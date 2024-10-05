@@ -35,6 +35,10 @@ main {
   width: 100%;
 }
 
+.month-header i {
+  cursor: pointer;
+}
+
 .summary-header h2 {
   padding-top: 20px;
 }
