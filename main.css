@@ -7,7 +7,44 @@
 main {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+}
+
+.month-container {
+  display: flex;
+  /* flex-direction: row;
+  justify-content: space-around;
+  align-items: center; */
+  padding: 2rem;
+  font-weight: 700;
+  font-size: 3rem;
+  border: 1px solid red;
+  width: 50%;
+  border: 2px solid lightgrey;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.month-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.summary-header h2 {
+  padding-top: 20px;
+}
+
+.summary-container {
+  background-color: #F35288;
+  width: 50%;
+  border-radius: 20px;
+  padding: 2%;
+  color: #fff;
 }
 
 .summary {
@@ -22,7 +59,14 @@ main {
   display: flex;
   flex-direction: row;
   text-align: center;
-  justify-content: center;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.summary-expense p,
+.summary-income p {
+  padding: 5px;
+  font-size: 23px;
 }
 
 .category {

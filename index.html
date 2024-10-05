@@ -7,11 +7,18 @@
   <title>Expense Tracker</title>
   <link rel="stylesheet" href="./main.css" />
   <link rel="stylesheet" href="./income.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
   <main>
-    <div class="month-container">Month</div>
+    <div class="month-container">
+      <div class="month-header">
+        <i class="material-icons">chevron_left</i>
+        <p>Month</p>
+        <i class="material-icons">chevron_right</i>
+      </div>
+    </div>
 
     <div class="summary-container">
       <div class="summary-header">
@@ -19,11 +26,13 @@
         <h2>$10,000</h2>
       </div>
       <div class="each-total">
-        <div class="expense">
+        <div class="summary-expense">
+          <i class="material-icons">arrow_upward</i>
           <p>Expenses</p>
           <p>$780</p>
         </div>
-        <div class="income">
+        <div class="summary-income">
+          <i class="material-icons">arrow_downward</i>
           <p>Income</p>
           <p>$8,000</p>
         </div>
@@ -31,16 +40,17 @@
     </div>
 
     <div class="income-container">
-      <div class="income-header">
-        <h1>Income</h1>
-        <button>+ New</button>
+      <div class="income-each-total">
+        <div class="income">
+          <h1>Income</h1>
+          <button>+ New</button>
+        </div>
+        <div class="salary">
+          <p>Salary</p>
+          <p>$8,000</p>
+        </div>
       </div>
-      <div class="salary">
-        <p>Salary</p>
-        <p>$8,000</p>
-      </div>
-    </div>
-
+    </div>
     <div class="expence-container">
       <h2>Expenses</h2>
       <div class="graph-wrap">
