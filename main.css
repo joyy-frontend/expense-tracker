@@ -6,10 +6,19 @@
 
 .summary {
     display: flex;
+    flex-direction: column;
+    border: solid 1px black;
+    border-radius: 25px;    
+    padding: 20px;
 }
-.expense {
+.each-total {
     display: flex;
 }
-.income {
+
+.category {
     display: flex;
+    flex-direction: column;
+    border: solid 1px black;
+    border-radius: 25px;    
+    padding: 20px;
 }
