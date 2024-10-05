@@ -1,15 +1,57 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .summary {
-    display: flex;
+  display: flex;
 }
 .expense {
-    display: flex;
+  display: flex;
 }
 .income {
-    display: flex;
+  display: flex;
+}
+
+/*Expense*/
+.circle circle {
+  fill: none;
+  stroke-width: 14px;
+}
+.graph-wrap {
+  width: 50%;
+}
+.circle circle:nth-child(1) {
+  stroke: red;
+  stroke-dasharray: 40, 100;
+  stroke-dashoffset: 0;
+}
+
+.circle {
+  transform: rotate(-90deg);
+}
+
+.circle circle:nth-child(2) {
+  stroke: #54cccc;
+  stroke-dasharray: 30, 100;
+  stroke-dashoffset: 90;
+}
+
+.circle circle:nth-child(3) {
+  stroke: #f2cc61;
+  stroke-dasharray: 20, 100;
+  stroke-dashoffset: 50;
+}
+
+.circle circle:nth-child(4) {
+  stroke: #a7d860;
+  stroke-dasharray: 10, 100;
+  stroke-dashoffset: 20;
+}
+
+.category-expence {
+  display: flex;
+  margin: 5px;
+  gap: 5px;
 }
