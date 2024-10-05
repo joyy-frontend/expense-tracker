@@ -5,7 +5,6 @@
 }
 
 .summary {
-<<<<<<< HEAD
     display: flex;
     flex-direction: column;
     border: solid 1px black;
@@ -22,15 +21,6 @@
     border: solid 1px black;
     border-radius: 25px;    
     padding: 20px;
-}
-=======
-  display: flex;
-}
-.expense {
-  display: flex;
-}
-.income {
-  display: flex;
 }
 
 /*Expense*/
@@ -74,4 +64,4 @@
   margin: 5px;
   gap: 5px;
 }
->>>>>>> haruka
+
