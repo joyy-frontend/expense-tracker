@@ -88,6 +88,7 @@ main {
 .category-header {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 5%;
   margin-top: 3rem;
 }
@@ -140,7 +141,6 @@ main {
   flex-direction: row;
 }
 
-
 .income-btn-new button {
   background: var(--main-color);
   border-radius: 20px;
@@ -160,7 +160,7 @@ main {
   width: 20%;
   border: none;
   font-size: 1.5em;
-  padding: .3rem;
+  padding: 0.3rem;
   cursor: pointer;
 }
 
@@ -234,11 +234,12 @@ main {
 .expense-header {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 5%;
   margin-top: 3rem;
 }
 
-.expense-header h2 {
+h2 {
   font-size: 2rem;
 }
 
