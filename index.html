@@ -7,6 +7,7 @@
   <title>Expense Tracker</title>
   <link rel="stylesheet" href="./main.css" />
   <link rel="stylesheet" href="./income.css" />
+  <link rel="stylesheet" href="./modal.css" />
 </head>
 
 <body>
@@ -76,31 +77,45 @@
       <div class="category-container">
         <div class="category-header">
           <h1>Category</h1>
-          <button>+New</button>
+          <button id="newCategoryBtn">+New</button>
         </div>
         <div class="categories">
-          <a href="">
-            <p>Shopping</p>
-          </a>
-          <a href="">
-            <p>Rent</p>
-          </a>
-          <a href="">
-            <p>Restaurant</p>
-          </a>
-          <a href="">
-            <p>Grocery</p>
-          </a>
-          <a href="">
-            <p>Gym</p>
-          </a>
-          <a href="">
-            <p>Subscription</p>
-          </a>
+          <p class="category-item">Shopping</p>
+          <p class="category-item">Rent</p>
+          <p class="category-item">Restaurant</p>
+          <p class="category-item">Grocery</p>
+          <p class="category-item">Gym</p>
+          <p class="category-item">Subscription</p>
         </div>
+        <!-- Add category modal -->
+        <div id="addCategoryModal" class="modal hidden">
+          <div class="modal-content">
+              <span class="close">&times;</span>
+              <h2>New Category</h2>
+              <label for="categoryTitleInput">Category Title:</label>
+              <input type="text" id="categoryTitleInput">
+              <label for="categoryDescriptionInput">Description:</label>
+              <input type="text" id="categoryDescriptionInput">
+              <button id="saveCategoryBtn">Save Category</button>
+          </div>
+        </div>
+        <!-- Edit and delete modal -->
+        <div id="editCategoryModal" class="modal hidden">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="categoryName"></p>
+            <label for="categoryTitleEdit">Category Title:</label>
+            <input type="text" id="categoryTitleEdit">
+            <label for="categoryDescriptionEdit">Description:</label>
+            <input type="text" id="categoryDescriptionEdit">
+            <button id="editCategoryBtn">Edit</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </main>
+  <script src="script.js"></script>
 </body>
 
 </html>
