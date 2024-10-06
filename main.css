@@ -2,8 +2,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
 }
 
+:root {
+  --main-color: #f35288;
+  --gray-line: rgb(177, 177, 177);
+}
 main {
   display: flex;
   flex-direction: column;
@@ -31,6 +36,13 @@ main {
   border: solid 1px black;
   border-radius: 25px;
   padding: 20px;
+}
+
+.category-header {
+  display: flex;
+  justify-content: center;
+  gap: 5%;
+  margin-top: 3rem;
 }
 
 /*Expense*/
@@ -74,5 +86,76 @@ main {
 .category-expence {
   display: flex;
   margin: 5px;
-  gap: 5px;
+  gap: 10px;
+  justify-content: space-between;
+  border: solid 1px var(--gray-line);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px;
+  line-height: 30px;
+}
+.category-expence p {
+  width: 25%;
+}
+
+.expence-wrap {
+  width: 50%;
+  text-align: center;
+  margin: 0 auto;
+}
+.color-expence {
+  color: red;
+  font-weight: bold;
+}
+.category-expence:hover .color-expence {
+  color: white;
+}
+.expense-header {
+  display: flex;
+  justify-content: center;
+  gap: 5%;
+  margin-top: 3rem;
+}
+.expense-header h2 {
+  font-size: 2rem;
+}
+
+.expence-list {
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.expence-list th,
+td {
+  border: solid 1px;
+  padding: 5%;
+}
+.expence-list th {
+  width: 100px;
+  height: 30px;
+}
+
+.category-container {
+  margin-top: 2rem;
+}
+
+.categories p {
+  border: solid 1px var(--gray-line);
+  border-radius: 2px;
+  color: black;
+  display: block;
+  margin: 10px;
+  padding: 5px;
+  line-height: 30px;
+}
+
+.categories p:hover,
+.category-expence:hover {
+  background-color: var(--main-color);
+  color: white;
+}
+
+.category-container {
+  width: 50%;
+  margin: 0 auto;
 }

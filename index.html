@@ -7,6 +7,11 @@
   <title>Expense Tracker</title>
   <link rel="stylesheet" href="./main.css" />
   <link rel="stylesheet" href="./income.css" />
+  <!--font-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
@@ -39,10 +44,13 @@
         <p>Salary</p>
         <p>$8,000</p>
       </div>
-    </div>
+    </div>
 
     <div class="expence-container">
-      <h2>Expenses</h2>
+      <div class="expense-header">
+        <h2>Expenses</h2>
+        <button>+ New</button>
+      </div>
       <div class="graph-wrap">
         <svg class="circle"
           viewBox="0 0 64 64"><!--<svg width="幅" height="高さ" viewBox="min-x min-y width height"></svg>-->
@@ -52,53 +60,42 @@
           <circle cx="50%" cy="50%" r="15.9154"></circle>
         </svg>
       </div>
-      <div>
+      <div class="expence-wrap">
         <div class="category-expence">
           <p>Shopping</p>
           <p>Clothes</p>
-          <p>$250</p>
-          <p>date</p>
+          <p class="color-expence">-$250</p>
+          <p>10/5</p>
         </div>
         <div class="category-expence">
           <p>Rent</p>
           <p>Rent</p>
-          <p>$250</p>
-          <p>date</p>
+          <p class="color-expence">-$250</p>
+          <p>10/5</p>
         </div>
         <div class="category-expence">
           <p>Restaurant</p>
           <p>Sushi</p>
-          <p>$250</p>
-          <p>date</p>
+          <p class="color-expence">-$250</p>
+          <p>10/5</p>
         </div>
+      </div>
+    </div>
+
+    <div class="category-container">
+      <div class="category-header">
+        <h1>Category</h1>
+        <button id="newCategoryBtn">+New</button>
+      </div>
+      <div class="categories">
+        <p class="category-item">Shopping</p>
+        <p class="category-item">Rent</p>
+        <p class="category-item">Restaurant</p>
+        <p class="category-item">Grocery</p>
+        <p class="category-item">Gym</p>
+        <p class="category-item">Subscription</p>
       </div>
 
-      <div class="category-container">
-        <div class="category-header">
-          <h1>Category</h1>
-          <button>+New</button>
-        </div>
-        <div class="categories">
-          <a href="">
-            <p>Shopping</p>
-          </a>
-          <a href="">
-            <p>Rent</p>
-          </a>
-          <a href="">
-            <p>Restaurant</p>
-          </a>
-          <a href="">
-            <p>Grocery</p>
-          </a>
-          <a href="">
-            <p>Gym</p>
-          </a>
-          <a href="">
-            <p>Subscription</p>
-          </a>
-        </div>
-      </div>
     </div>
   </main>
 </body>
