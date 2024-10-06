@@ -2,12 +2,57 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
+}
+
+:root {
+  --main-color: #f35288;
+  --gray-line: rgb(177, 177, 177);
 }
 
 main {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+}
+
+/* month */
+.month-container {
+  display: flex;
+  padding: 2rem;
+  font-weight: 700;
+  font-size: 3rem;
+  width: 50%;
+  border: 2px solid lightgrey;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.month-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.month-header i {
+  cursor: pointer;
+}
+
+/* Total Balance */
+.summary-header h2 {
+  padding-top: 20px;
+}
+
+.summary-container {
+  background-color: var(--main-color);
+  width: 50%;
+  border-radius: 20px;
+  padding: 2%;
+  color: #fff;
 }
 
 .summary {
@@ -22,7 +67,14 @@ main {
   display: flex;
   flex-direction: row;
   text-align: center;
-  justify-content: center;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.summary-expense p,
+.summary-income p {
+  padding: 5px;
+  font-size: 23px;
 }
 
 .category {
@@ -31,6 +83,101 @@ main {
   border: solid 1px black;
   border-radius: 25px;
   padding: 20px;
+}
+
+.category-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+  margin-top: 3rem;
+}
+
+/* income */
+.income-container {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  width: 50%;
+  padding: 2rem;
+  border: 2px solid lightgrey;
+  line-height: 2rem;
+  border-radius: 20px;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.income-each-total {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+}
+
+.income {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.income-area {
+  display: flex;
+  /* flex-direction: row; */
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.income h1 {
+  font-size: 2rem;
+  margin-right: -40px;
+}
+
+.income-btn-new {
+  display: flex;
+  flex-direction: row;
+}
+
+.income-btn-new button {
+  background: var(--main-color);
+  border-radius: 20px;
+  width: auto;
+  border: none;
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.income button {
+  background: var(--main-color);
+  color: #fff;
+  border-radius: 27.5px;
+  border: 1px solid #333;
+  width: 20%;
+  border: none;
+  font-size: 1.5em;
+  padding: 0.3rem;
+  cursor: pointer;
+}
+
+.salary {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  padding-top: 2%;
+  font-size: 23px;
+}
+
+.salary p:first-child {
+  margin-left: -4%;
+}
+
+.salary p:last-child {
+  margin-left: 5%;
 }
 
 /*Expense*/
@@ -49,30 +196,90 @@ main {
   stroke-dashoffset: 0;
 }
 
-.circle {
-  transform: rotate(-90deg);
-}
-
-.circle circle:nth-child(2) {
-  stroke: #54cccc;
-  stroke-dasharray: 30, 100;
-  stroke-dashoffset: 90;
-}
-
-.circle circle:nth-child(3) {
-  stroke: #f2cc61;
-  stroke-dasharray: 20, 100;
-  stroke-dashoffset: 50;
-}
-
-.circle circle:nth-child(4) {
-  stroke: #a7d860;
-  stroke-dasharray: 10, 100;
-  stroke-dashoffset: 20;
-}
-
 .category-expence {
   display: flex;
   margin: 5px;
-  gap: 5px;
+  gap: 10px;
+  justify-content: space-between;
+  border: solid 1px var(--gray-line);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px;
+  line-height: 30px;
+}
+
+.category-expence p {
+  width: 25%;
+}
+
+.expence-container {
+  width: 100%;
+}
+
+.expence-wrap {
+  width: 50%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.color-expence {
+  color: red;
+  font-weight: bold;
+}
+
+.category-expence:hover .color-expence {
+  color: white;
+}
+
+.expense-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+  margin-top: 3rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+.expence-list {
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.expence-list th,
+td {
+  border: solid 1px;
+  padding: 5%;
+}
+
+.expence-list th {
+  width: 100px;
+  height: 30px;
+}
+
+.category-container {
+  margin-top: 2rem;
+}
+
+.categories p {
+  border: solid 1px var(--gray-line);
+  border-radius: 2px;
+  color: black;
+  display: block;
+  margin: 10px;
+  padding: 5px;
+  line-height: 30px;
+}
+
+.categories p:hover,
+.category-expence:hover {
+  background-color: var(--main-color);
+  color: white;
+}
+
+.category-container {
+  width: 50%;
+  margin: 0 auto;
 }

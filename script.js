@@ -1,4 +1,3 @@
-
 let categories = [];
 let editingIndex = -1;
 const categoriesContainer = document.querySelector('.categories');
@@ -7,10 +6,11 @@ const addCategoryModal = document.getElementById('addCategoryModal');
 const editCategoryModal = document.getElementById('editCategoryModal');
 const saveCategoryBtn = document.getElementById('saveCategoryBtn');
 const editCategoryBtn = document.getElementById('editCategoryBtn');
-const categoryItems = document.querySelectorAll('.category-item');
-const categoryName = document.getElementById('categoryName');
+//const categoryItems = document.querySelectorAll('.category-item');
+//const categoryName = document.getElementById('categoryName');
 const closeModalButtons = document.querySelectorAll('.close');  
-const categoryTitleEdit = document.getElementById('categoryTitleEdit');
+//const categoryTitleEdit = document.getElementById('categoryTitleEdit');
+
 
 // Initially render the categories (if any)
 renderCategories();
@@ -24,7 +24,7 @@ function renderCategories() {
         const categoryElement = document.createElement('div');
         categoryElement.classList.add('category-item');
         categoryElement.innerHTML = `
-            <p data-index="${index}">${category.title}</p>
+            <p data-index="${index}">${category.symbol}${category.title}</p>
             <button class="delete-btn" data-index="${index}">Delete</button>
         `;
 
@@ -46,17 +46,47 @@ function renderCategories() {
     });
 }
 
+
+document.addEventListener('DOMContentLoaded', () => {
+    const categorySymbol = document.getElementById('categorySymbol');
+    
+    // Ensure the emoji picker is present in the DOM before attaching the event listener
+    const emojiPicker = document.querySelector('emoji-picker');
+    
+    if (emojiPicker) {
+        emojiPicker.addEventListener('emoji-click', (event) => {
+            // Log the entire event object to inspect its structure
+            console.log('Event Detail:', event.detail);
+            
+            // Check if 'unicode' exists in the event detail
+            if (event.detail && event.detail.unicode) {
+                const selectedEmoji = event.detail.unicode;  // Extract the emoji unicode
+                console.log('Selected Emoji:', selectedEmoji);
+
+                // Append the emoji to the input field
+                categorySymbol.value += selectedEmoji;
+            } else {
+                console.error('No emoji found in event detail!');
+            }
+        });
+    } else {
+        console.error('Emoji picker element not found!');
+    }
+});
+
 // Save Button Functionality
 saveCategoryBtn.addEventListener('click', (e) => {
     e.preventDefault();  // Prevent form submission
 
+    const categorySymbol = document.getElementById('categorySymbol').value;
     const categoryTitle = document.getElementById('categoryTitleInput').value;
     const categoryDescription = document.getElementById('categoryDescriptionInput').value;
 
-    if (categoryTitle && categoryDescription) {
+    console.log(categorySymbol);
+    if (categorySymbol && categoryTitle && categoryDescription) {
         if (editingIndex === -1) {
             // Add new category to the array
-            categories.push({ title: categoryTitle, description: categoryDescription });
+            categories.push({ symbol: categorySymbol, title: categoryTitle, description: categoryDescription });
         } else {
             // Edit existing category in the array
             categories[editingIndex] = { title: categoryTitle, description: categoryDescription };
@@ -82,6 +112,7 @@ function handleDelete(e) {
 
 // Edit Button Functionality
 function handleEdit(index) {
+    document.getElementById('categorySymbolEdit').value = categories[index].symbol.value;
     document.getElementById('categoryTitleEdit').value = categories[index].title;
     document.getElementById('categoryDescriptionEdit').value = categories[index].description;
 
@@ -92,6 +123,7 @@ function handleEdit(index) {
         e.preventDefault();
         console.log("edit button click");
         // Update category details
+        categories[index].symbol.value = document.getElementById('categorySymbolEdit').value;
         categories[index].title = document.getElementById('categoryTitleEdit').value;
         categories[index].description = document.getElementById('categoryDescriptionEdit').value;
 
