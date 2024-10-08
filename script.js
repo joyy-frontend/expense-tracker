@@ -6,10 +6,7 @@ const addCategoryModal = document.getElementById('addCategoryModal');
 const editCategoryModal = document.getElementById('editCategoryModal');
 const saveCategoryBtn = document.getElementById('saveCategoryBtn');
 const editCategoryBtn = document.getElementById('editCategoryBtn');
-//const categoryItems = document.querySelectorAll('.category-item');
-//const categoryName = document.getElementById('categoryName');
 const closeModalButtons = document.querySelectorAll('.close');  
-//const categoryTitleEdit = document.getElementById('categoryTitleEdit');
 
 
 // Initially render the categories (if any)
@@ -46,15 +43,13 @@ function renderCategories() {
     });
 }
 
-
-document.addEventListener('DOMContentLoaded', () => {
-    const categorySymbol = document.getElementById('categorySymbol');
-    
+function emojiPicker(pickerPath, inputPath){
     // Ensure the emoji picker is present in the DOM before attaching the event listener
-    const emojiPicker = document.querySelector('emoji-picker');
-    
-    if (emojiPicker) {
-        emojiPicker.addEventListener('emoji-click', (event) => {
+    const picker = document.getElementById(pickerPath);
+    const input = document.getElementById(inputPath);
+
+    if (picker) {
+        picker.addEventListener('emoji-click', (event) => {
             // Log the entire event object to inspect its structure
             console.log('Event Detail:', event.detail);
             
@@ -62,9 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (event.detail && event.detail.unicode) {
                 const selectedEmoji = event.detail.unicode;  // Extract the emoji unicode
                 console.log('Selected Emoji:', selectedEmoji);
-
+                input.value += selectedEmoji;
                 // Append the emoji to the input field
-                categorySymbol.value += selectedEmoji;
+                //picker.value += selectedEmoji;
             } else {
                 console.error('No emoji found in event detail!');
             }
@@ -72,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('Emoji picker element not found!');
     }
-});
+}
 
 // Save Button Functionality
 saveCategoryBtn.addEventListener('click', (e) => {
@@ -112,9 +107,11 @@ function handleDelete(e) {
 
 // Edit Button Functionality
 function handleEdit(index) {
-    document.getElementById('categorySymbolEdit').value = categories[index].symbol.value;
+    document.getElementById('categorySymbolEdit').value = categories[index].symbol;
     document.getElementById('categoryTitleEdit').value = categories[index].title;
     document.getElementById('categoryDescriptionEdit').value = categories[index].description;
+
+    emojiPicker('editEmojiPicker', 'categorySymbolEdit');
 
     // Open the modal for editing
     editCategoryModal.style.display = 'block';
@@ -122,8 +119,9 @@ function handleEdit(index) {
     editCategoryBtn.addEventListener('click', (e) => {
         e.preventDefault();
         console.log("edit button click");
+        
         // Update category details
-        categories[index].symbol.value = document.getElementById('categorySymbolEdit').value;
+        categories[index].symbol = document.getElementById('categorySymbolEdit').value;
         categories[index].title = document.getElementById('categoryTitleEdit').value;
         categories[index].description = document.getElementById('categoryDescriptionEdit').value;
 
@@ -138,6 +136,7 @@ function handleEdit(index) {
 // Show the modal when the +New button is clicked
 newCategoryBtn.addEventListener('click', () => {
     clearModalInputs(addCategoryModal);
+    emojiPicker('addEmojiPicker', 'categorySymbol');
     addCategoryModal.style.display = 'block';
 });
 
