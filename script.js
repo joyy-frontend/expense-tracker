@@ -7,7 +7,7 @@ const editCategoryModal = document.getElementById('editCategoryModal');
 const saveCategoryBtn = document.getElementById('saveCategoryBtn');
 const editCategoryBtn = document.getElementById('editCategoryBtn');
 const closeModalButtons = document.querySelectorAll('.close');  
-
+let emojiPickerInitialized = false;
 
 // Initially render the categories (if any)
 renderCategories();
@@ -43,61 +43,6 @@ function renderCategories() {
     });
 }
 
-function emojiPicker(pickerPath, inputPath){
-    // Ensure the emoji picker is present in the DOM before attaching the event listener
-    const picker = document.getElementById(pickerPath);
-    const input = document.getElementById(inputPath);
-
-    if (picker) {
-        picker.addEventListener('emoji-click', (event) => {
-            // Log the entire event object to inspect its structure
-            console.log('Event Detail:', event.detail);
-            
-            // Check if 'unicode' exists in the event detail
-            if (event.detail && event.detail.unicode) {
-                const selectedEmoji = event.detail.unicode;  // Extract the emoji unicode
-                console.log('Selected Emoji:', selectedEmoji);
-                input.value += selectedEmoji;
-                // Append the emoji to the input field
-                //picker.value += selectedEmoji;
-            } else {
-                console.error('No emoji found in event detail!');
-            }
-        });
-    } else {
-        console.error('Emoji picker element not found!');
-    }
-}
-
-// Save Button Functionality
-saveCategoryBtn.addEventListener('click', (e) => {
-    e.preventDefault();  // Prevent form submission
-
-    const categorySymbol = document.getElementById('categorySymbol').value;
-    const categoryTitle = document.getElementById('categoryTitleInput').value;
-    const categoryDescription = document.getElementById('categoryDescriptionInput').value;
-
-    console.log(categorySymbol);
-    if (categorySymbol && categoryTitle && categoryDescription) {
-        if (editingIndex === -1) {
-            // Add new category to the array
-            categories.push({ symbol: categorySymbol, title: categoryTitle, description: categoryDescription });
-        } else {
-            // Edit existing category in the array
-            categories[editingIndex] = { title: categoryTitle, description: categoryDescription };
-            editingIndex = -1;  // Reset after editing
-        }
-
-        // Render the updated list of categories
-        renderCategories();
-
-        // Close the modal
-        addCategoryModal.style.display = 'none';
-    } else {
-        alert('Please fill in all fields');
-    }
-});
-
 // Delete Button Functionality
 function handleDelete(e) {
     const index = e.target.dataset.index;
@@ -105,40 +50,38 @@ function handleDelete(e) {
     renderCategories();  // Re-render the categories list
 }
 
-// Edit Button Functionality
 function handleEdit(index) {
+    // Pre-fill the edit modal with the category's existing data
     document.getElementById('categorySymbolEdit').value = categories[index].symbol;
     document.getElementById('categoryTitleEdit').value = categories[index].title;
     document.getElementById('categoryDescriptionEdit').value = categories[index].description;
 
-    emojiPicker('editEmojiPicker', 'categorySymbolEdit');
-
     // Open the modal for editing
     editCategoryModal.style.display = 'block';
+
+    // Show the modal when the +New button is clicked
     
+    if (!emojiPickerInitialized) {
+        emojiPicker('editEmojiPicker', 'categorySymbolEdit');
+        emojiPickerInitialized = true;  // Ensure we only initialize the picker once
+    }
+
+    // Handle saving the edited category
     editCategoryBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log("edit button click");
-        
-        // Update category details
+
+        // Update the category in the array using the index
         categories[index].symbol = document.getElementById('categorySymbolEdit').value;
         categories[index].title = document.getElementById('categoryTitleEdit').value;
         categories[index].description = document.getElementById('categoryDescriptionEdit').value;
 
-        // Re-render the categories after editing
+        // Re-render the updated list of categories
         renderCategories();
 
-        // Close the modal after saving the changes
+        // Close the modal after saving
         editCategoryModal.style.display = 'none';
-    });
+    }, { once: true });  // The { once: true } ensures the event listener is only added once
 }
-
-// Show the modal when the +New button is clicked
-newCategoryBtn.addEventListener('click', () => {
-    clearModalInputs(addCategoryModal);
-    emojiPicker('addEmojiPicker', 'categorySymbol');
-    addCategoryModal.style.display = 'block';
-});
 
 // Close X button
 closeModalButtons.forEach(button => {
@@ -162,9 +105,72 @@ window.addEventListener('click', (e) => {
     }
 });
 
-function clearModalInputs(modal) {
-    const inputs = modal.querySelectorAll('input');
-    inputs.forEach(input => {
-        input.value = '';  // Clear the input field
+document.addEventListener('DOMContentLoaded', () => {
+    let emojiPickerInitialized = false;
+    // Show the modal when the +New button is clicked
+    newCategoryBtn.addEventListener('click', () => {
+        clearModalInputs();
+        if (!emojiPickerInitialized) {
+            emojiPicker('addEmojiPicker', 'categorySymbol');
+            emojiPickerInitialized = true;  // Ensure we only initialize the picker once
+        }
+        addCategoryModal.style.display = 'block';
+        editingIndex = -1;
     });
+
+    // Add event listener for Save Button (Handle both new and editing case)
+    saveCategoryBtn.addEventListener('click', handleSaveOrEdit);
+
+    // Function to handle both saving new and editing existing categories
+    function handleSaveOrEdit(e) {
+        e.preventDefault();  // Prevent form submission
+
+        const categorySymbol = document.getElementById('categorySymbol').value;
+        const categoryTitle = document.getElementById('categoryTitleInput').value;
+        const categoryDescription = document.getElementById('categoryDescriptionInput').value;
+
+        if (categorySymbol && categoryTitle && categoryDescription) {
+            if (editingIndex === -1) {
+                // Add new category to the array
+                categories.push({ symbol: categorySymbol, title: categoryTitle, description: categoryDescription });
+            } else {
+                // Edit existing category in the array
+                categories[editingIndex] = { symbol: categorySymbol, title: categoryTitle, description: categoryDescription };
+                editingIndex = -1;  // Reset after editing
+            }
+
+            // Render the updated list of categories
+            renderCategories();
+
+            // Close the modal after saving
+            addCategoryModal.style.display = 'none';
+        } else {
+            alert('Please fill in all fields');
+        }
+    }
+
+    // Function to clear modal inputs
+    function clearModalInputs() {
+        document.getElementById('categorySymbol').value = '';
+        document.getElementById('categoryTitleInput').value = '';
+        document.getElementById('categoryDescriptionInput').value = '';
+    }
+
+});
+
+// Function for initializing the emoji picker only once
+function emojiPicker(pickerId, inputId) {
+    const picker = document.getElementById(pickerId);
+    const input = document.getElementById(inputId);
+
+    if (picker) {
+        picker.addEventListener('emoji-click', (event) => {
+            if (event.detail && event.detail.unicode) {
+                const selectedEmoji = event.detail.unicode;
+                input.value += selectedEmoji;
+            }
+        });
+    } else {
+        console.error('Emoji picker element not found!');
+    }
 }
