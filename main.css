@@ -139,6 +139,10 @@ main {
 
 
 /* income */
+.income-first-container {
+  width: 100%;
+}
+
 .income-container {
   display: flex;
   justify-content: space-between;
@@ -175,11 +179,11 @@ main {
 .expense-area,
 .category-area {
   display: flex;
-  /* flex-direction: row; */
   justify-content: space-between;
   width: 100%;
   align-items: center;
 }
+
 .category-area,
 .expense-area {
   padding: 2rem;
@@ -221,6 +225,7 @@ main {
 
 .salary {
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: space-evenly;
   padding-top: 2%;
@@ -228,11 +233,11 @@ main {
 }
 
 .salary p:first-child {
-  margin-left: -4%;
+  margin-left: 1%;
 }
 
-.salary p:last-child {
-  margin-left: 5%;
+.salary p {
+  padding: 10px 10px;
 }
 
 /*Expense*/
@@ -304,6 +309,7 @@ main {
 .category h2 {
   width: 100%;
 }
+
 .expence-container {
   border: solid 2px var(--gray-line);
   border-radius: 20px;
@@ -333,7 +339,7 @@ td {
 }
 
 .expense-chart {
-  width: 400px; 
+  width: 400px;
   height: 400px;
   margin: 0 auto;
 }
@@ -351,7 +357,8 @@ td {
 }
 
 .categories p:hover,
-.category-expence:hover {
+.category-expence:hover,
+.income-box:hover {
   background-color: var(--main-color);
   color: white;
 }
@@ -360,6 +367,7 @@ td {
 .edit-category-wrap {
   text-align: right;
 }
+
 .expense-chart {
   margin-bottom: 1.5rem;
 }
@@ -368,6 +376,7 @@ td {
   color: red;
   font-weight: bold;
 }
+
 .category-expense {
   display: flex;
   width: 100%;
@@ -386,10 +395,12 @@ td {
 .category-expense:hover .color-expense {
   color: white;
 }
+
 .category-expense p {
   height: 100%;
   vertical-align: center;
 }
+
 /********* category **********/
 .category-container {
   margin-top: 1.5rem;
@@ -398,18 +409,21 @@ td {
   width: 50%;
   padding-bottom: 0.5rem;
 }
+
 .categories {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   padding: 0 1rem;
 }
+
 .category-header h2 {
   width: 100%;
 }
 
 
-#exerrorMessage, #exerrorMessageEdit {
+#exerrorMessage,
+#exerrorMessageEdit {
   color: #e74c3c;
   font-size: 18px;
   margin-top: 10px;

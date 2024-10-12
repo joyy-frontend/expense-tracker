@@ -110,7 +110,7 @@ export function renderIncome() {
     monthData.income.forEach((income, index) => {
         // Create income element container
         const incomeElement = document.createElement('div');
-        incomeElement.classList.add('expence-container');  // Ensure class is consistent
+        incomeElement.classList.add('income-first-container');  // Ensure class is consistent
         incomeElement.innerHTML = `
             <div class="income-box">
                 <p class="income-title" data-index="${index}">${income.description}</p>
