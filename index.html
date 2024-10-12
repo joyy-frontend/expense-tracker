@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Expense Tracker</title>  
+  <title>Expense Tracker</title>
   <link rel="stylesheet" href="./main.css" />
   <!-- Material Icon -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
-  rel="stylesheet">
+    rel="stylesheet">
   <!-- temp modal design -->
   <link rel="stylesheet" href="./modal.css" />
   <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
@@ -22,9 +22,9 @@
   <main>
     <div class="month-container">
       <div class="month-header">
-        <i class="material-icons">chevron_left</i>
-        <p>Month</p>
-        <i class="material-icons">chevron_right</i>
+        <i class="material-icons left">chevron_left</i>
+        <p id="currentMonth"></p>
+        <i class="material-icons right">chevron_right</i>
       </div>
     </div>
 
@@ -68,7 +68,7 @@
       <div class="expense-header">
         <h2>Expenses</h2>
         <div class="income-btn-new">
-          <button>+ New</button>
+          <button id="addExpenseBtn">+ New</button>
         </div>
       </div>
       <div class="expence-wrap">
@@ -91,58 +91,83 @@
           <p>10/5</p>
         </div>
       </div>
+      <!-- Add expense modal -->
+      <div id="addExpenseModal" class="modal hidden">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Add Expense</h2>
+          <div class="expence-item">
+            <label for="expenseTitleInput">Expense:</label>
+            <input type="text" id="expenseTitleInput">
+          </div>
+          <div class="expence-item">
+            <label for="expenseDescriptionInput">Description:</label>
+            <input type="text" id="expenseDescriptionInput">
+          </div>
+          <div class="expence-item">
+            <label for="expensePriceInput">Price:</label>
+            <input type="text" id="expensePriceInput">
+          </div>
+          <div class="expence-item">
+            <label for="expenseDateInput">Date:</label>
+            <input type="date" id="expenseDateInput" value="">
+          </div>
+          <button id="saveExpenseBtn">Save</button>
+        </div>
+      </div>
     </div>
 
-      <div class="category-container">
-        <div class="category-header">
-          <h2>Category</h2>
-          <div class="income-btn-new">
-            <button id="newCategoryBtn">+New</button>
-          </div>
+    <div class="category-container">
+      <div class="category-header">
+        <h2>Category</h2>
+        <div class="income-btn-new">
+          <button id="newCategoryBtn">+New</button>
         </div>
-        <div class="categories">
-          <p class="category-item">Shopping</p>
-          <p class="category-item">Rent</p>
-          <p class="category-item">Restaurant</p>
-          <p class="category-item">Grocery</p>
-          <p class="category-item">Gym</p>
-          <p class="category-item">Subscription</p>
-        </div>
-        <!-- Add category modal -->
-        <div id="addCategoryModal" class="modal hidden">
-          <div class="modal-content">
-              <span class="close">&times;</span>
-              <h2>New Category</h2>
-              <label for="categorySymbol">Symbol:</label>
-              <input type="text" id="categorySymbol">
-              <emoji-picker id="addEmojiPicker"></emoji-picker>
-              <label for="categoryTitleInput">Category Title:</label>
-              <input type="text" id="categoryTitleInput">
-              <label for="categoryDescriptionInput">Description:</label>
-              <input type="text" id="categoryDescriptionInput">
-              <button id="saveCategoryBtn">Save</button>
-          </div>
-        </div>
-        <!-- Edit and delete modal -->
-        <div id="editCategoryModal" class="modal hidden">
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <p id="categoryName"></p>
-            <label for="categorySymbolEdit">Category Symbol:</label>
-            <input type="text" id="categorySymbolEdit">
-            <emoji-picker id="editEmojiPicker"></emoji-picker>
-            <label for="categoryTitleEdit">Category Title:</label>
-            <input type="text" id="categoryTitleEdit">
-            <label for="categoryDescriptionEdit">Description:</label>
-            <input type="text" id="categoryDescriptionEdit">
-            <button id="editCategoryBtn">Edit</button>
-          </div>
-        </div>
-
       </div>
+      <div class="categories">
+        <p class="category-item">Shopping</p>
+        <p class="category-item">Rent</p>
+        <p class="category-item">Restaurant</p>
+        <p class="category-item">Grocery</p>
+        <p class="category-item">Gym</p>
+        <p class="category-item">Subscription</p>
+      </div>
+      <!-- Add category modal -->
+      <div id="addCategoryModal" class="modal hidden">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>New Category</h2>
+          <label for="categorySymbol">Symbol:</label>
+          <input type="text" id="categorySymbol">
+          <emoji-picker id="addEmojiPicker"></emoji-picker>
+          <label for="categoryTitleInput">Category Title:</label>
+          <input type="text" id="categoryTitleInput">
+          <label for="categoryDescriptionInput">Description:</label>
+          <input type="text" id="categoryDescriptionInput">
+          <button id="saveCategoryBtn">Save</button>
+        </div>
+      </div>
+      <!-- Edit and delete modal -->
+      <div id="editCategoryModal" class="modal hidden">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p id="categoryName"></p>
+          <label for="categorySymbolEdit">Category Symbol:</label>
+          <input type="text" id="categorySymbolEdit">
+          <emoji-picker id="editEmojiPicker"></emoji-picker>
+          <label for="categoryTitleEdit">Category Title:</label>
+          <input type="text" id="categoryTitleEdit">
+          <label for="categoryDescriptionEdit">Description:</label>
+          <input type="text" id="categoryDescriptionEdit">
+          <button id="editCategoryBtn">Edit</button>
+        </div>
+      </div>
+
+    </div>
     </div>
   </main>
   <script src="./script.js"></script>
+
 </body>
 
 </html>

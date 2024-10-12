@@ -216,6 +216,11 @@ main {
   width: 100%;
 }
 
+.expence-item {
+  display: flex;
+  align-items: center;
+}
+
 .expence-wrap {
   width: 50%;
   text-align: center;
