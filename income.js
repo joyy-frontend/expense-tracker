@@ -13,10 +13,13 @@ function renderIncome() {
 
   incomeArray.forEach((income, index) => {
     const incomeElement = document.createElement('div');
-    incomeElement.classList.add('income-list');
+    incomeElement.classList.add('expence-container');
     incomeElement.innerHTML = `
-      <p data-index="${index}">${income.title} ${income.amount}</p>
-      <button class="income-del" data-index="${index}">Delete</button>
+          <div class="income-box">
+            <p data-index="${index}">${income.title}</p>
+            <p data-index="${index}">${income.amount}</p>
+            <button class="income-del" id="delIncomeBtn" data-index="${index}">Delete</button>
+          </div>
     `;
     salary.appendChild(incomeElement);
   })

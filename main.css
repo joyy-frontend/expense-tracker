@@ -295,3 +295,61 @@ td {
   width: 50%;
   margin: 0 auto;
 }
+
+/* add income css (joy) */
+#errorMessage {
+  color: #e74c3c;
+  font-size: 18px;
+  margin-top: 10px;
+  display: none;
+}
+
+#saveIncomeBtn,
+#editIncomeBtn,
+#delIncomeBtn {
+  width: 100%;
+  padding: 12px;
+  background-color: #fff;
+  color: #f35288;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  transition: background-color 0.3s;
+  border: 2px solid #E5E5E5;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+  outline: none;
+}
+
+.income-box {
+  display: flex;
+  margin: 5px;
+  gap: 10px;
+  justify-content: space-between;
+  border: solid 1px var(--gray-line);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px;
+  line-height: 30px;
+}
+
+.income-box button {
+  border: 5px solid red;
+}
