@@ -1,4 +1,6 @@
 let categories = [];
+let monthsData = {};
+let currentMonth = 'October 2024';
 let editingIndex = -1;
 const categoriesContainer = document.querySelector('.categories');
 const newCategoryBtn = document.getElementById('newCategoryBtn');
@@ -9,8 +11,92 @@ const editCategoryBtn = document.getElementById('editCategoryBtn');
 const closeModalButtons = document.querySelectorAll('.close');  
 let emojiPickerInitialized = false;
 
+const addExpenseModal = document.getElementById('addExpenseModal');
+const addExpenseBtn = document.getElementById('addExpenseBtn');
+
+const showCurrentMonth = document.querySelector('#currentMonth');
+showCurrentMonth.innerHTML = currentMonth;
+
 // Initially render the categories (if any)
 renderCategories();
+
+function changeMonth(direction) {
+    console.log("clicked");
+    
+    const months = [
+        'January 2024', 'February 2024', 'March 2024', 'April 2024', 'May 2024', 'June 2024', 'July 2024', 'August 2024', 'September 2024', 'October 2024', 'November 2024', 'December 2024', 'January 2025'
+    ];
+    let currentIndex = months.indexOf(currentMonth);
+    
+    if (direction === 'next') {
+        currentIndex = (currentIndex + 1) % months.length;
+    } else if (direction === 'prev') {
+        currentIndex = (currentIndex - 1 + months.length) % months.length;
+    }
+    
+    currentMonth = months[currentIndex];
+    showCurrentMonth.innerHTML = currentMonth;
+    console.log(showCurrentMonth);
+    renderDataForMonth(currentMonth);
+}
+
+document.querySelector('.material-icons.left').addEventListener('click', () => changeMonth('prev'));
+document.querySelector('.material-icons.right').addEventListener('click', () => changeMonth('next'));
+
+
+function renderDataForMonth(month) {
+    const monthData = monthsData[month] || { income: [], expenses: [] };
+    
+    // Render income
+    const incomeContainer = document.querySelector('.income-container');
+    incomeContainer.innerHTML = '';
+    monthData.income.forEach(income => {
+        const incomeItem = `<div class="salary"><p>${income.description}</p><p>${income.amount}</p></div>`;
+        incomeContainer.innerHTML += incomeItem;
+    });
+    
+    // Render expenses
+    const expensesContainer = document.querySelector('.expence-wrap');
+    expensesContainer.innerHTML = '';
+    monthData.expenses.forEach(expense => {
+        const expenseItem = `<div class="category-expence">
+                                <p>${expense.category}</p>
+                                <p>${expense.description}</p>
+                                <p class="color-expence">-${expense.amount}</p>
+                                <p>${expense.date}</p>
+                             </div>`;
+        expensesContainer.innerHTML += expenseItem;
+    });
+}
+
+function updateSummary() {
+    const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
+    const totalIncome = monthData.income.reduce((acc, inc) => acc + parseFloat(inc.amount), 0);
+    const totalExpenses = monthData.expenses.reduce((acc, exp) => acc + parseFloat(exp.amount), 0);
+
+    document.querySelector('.summary-container h2').textContent = `$${totalIncome - totalExpenses}`;
+    document.querySelector('.summary-income p:last-child').textContent = `$${totalIncome}`;
+    document.querySelector('.summary-expense p:last-child').textContent = `$${totalExpenses}`;
+}
+
+function addIncome(amount, description) {
+    if (!monthsData[currentMonth]) {
+        monthsData[currentMonth] = { income: [], expenses: [] };
+    }
+    
+    monthsData[currentMonth].income.push({ amount, description });
+    renderDataForMonth(currentMonth);
+}
+
+function addExpense(category, amount, description, date) {
+    if (!monthsData[currentMonth]) {
+        monthsData[currentMonth] = { income: [], expenses: [] };
+    }
+    
+    monthsData[currentMonth].expenses.push({ category, amount, description, date });
+    renderDataForMonth(currentMonth);
+}
+
 
 // Function to render categories from array
 function renderCategories() {
@@ -106,6 +192,13 @@ window.addEventListener('click', (e) => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    addExpenseBtn.addEventListener('click', () => {
+        //clearModalInputs();
+        addExpenseModal.style.display = 'block';
+        //editingIndex = -1;
+    });
+
+
     let emojiPickerInitialized = false;
     // Show the modal when the +New button is clicked
     newCategoryBtn.addEventListener('click', () => {

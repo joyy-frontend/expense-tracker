@@ -22,9 +22,9 @@
   <main>
     <div class="month-container">
       <div class="month-header">
-        <i class="material-icons">chevron_left</i>
-        <p>Month</p>
-        <i class="material-icons">chevron_right</i>
+        <i class="material-icons left">chevron_left</i>
+        <p id="currentMonth"></p>
+        <i class="material-icons right">chevron_right</i>
       </div>
     </div>
 
@@ -68,7 +68,7 @@
       <div class="expense-header">
         <h2>Expenses</h2>
         <div class="income-btn-new">
-          <button>+ New</button>
+          <button id="addExpenseBtn">+ New</button>
         </div>
       </div>
       <div class="expence-wrap">
@@ -89,6 +89,18 @@
           <p>Sushi</p>
           <p class="color-expence">-$250</p>
           <p>10/5</p>
+        </div>
+      </div>
+      <!-- Add expense modal -->
+      <div id="addExpenseModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Expense</h2>
+            <label for="expenseTitleInput">Expense:</label>
+            <input type="text" id="expenseTitleInput">
+            <label for="expenseDescriptionInput">Description:</label>
+            <input type="text" id="expenseDescriptionInput">
+            <button id="saveExpenseBtn">Save</button>
         </div>
       </div>
     </div>
