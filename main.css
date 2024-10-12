@@ -216,6 +216,11 @@ main {
   width: 100%;
 }
 
+.expence-item {
+  display: flex;
+  align-items: center;
+}
+
 .expence-wrap {
   width: 50%;
   text-align: center;
@@ -257,6 +262,13 @@ td {
 .expence-list th {
   width: 100px;
   height: 30px;
+}
+
+
+
+.expense-chart {
+  width: 50%;
+  margin: 0 auto;
 }
 
 .category-container {

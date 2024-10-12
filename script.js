@@ -1,3 +1,5 @@
+//import Chart from 'chart.js/auto';
+
 let categories = [];
 let monthsData = {};
 let currentMonth = 'October 2024';
@@ -13,6 +15,7 @@ let emojiPickerInitialized = false;
 
 const addExpenseModal = document.getElementById('addExpenseModal');
 const addExpenseBtn = document.getElementById('addExpenseBtn');
+const saveExpenseBtn = document.getElementById('saveExpenseBtn');
 
 const showCurrentMonth = document.querySelector('#currentMonth');
 showCurrentMonth.innerHTML = currentMonth;
@@ -48,7 +51,7 @@ function renderDataForMonth(month) {
     const monthData = monthsData[month] || { income: [], expenses: [] };
     
     // Render income
-    const incomeContainer = document.querySelector('.income-container');
+    const incomeContainer = document.querySelector('.salary');
     incomeContainer.innerHTML = '';
     monthData.income.forEach(income => {
         const incomeItem = `<div class="salary"><p>${income.description}</p><p>${income.amount}</p></div>`;
@@ -79,14 +82,14 @@ function updateSummary() {
     document.querySelector('.summary-expense p:last-child').textContent = `$${totalExpenses}`;
 }
 
-function addIncome(amount, description) {
-    if (!monthsData[currentMonth]) {
-        monthsData[currentMonth] = { income: [], expenses: [] };
-    }
+// function addIncome(amount, description) {
+//     if (!monthsData[currentMonth]) {
+//         monthsData[currentMonth] = { income: [], expenses: [] };
+//     }
     
-    monthsData[currentMonth].income.push({ amount, description });
-    renderDataForMonth(currentMonth);
-}
+//     monthsData[currentMonth].income.push({ amount, description });
+//     renderDataForMonth(currentMonth);
+// }
 
 function addExpense(category, amount, description, date) {
     if (!monthsData[currentMonth]) {
@@ -126,6 +129,18 @@ function renderCategories() {
 
     document.querySelectorAll('.delete-btn').forEach(button => {
         button.addEventListener('click', handleDelete);
+    });
+}
+
+function renderCategoryOptions() {
+    const categorySelect = document.getElementById('expenseCategory');
+    categorySelect.innerHTML = ''; // Clear previous options
+
+    categories.forEach((category, index) => {
+        const option = document.createElement('option');
+        option.value = category.title; // You can use title or another identifier
+        option.textContent = `${category.symbol} ${category.title}`;
+        categorySelect.appendChild(option);
     });
 }
 
@@ -193,11 +208,63 @@ window.addEventListener('click', (e) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     addExpenseBtn.addEventListener('click', () => {
-        //clearModalInputs();
-        addExpenseModal.style.display = 'block';
-        //editingIndex = -1;
+        renderCategoryOptions(); // Populate categories
+        addExpenseModal.style.display = 'block'; // Show modal
     });
 
+    // document.getElementById('saveExpenseBtn').addEventListener('click', (e) => {
+    //     e.preventDefault(); // Prevent form submission
+    
+    //     const selectedCategory = document.getElementById('expenseCategory').value;
+    //     const expenseTitle = document.getElementById('expenseTitleInput').value;
+    //     const expenseDescription = document.getElementById('expenseDescriptionInput').value;
+    //     const expenseAmount = parseFloat(prompt('Enter the expense amount:')); // You can replace this with a proper input field
+    
+    //     if (selectedCategory && expenseTitle && expenseDescription && !isNaN(expenseAmount)) {
+    //         const currentDate = new Date().toLocaleDateString(); // Capture current date
+    
+    //         // Add the expense to the current month
+    //         addExpense(selectedCategory, expenseAmount, expenseDescription, currentDate);
+    
+    //         // Close the modal after saving
+    //         addExpenseModal.style.display = 'none';
+    //     } else {
+    //         alert('Please fill out all fields and enter a valid amount');
+    //     }
+    // });
+
+    // Add event listener for Expense Save Button////////////////////////////////////////////////////////////
+    saveExpenseBtn.addEventListener('click', handleSaveOrEditExpense);
+    function handleSaveOrEditExpense(e){
+        e.preventDefault();
+        
+        //get inputted values
+        //const expenseTite = document.getElementById('expenseTitleInput').value;
+        const expenseDescription = document.getElementById('expenseDescriptionInput').value;
+        const expensePrice = document.getElementById('expensePriceInput').value;
+        const expenseDate = document.getElementById('expenseDateInput').value;
+        //check of all fields are inputted
+        if (expenseDescription && !isNaN(expensePrice) && expenseDate) {
+            // add them
+            addExpense(expenseDescription, expensePrice, expenseDate);
+            //close modal
+            addExpenseModal.style.display = 'none';
+        
+            //clear fields
+            clearExpenseInputs();
+        }else{
+            alert('Please fill in all fileds');
+        }
+    }
+    //clear inputted fileds
+    function clearExpenseInputs() {
+        document.getElementById('expenseCategoryInput').value = '';
+        document.getElementById('expenseDescriptionInput').value = '';
+        document.getElementById('expensePriceInput').value = '';
+        document.getElementById('expenseDateInput').value = '';
+    }
+    
+    //////////////////////////////////
 
     let emojiPickerInitialized = false;
     // Show the modal when the +New button is clicked
@@ -267,3 +334,24 @@ function emojiPicker(pickerId, inputId) {
         console.error('Emoji picker element not found!');
     }
 }
+
+//chart js
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: 'Expenses',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+        }]
+    },
+});

@@ -54,22 +54,50 @@
             <h2>Income</h2>
           </div>
           <div class="income-btn-new">
-            <button>+New</button>
+            <button id="btnIncomNew">+New</button>
             <!-- <i class="material-icons">add</i> -->
           </div>
         </div>
         <div class="salary">
-          <p>Salary</p>
-          <p>$8,000</p>
+          <!-- <p>Salary</p>
+          <p>$8,000</p> -->
         </div>
       </div>
     </div>
+    <div id="addIncomeModal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>New Income</h2>
+        <label for="incomeTitleInput">Title:</label>
+        <input type="text" id="incomeTitleInput">
+        <label for="incomeAmountInput">Amount:</label>
+        <input type="number" id="incomeAmountInput">
+        <button id="saveIncomeBtn">Save</button>
+        <div id="errorMessage"></div>
+      </div>
+    </div>
+    <!-- Edit and delete modal -->
+    <div id="editIncomeModal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="categoryName"></p>
+        <label for="incomeTitleEdit"> Title:</label>
+        <input type="text" id="incomeTitleEdit">
+        <label for="incomeAmountEdit">Amount:</label>
+        <input type="text" id="incomeAmountEdit">
+        <button id="editIncomeBtn">Edit</button>
+      </div>
+    </div>
+    
     <div class="expence-container">
       <div class="expense-header">
         <h2>Expenses</h2>
         <div class="income-btn-new">
           <button id="addExpenseBtn">+ New</button>
         </div>
+      </div>
+      <div class="expense-chart">
+        <canvas id="myChart"></canvas>
       </div>
       <div class="expence-wrap">
         <div class="category-expence">
@@ -96,10 +124,23 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Add Expense</h2>
-            <label for="expenseTitleInput">Expense:</label>
-            <input type="text" id="expenseTitleInput">
-            <label for="expenseDescriptionInput">Description:</label>
-            <input type="text" id="expenseDescriptionInput">
+            <!-- Category dropdown -->
+            <label for="expenseCategory">Category:</label>
+            <select id="expenseCategory">
+
+            </select>
+            <div class="expence-item">
+              <label for="expenseDescriptionInput">Detail:</label>
+              <input type="text" id="expenseDescriptionInput">
+            </div>
+            <div class="expence-item">
+              <label for="expensePriceInput">Price:</label>
+              <input type="text" id="expensePriceInput">
+            </div>
+            <div class="expence-item">
+              <label for="expenseDateInput">Date:</label>
+              <input type="date" id="expenseDateInput" value="">
+            </div>
             <button id="saveExpenseBtn">Save</button>
         </div>
       </div>
@@ -154,7 +195,9 @@
       </div>
     </div>
   </main>
-  <script src="./script.js"></script>
+  <script async type="module" src="script.js"></script>
+  <script src="./income.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 
 </html>
