@@ -38,7 +38,7 @@ addExpenseBtn.addEventListener('click', () => {
     renderCategoryOptions();
     document.getElementById('expenseDescriptionInput').value = ''; // Clear previous inputs
     document.getElementById('expensePriceInput').value = '';
-    document.getElementById('expenseDateInput').value = '';
+    document.getElementById('expenseDateInput').value = getTodayDate();
     addExpenseModal.style.display = 'block';
 });
 
@@ -60,3 +60,10 @@ saveExpenseBtn.addEventListener('click', (e) => {
     }
 });
 
+function getTodayDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Add leading 0 if needed
+    const day = String(today.getDate()).padStart(2, '0'); // Add leading 0 if needed
+    return `${year}-${month}-${day}`; // Return in 'YYYY-MM-DD' format
+}
