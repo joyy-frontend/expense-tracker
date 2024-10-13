@@ -463,6 +463,15 @@ td {
   width: auto;
 }
 
+#saveIncomeBtn,
+#editIncomeBtn {
+  width: 100%;
+}
+
+#delIncomeBtn {
+  width: auto;
+}
+
 input[type="text"],
 input[type="number"] {
   width: 100%;
