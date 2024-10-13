@@ -15,11 +15,11 @@ function renderIncome() {
     const incomeElement = document.createElement('div');
     incomeElement.classList.add('expence-container');
     incomeElement.innerHTML = `
-          <div class="income-box">
-            <p data-index="${index}">${income.title}</p>
-            <p data-index="${index}">${income.amount}</p>
-            <button class="income-del" id="delIncomeBtn" data-index="${index}">Delete</button>
-          </div>
+        <div class="income-box">
+          <p class="income-title" data-index="${index}">${income.title}</p>
+          <p class="income-amount" data-index="${index}">$${income.amount}</p>
+          <button class="income-del" id="delIncomeBtn" data-index="${index}">Delete</button>
+        </div>
     `;
     salary.appendChild(incomeElement);
   })
@@ -89,3 +89,5 @@ saveIncomeBtn.addEventListener('click', (e) => {
     errorMessage.style.display = 'block';
   }
 });
+
+

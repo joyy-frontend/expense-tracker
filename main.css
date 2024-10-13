@@ -125,7 +125,6 @@ main {
 
 .income-area {
   display: flex;
-  /* flex-direction: row; */
   justify-content: space-between;
   width: 100%;
   align-items: center;
@@ -166,6 +165,7 @@ main {
 
 .salary {
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: space-evenly;
   padding-top: 2%;
@@ -173,11 +173,11 @@ main {
 }
 
 .salary p:first-child {
-  margin-left: -4%;
+  margin-left: 1%;
 }
 
-.salary p:last-child {
-  margin-left: 5%;
+.salary p {
+  padding: 10px 10px;
 }
 
 /*Expense*/
@@ -286,7 +286,8 @@ td {
 }
 
 .categories p:hover,
-.category-expence:hover {
+.category-expence:hover,
+.income-box:hover {
   background-color: var(--main-color);
   color: white;
 }
@@ -307,7 +308,6 @@ td {
 #saveIncomeBtn,
 #editIncomeBtn,
 #delIncomeBtn {
-  width: 100%;
   padding: 12px;
   background-color: #fff;
   color: #f35288;
@@ -318,6 +318,15 @@ td {
   font-weight: 700;
   transition: background-color 0.3s;
   border: 2px solid #E5E5E5;
+}
+
+#saveIncomeBtn,
+#editIncomeBtn {
+  width: 100%;
+}
+
+#delIncomeBtn {
+  width: auto;
 }
 
 input[type="text"],
@@ -348,8 +357,9 @@ input:focus {
   margin: 10px;
   padding: 5px;
   line-height: 30px;
+  cursor: pointer;
 }
 
-.income-box button {
-  border: 5px solid red;
+.income-box p {
+  text-align: center;
 }
