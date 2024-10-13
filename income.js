@@ -4,6 +4,7 @@ const saveIncomeBtn = document.getElementById('saveIncomeBtn');
 const errorMessage = document.getElementById('errorMessage'); 
 const salary = document.querySelector('.salary');
 const editIncomeModal = document.getElementById('editIncomeModal');
+const editIncomeBtn = document.getElementById('editIncomeBtn');
 const incomeArray = [];
 
 renderIncome();
@@ -34,8 +35,8 @@ function renderIncome() {
   document.querySelectorAll('.income-del').forEach(button => {
     button.addEventListener('click', incomeHandleDelete);
   })
-
 }
+
 btnIncomeNew.addEventListener('click', () => {
   incomeClearModalInputs(addIncomeModal);
   addIncomeModal.style.display = 'block';
@@ -51,14 +52,12 @@ function IncomeHandleEdit(index) {
 editIncomeBtn.addEventListener('click', (e) => {
   e.preventDefault();
   const index = editIncomeBtn.getAttribute('data-index'); 
-
-  incomeArray[index].title = document.getElementById('incomeTitleEdit').value;
-  incomeArray[index].amount = document.getElementById('incomeAmountEdit').value;
-
-  renderIncome();
-
-  editIncomeModal.style.display = 'none';
+  const incomeTitleEdit = document.getElementById('incomeTitleEdit');
+  const incomeAmountEdit = document.getElementById('incomeAmountEdit');
+  
+  handleIncomeAction(incomeTitleEdit, incomeAmountEdit, editIncomeModal, 'edit', index);
 });
+
 
 function incomeHandleDelete(e) {
   const index = e.target.dataset.index;
@@ -73,21 +72,36 @@ function incomeClearModalInputs(modal) {
     });
 }
 
+function handleIncomeAction(titleInput, amountInput, modal, status, index) {
+  const errorMessageEdit = document.getElementById('errorMessageEdit'); 
+
+  if (titleInput.value.trim() !== '' && amountInput.value.trim() !== '') {
+    errorMessageEdit.style.display = 'none'; 
+
+    if (status === 'edit') {
+      incomeArray[index].title = titleInput.value;
+      incomeArray[index].amount = amountInput.value;
+    } else {
+      incomeArray.push({ title: titleInput.value, amount: amountInput.value });
+    }
+
+    renderIncome(); 
+    modal.style.display = 'none'; 
+  } else {
+    if (status === 'edit') {
+      errorMessageEdit.textContent = 'Please check your input values.';
+      errorMessageEdit.style.display = 'block';
+    } else {
+      errorMessage.textContent = 'Please check your input values.';
+      errorMessage.style.display = 'block';
+    }
+  }
+}
+
 saveIncomeBtn.addEventListener('click', (e) => {
   e.preventDefault();
-
   const incomeTitleInput = document.getElementById('incomeTitleInput');
   const incomeAmountInput = document.getElementById('incomeAmountInput');
-  
-  if (incomeTitleInput.value.trim() !== '' && incomeAmountInput.value.trim() !== '') {
-    errorMessage.style.display = 'none';
-    incomeArray.push({ title: incomeTitleInput.value, amount: incomeAmountInput.value });
-    renderIncome();
-    addIncomeModal.style.display = 'none';
-  } else {
-    errorMessage.textContent = 'Please check your input values.';
-    errorMessage.style.display = 'block';
-  }
+  handleIncomeAction(incomeTitleInput, incomeAmountInput, addIncomeModal, 'save');
 });
-
 

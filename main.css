@@ -298,7 +298,8 @@ td {
 }
 
 /* add income css (joy) */
-#errorMessage {
+#errorMessage,
+#errorMessageEdit {
   color: #e74c3c;
   font-size: 18px;
   margin-top: 10px;
