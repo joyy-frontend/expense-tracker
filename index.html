@@ -54,13 +54,15 @@
             <h2>Income</h2>
           </div>
           <div class="income-btn-new">
-            <button id="btnIncomNew">+New</button>
+            <button id="btnIncomeNew">+New</button>
             <!-- <i class="material-icons">add</i> -->
           </div>
         </div>
         <div class="salary">
-          <!-- <p>Salary</p>
-          <p>$8,000</p> -->
+          <div class=""salary-item">
+            <p>Salary</p>
+            <p>1000</p>
+          </div>
         </div>
       </div>
     </div>
@@ -134,13 +136,37 @@
             </div>
             <div class="expence-item">
               <label for="expensePriceInput">Price:</label>
-              <input type="text" id="expensePriceInput">
+              <input type="number" id="expensePriceInput">
             </div>
             <div class="expence-item">
               <label for="expenseDateInput">Date:</label>
               <input type="date" id="expenseDateInput" value="">
             </div>
             <button id="saveExpenseBtn">Save</button>
+        </div>
+      </div>
+      <!-- Edit expense modal -->
+      <div id="editExpenseModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Expense</h2>
+            <!-- Category dropdown -->
+            <label for="expenseCategoryEdit">Category:</label>
+            <select id="expenseCategoryEdit">
+            </select>
+            <div class="expence-item">
+              <label for="expenseDescriptionEdit">Detail:</label>
+              <input type="text" id="expenseDescriptionEdit">
+            </div>
+            <div class="expence-item">
+              <label for="expensePriceEdit">Price:</label>
+              <input type="number" id="expensePriceEdit">
+            </div>
+            <div class="expence-item">
+              <label for="expenseDateEdit">Date:</label>
+              <input type="date" id="expenseDateEdit" value="">
+            </div>
+            <button id="editExpenseBtn">Save</button>
         </div>
       </div>
     </div>

@@ -1,68 +1,48 @@
-const btnIncomeNew = document.getElementById("btnIncomNew");
+import { currentMonth, monthsData, renderDataForMonth, renderIncome, salary } from './script.js';
+
+const btnIncomeNew = document.getElementById("btnIncomeNew");
 const addIncomeModal = document.getElementById('addIncomeModal');
 const saveIncomeBtn = document.getElementById('saveIncomeBtn');
-const errorMessage = document.getElementById('errorMessage'); 
-const salary = document.querySelector('.salary');
+const errorMessage = document.getElementById('errorMessage');
+//const salary = document.querySelector('.salary');
 const editIncomeModal = document.getElementById('editIncomeModal');
-const incomeArray = [];
+const editIncomeBtn = document.getElementById('editIncomeBtn');
 
-renderIncome();
-
-function renderIncome() {
-  salary.innerHTML = '';
-
-  incomeArray.forEach((income, index) => {
-    const incomeElement = document.createElement('div');
-    incomeElement.classList.add('income-list');
-    incomeElement.innerHTML = `
-      <p data-index="${index}">${income.title} ${income.amount}</p>
-      <button class="income-del" data-index="${index}">Delete</button>
-    `;
-    salary.appendChild(incomeElement);
-  })
-
-  document.querySelectorAll('.salary p').forEach(p => {
-    p.addEventListener('click', (e) => {
-      const index = Number(e.target.dataset.index);
-      IncomeHandleEdit(index);
-    })
-  });
-
-  document.querySelectorAll('.income-del').forEach(button => {
-    button.addEventListener('click', incomeHandleDelete);
-  })
-
+// Function to add income to the selected month
+function addIncome(amount, description) {
+    if (!monthsData[currentMonth]) {
+        monthsData[currentMonth] = { income: [], expenses: [] };
+    }
+    monthsData[currentMonth].income.push({ amount, description });
+    renderIncome();  // Re-render after adding new income
 }
+
+
+// Show the add income modal
 btnIncomeNew.addEventListener('click', () => {
-  incomeClearModalInputs(addIncomeModal);
-  addIncomeModal.style.display = 'block';
+    incomeClearModalInputs(addIncomeModal);
+    addIncomeModal.style.display = 'block';
 });
 
-function IncomeHandleEdit(index) {
-  document.getElementById('incomeTitleEdit').value = incomeArray[index].title;
-  document.getElementById('incomeAmountEdit').value = incomeArray[index].amount;
-  editIncomeModal.style.display = 'block';
-  editIncomeBtn.setAttribute('data-index', index);
-}
 
+// Handle saving the edited income
 editIncomeBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  const index = editIncomeBtn.getAttribute('data-index'); 
+    e.preventDefault();
+    const index = editIncomeBtn.getAttribute('data-index');
+    const monthData = monthsData[currentMonth];
 
-  incomeArray[index].title = document.getElementById('incomeTitleEdit').value;
-  incomeArray[index].amount = document.getElementById('incomeAmountEdit').value;
+    // Update the income with edited values
+    monthData.income[index].description = document.getElementById('incomeTitleEdit').value;
+    monthData.income[index].amount = document.getElementById('incomeAmountEdit').value;
 
-  renderIncome();
+    console.log('Updated income:', monthData.income[index]);  // Debugging
 
-  editIncomeModal.style.display = 'none';
+    renderIncome();  // Re-render income after editing
+    editIncomeModal.style.display = 'none';
 });
 
-function incomeHandleDelete(e) {
-  const index = e.target.dataset.index;
-  incomeArray.splice(index, 1);  
-  renderIncome();
-}
 
+// Clear modal input fields
 function incomeClearModalInputs(modal) {
     const inputs = modal.querySelectorAll('input');
     inputs.forEach(input => {
@@ -70,19 +50,20 @@ function incomeClearModalInputs(modal) {
     });
 }
 
+// Handle saving new income
 saveIncomeBtn.addEventListener('click', (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const incomeTitleInput = document.getElementById('incomeTitleInput');
-  const incomeAmountInput = document.getElementById('incomeAmountInput');
-  
-  if (incomeTitleInput.value.trim() !== '' && incomeAmountInput.value.trim() !== '') {
-    errorMessage.style.display = 'none';
-    incomeArray.push({ title: incomeTitleInput.value, amount: incomeAmountInput.value });
-    renderIncome();
-    addIncomeModal.style.display = 'none';
-  } else {
-    errorMessage.textContent = 'Please check your input values.';
-    errorMessage.style.display = 'block';
-  }
+    const incomeTitleInput = document.getElementById('incomeTitleInput');
+    const incomeAmountInput = document.getElementById('incomeAmountInput');
+
+    if (incomeTitleInput.value.trim() !== '' && incomeAmountInput.value.trim() !== '') {
+        errorMessage.style.display = 'none';
+        addIncome(incomeAmountInput.value, incomeTitleInput.value);  // Add income to current month data
+        renderIncome();  // Re-render income
+        addIncomeModal.style.display = 'none';  // Close modal
+    } else {
+        errorMessage.textContent = 'Please check your input values.';
+        errorMessage.style.display = 'block';
+    }
 });
