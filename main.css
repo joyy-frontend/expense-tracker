@@ -7,7 +7,7 @@
 
 :root {
   --main-color: #f35288;
-  --gray-line: rgb(177, 177, 177);
+  --gray-line: lightgray;
 }
 
 main {
@@ -85,13 +85,13 @@ main {
   padding: 20px;
 }
 
-.category-header {
+/*.category-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 5%;
-  margin-top: 3rem;
-}
+  /*margin: 3rem auto 0 auto;
+  width: 100%;
+}*/
 
 /* income */
 .income-container {
@@ -107,7 +107,9 @@ main {
   align-items: center;
 }
 
-.income-each-total {
+.income-each-total,
+.expense-each-total,
+.category-each-total {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -115,7 +117,8 @@ main {
   padding: 10px;
 }
 
-.income {
+.income,
+.expense {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -123,12 +126,18 @@ main {
   width: 100%;
 }
 
-.income-area {
+.income-area,
+.expense-area,
+.category-area {
   display: flex;
   /* flex-direction: row; */
   justify-content: space-between;
   width: 100%;
   align-items: center;
+}
+.category-area,
+.expense-area {
+  padding: 2rem;
 }
 
 .income h1 {
@@ -139,6 +148,7 @@ main {
 .income-btn-new {
   display: flex;
   flex-direction: row;
+  margin-left: auto;
 }
 
 .income-btn-new button {
@@ -198,26 +208,26 @@ main {
 
 .category-expence {
   display: flex;
-  margin: 5px;
+  margin: 5px 0;
   gap: 10px;
   justify-content: space-between;
-  border: solid 1px var(--gray-line);
-  border-radius: 5px;
-  margin: 10px;
-  padding: 5px;
+  border: solid 2px var(--gray-line);
+  border-radius: 20px;
+  padding: 10px;
   line-height: 30px;
+  width: 100%;
+  font-size: 1rem;
 }
 
 .category-expence p {
-  width: 25%;
-}
-
-.expence-container {
-  width: 100%;
+  width: 80%;
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
 }
 
 .expence-wrap {
-  width: 50%;
+  width: 95%;
   text-align: center;
   margin: 0 auto;
 }
@@ -231,12 +241,25 @@ main {
   color: white;
 }
 
-.expense-header {
+.expense-header,
+.category-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 5%;
-  margin-top: 3rem;
+  width: 100%;
+  padding: 1rem;
+}
+
+.expense h2,
+.category h2 {
+  width: 100%;
+}
+.expence-container {
+  border: solid 2px var(--gray-line);
+  border-radius: 20px;
+  width: 50%;
+  margin-top: 20px;
+  padding: 0 0 0.8rem 0;
 }
 
 h2 {
@@ -259,18 +282,20 @@ td {
   height: 30px;
 }
 
-.category-container {
+/*.category-container {
   margin-top: 2rem;
-}
+}*/
 
-.categories p {
-  border: solid 1px var(--gray-line);
-  border-radius: 2px;
+.category-item p {
+  border: solid 2px var(--gray-line);
+  border-radius: 6px;
   color: black;
+  background-color: white;
   display: block;
   margin: 10px;
   padding: 5px;
   line-height: 30px;
+  min-width: 6rem;
 }
 
 .categories p:hover,
@@ -280,6 +305,34 @@ td {
 }
 
 .category-container {
-  width: 50%;
+  /*width: 50%;*/
   margin: 0 auto;
+}
+
+.save-exence-wrap,
+.edit-category-wrap {
+  text-align: right;
+}
+.expense-chart {
+  margin-bottom: 1.5rem;
+}
+
+/********* category **********/
+.categories {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 1rem;
+}
+.category-header h2 {
+  width: 100%;
+}
+
+/******** footer ***********/
+footer {
+  margin-top: 2rem;
+  text-align: center;
+  background-color: #331524;
+  color: white;
+  padding: 1rem;
 }
