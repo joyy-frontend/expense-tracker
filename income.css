@@ -18,3 +18,9 @@
   flex-direction: row;
   justify-content: space-around;
 }
+
+#errorMessage {
+  color: red;
+  display: none;
+  margin-top: 10px;
+}
