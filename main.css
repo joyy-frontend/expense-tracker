@@ -93,6 +93,16 @@ main {
   width: 100%;
 }*/
 
+/* budget container temp */
+.budget-container {
+  background-color: rgb(88, 36, 210);
+  width: 50%;
+  border-radius: 20px;
+  padding: 2rem;
+  color: #fff;
+  margin-top: 20px;
+}
+
 /* income */
 .income-container {
   display: flex;

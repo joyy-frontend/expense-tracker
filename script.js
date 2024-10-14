@@ -21,7 +21,6 @@ export function renderDataForMonth(month) {
     renderExpense(monthData);
 }
 
-// Logic to switch between months (next/prev)
 function changeMonth(direction) {
     const months = ['January 2024', 'February 2024', 'March 2024', 'April 2024', 'May 2024', 'June 2024', 
                     'July 2024', 'August 2024', 'September 2024', 'October 2024', 'November 2024', 'December 2024'];
@@ -35,7 +34,8 @@ function changeMonth(direction) {
     
     currentMonth = months[currentIndex];
     setCurrentMonth(currentMonth);
-    renderDataForMonth(currentMonth); // Render data when month changes
+    renderDataForMonth(currentMonth); // Re-render data for the new month
+    updateTotals();  // Update totals for the new month
 }
 
 document.querySelector('.material-icons.left').addEventListener('click', () => changeMonth('prev'));
@@ -142,8 +142,6 @@ function incomeHandleDelete(e) {
 }
 
 
-
-
 ///////////////////////////////////////////////////////expense
 export function renderExpense() {
     const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
@@ -184,7 +182,8 @@ export function renderExpense() {
 function handleDelete(e) {
     const index = e.target.dataset.index;
     monthsData[currentMonth].expenses.splice(index, 1);  // Remove the expense from the array
-    renderExpense();  // Re-render the updated expense list
+    renderExpense();
+    updateTotals();  // Update totals after deleting
 }
 
 function handleEdit(index) {
@@ -235,9 +234,9 @@ function handleEdit(index) {
                 date: expenseDate
             };
 
-            // Re-render the updated list of expenses
             renderExpense();
-            document.getElementById('editExpenseModal').style.display = 'none'; // Close modal
+            document.getElementById('editExpenseModal').style.display = 'none';
+            updateTotals();  // Update totals after editing
         } else {
             alert('Please fill in all fields.');
         }
@@ -257,4 +256,43 @@ function renderCategoryOptionsForEdit() {
         option.textContent = `${category.symbol} ${category.title}`;  // Display symbol and title
         categorySelect.appendChild(option);
     });
+}
+
+
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: 'Expenses',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+        }]
+    },
+});
+
+
+// This function will be used to update the total balance, total income, and total expenses dynamically
+export function updateTotals() {
+    const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
+    
+    // Calculate total income and expenses
+    const totalIncome = monthData.income.reduce((acc, income) => acc + parseFloat(income.amount), 0);
+    const totalExpenses = monthData.expenses.reduce((acc, expense) => acc + parseFloat(expense.amount), 0);
+    
+    // Calculate total balance
+    const totalBalance = totalIncome - totalExpenses;
+
+    // Update the DOM elements with the calculated totals
+    document.querySelector('.summary-header h2').textContent = `$${totalBalance.toLocaleString()}`;
+    document.querySelector('.summary-income p:last-child').textContent = `$${totalIncome.toLocaleString()}`;
+    document.querySelector('.summary-expense p:last-child').textContent = `$${totalExpenses.toLocaleString()}`;
 }

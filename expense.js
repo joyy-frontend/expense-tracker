@@ -1,4 +1,4 @@
-import { categories, currentMonth, monthsData, renderExpense, renderDataForMonth } from './script.js';
+import { categories, currentMonth, updateTotals, monthsData, renderExpense, renderDataForMonth } from './script.js';
 
 const addExpenseModal = document.getElementById('addExpenseModal');
 const addExpenseBtn = document.getElementById('addExpenseBtn');
@@ -10,14 +10,10 @@ function addExpense(category, amount, description, date) {
         monthsData[currentMonth] = { income: [], expenses: [] };
     }
     
-    // Check how the expense is being added
     const newExpense = { category, amount, description, date };
-    console.log('Adding new expense:', newExpense);
-    
     monthsData[currentMonth].expenses.push(newExpense);
-
-    console.log('Updated monthsData:', monthsData);  // Check if category is saved correctly
     renderExpense();  // Re-render after adding new expense
+    updateTotals();  // Update the totals
 }
 
 // Populate categories in the dropdown
