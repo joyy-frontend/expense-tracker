@@ -1,13 +1,12 @@
-import { currentMonth, monthsData, renderDataForMonth, renderIncome, salary } from './script.js';
+import { currentMonth, monthsData, updateTotals, renderIncome, salary } from './script.js';
 
 const btnIncomeNew = document.getElementById("btnIncomeNew");
 const addIncomeModal = document.getElementById('addIncomeModal');
 const saveIncomeBtn = document.getElementById('saveIncomeBtn');
 const errorMessage = document.getElementById('errorMessage');
-//const salary = document.querySelector('.salary');///////////
+//const salary = document.querySelector('.salary');
 const editIncomeModal = document.getElementById('editIncomeModal');
 const editIncomeBtn = document.getElementById('editIncomeBtn');
-//const incomeArray = [];
 
 // Function to add income to the selected month
 function addIncome(amount, description) {
@@ -16,7 +15,9 @@ function addIncome(amount, description) {
     }
     monthsData[currentMonth].income.push({ amount, description });
     renderIncome();  // Re-render after adding new income
+    updateTotals();  // Update totals
 }
+
 
 // Show the add income modal
 btnIncomeNew.addEventListener('click', () => {
@@ -62,6 +63,7 @@ saveIncomeBtn.addEventListener('click', (e) => {
         addIncome(incomeAmountInput.value, incomeTitleInput.value);  // Add income to current month data
         renderIncome();  // Re-render income
         addIncomeModal.style.display = 'none';  // Close modal
+        console.log("Income modal closed");
     } else {
         errorMessage.textContent = 'Please check your input values.';
         errorMessage.style.display = 'block';

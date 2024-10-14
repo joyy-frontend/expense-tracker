@@ -1,23 +1,26 @@
-import { categories, currentMonth, monthsData, renderExpense, renderDataForMonth } from './script.js';
+import { categories, currentMonth, renderBudgetTracking, updateTotals, updateExpenseChart, monthsData, renderExpense, renderDataForMonth } from './script.js';
 
 const addExpenseModal = document.getElementById('addExpenseModal');
 const addExpenseBtn = document.getElementById('addExpenseBtn');
 const saveExpenseBtn = document.getElementById('saveExpenseBtn');
-const expenseContainer = document.querySelector('.category-expence');
 
-function addExpense(category, amount, description, date) {
+function addExpense(categoryTitle, amount, description, date) {
     if (!monthsData[currentMonth]) {
         monthsData[currentMonth] = { income: [], expenses: [] };
     }
-    
-    // Check how the expense is being added
-    const newExpense = { category, amount, description, date };
-    console.log('Adding new expense:', newExpense);
-    
-    monthsData[currentMonth].expenses.push(newExpense);
 
-    console.log('Updated monthsData:', monthsData);  // Check if category is saved correctly
-    renderExpense();  // Re-render after adding new expense
+    const newExpense = {
+        category: categoryTitle,  // Ensure this matches the exact title in categories
+        amount: amount,
+        description: description,
+        date: date
+    };
+
+    monthsData[currentMonth].expenses.push(newExpense);
+    renderExpense();  // Re-render expenses list
+    updateTotals();    // Update totals
+    updateExpenseChart();  // Update the expense chart for the current month
+    renderBudgetTracking();  // Update the budget tracking progress bars
 }
 
 // Populate categories in the dropdown
@@ -38,7 +41,7 @@ addExpenseBtn.addEventListener('click', () => {
     renderCategoryOptions();
     document.getElementById('expenseDescriptionInput').value = ''; // Clear previous inputs
     document.getElementById('expensePriceInput').value = '';
-    document.getElementById('expenseDateInput').value = '';
+    document.getElementById('expenseDateInput').value = getTodayDate();
     addExpenseModal.style.display = 'block';
 });
 
@@ -60,3 +63,10 @@ saveExpenseBtn.addEventListener('click', (e) => {
     }
 });
 
+function getTodayDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Add leading 0 if needed
+    const day = String(today.getDate()).padStart(2, '0'); // Add leading 0 if needed
+    return `${year}-${month}-${day}`; // Return in 'YYYY-MM-DD' format
+}

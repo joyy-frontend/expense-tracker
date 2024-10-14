@@ -21,7 +21,6 @@ export function renderDataForMonth(month) {
     renderExpense(monthData);
 }
 
-// Logic to switch between months (next/prev)
 function changeMonth(direction) {
     const months = ['January 2024', 'February 2024', 'March 2024', 'April 2024', 'May 2024', 'June 2024', 
                     'July 2024', 'August 2024', 'September 2024', 'October 2024', 'November 2024', 'December 2024'];
@@ -35,7 +34,9 @@ function changeMonth(direction) {
     
     currentMonth = months[currentIndex];
     setCurrentMonth(currentMonth);
-    renderDataForMonth(currentMonth); // Render data when month changes
+    renderDataForMonth(currentMonth); // Re-render data for the new month
+    updateTotals();  // Update totals for the new month
+    updateExpenseChart();
 }
 
 document.querySelector('.material-icons.left').addEventListener('click', () => changeMonth('prev'));
@@ -54,8 +55,6 @@ closeModalButtons.forEach(button => {
         if (modal) {
             modal.style.display = 'none';  // Close the modal dynamically
             console.log(`${modal.id} closed`);
-
-            clearModalInputs(modal);
         }
     });
 });
@@ -142,8 +141,6 @@ function incomeHandleDelete(e) {
 }
 
 
-
-
 ///////////////////////////////////////////////////////expense
 export function renderExpense() {
     const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
@@ -184,27 +181,16 @@ export function renderExpense() {
 function handleDelete(e) {
     const index = e.target.dataset.index;
     monthsData[currentMonth].expenses.splice(index, 1);  // Remove the expense from the array
-    renderExpense();  // Re-render the updated expense list
+    renderExpense();
+    updateTotals();  // Update totals after deleting
 }
 
 function handleEdit(index) {
     const monthData = monthsData[currentMonth];
     const expense = monthData.expenses[index];
 
-    console.log('Index received for edit:', index);
-    console.log('Expense at index:', expense);
-
-    if (!expense || !expense.category) {
-        console.error('Invalid expense or category:', expense);
-        return;
-    }
-
     // Select the edit button
     const editExpenseBtn = document.getElementById('editExpenseBtn');
-    if (!editExpenseBtn) {
-        console.error('Edit button not found in the DOM');
-        return;
-    }
 
     // Populate category options in the dropdown
     renderCategoryOptionsForEdit();
@@ -225,38 +211,40 @@ function handleEdit(index) {
     // Show the modal
     document.getElementById('editExpenseModal').style.display = 'block';
 
-    // Remove previous event listener to prevent stacking
-    editExpenseBtn.removeEventListener('click', handleSaveExpense);
-
-    // Define the event listener for saving the edited expense
-    function handleSaveExpense(e) {
+    // Remove any existing event listener for editExpenseBtn before adding a new one
+    editExpenseBtn.onclick = function(e) {
         e.preventDefault();
+        handleSaveExpense(index);
+    };
+}
 
-        const newCategoryIndex = document.getElementById('expenseCategoryEdit').value;
-        const newCategory = categories[newCategoryIndex];
-        const expenseDescription = document.getElementById('expenseDescriptionEdit').value;
-        const expensePrice = document.getElementById('expensePriceEdit').value;
-        const expenseDate = document.getElementById('expenseDateEdit').value;
+// Define the save function outside of handleEdit
+function handleSaveExpense(index) {
+    const monthData = monthsData[currentMonth];
+    const expense = monthData.expenses[index];
 
-        if (newCategory && expenseDescription && expensePrice && expenseDate) {
-            // Update the expense with new values
-            monthData.expenses[index] = {
-                category: `${newCategory.symbol} ${newCategory.title}`,
-                description: expenseDescription,
-                amount: expensePrice,
-                date: expenseDate
-            };
+    const newCategoryIndex = document.getElementById('expenseCategoryEdit').value;
+    const newCategory = categories[newCategoryIndex];
+    const expenseDescription = document.getElementById('expenseDescriptionEdit').value;
+    const expensePrice = document.getElementById('expensePriceEdit').value;
+    const expenseDate = document.getElementById('expenseDateEdit').value;
 
-            // Re-render the updated list of expenses
-            renderExpense();
-            document.getElementById('editExpenseModal').style.display = 'none'; // Close modal
-        } else {
-            alert('Please fill in all fields.');
-        }
+    if (newCategory && expenseDescription && expensePrice && expenseDate) {
+        // Update the expense with new values
+        monthData.expenses[index] = {
+            category: `${newCategory.symbol} ${newCategory.title}`,
+            description: expenseDescription,
+            amount: expensePrice,
+            date: expenseDate
+        };
+
+        renderExpense();
+        document.getElementById('editExpenseModal').style.display = 'none';
+        updateTotals();  // Update totals after editing
+        updateExpenseChart();  // Update chart after editing
+    } else {
+        alert('Please fill in all fields.');
     }
-
-    // Attach the event listener for saving
-    editExpenseBtn.addEventListener('click', handleSaveExpense);
 }
 
 function renderCategoryOptionsForEdit() {
@@ -268,5 +256,127 @@ function renderCategoryOptionsForEdit() {
         option.value = index;  // Use the index as the value
         option.textContent = `${category.symbol} ${category.title}`;  // Display symbol and title
         categorySelect.appendChild(option);
+    });
+}
+
+// This function will be used to update the total balance, total income, and total expenses dynamically
+export function updateTotals() {
+    const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
+    
+    // Calculate total income and expenses
+    const totalIncome = monthData.income.reduce((acc, income) => acc + parseFloat(income.amount), 0);
+    const totalExpenses = monthData.expenses.reduce((acc, expense) => acc + parseFloat(expense.amount), 0);
+    
+    // Calculate total balance
+    const totalBalance = totalIncome - totalExpenses;
+
+    // Update the DOM elements with the calculated totals
+    document.querySelector('.summary-header h2').textContent = `$${totalBalance.toLocaleString()}`;
+    document.querySelector('.summary-income p:last-child').textContent = `$${totalIncome.toLocaleString()}`;
+    document.querySelector('.summary-expense p:last-child').textContent = `$${totalExpenses.toLocaleString()}`;
+}
+
+
+// Function to generate the expenses chart with grouped categories
+export function updateExpenseChart() {
+    const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
+
+    // Group expenses by category
+    const categoryTotals = {};
+    
+    monthData.expenses.forEach(expense => {
+        if (categoryTotals[expense.category]) {
+            categoryTotals[expense.category] += parseFloat(expense.amount);
+        } else {
+            categoryTotals[expense.category] = parseFloat(expense.amount);
+        }
+    });
+
+    // Extract labels (categories) and data (totals for each category)
+    const labels = Object.keys(categoryTotals);
+    const data = Object.values(categoryTotals);
+
+    // Check if chart already exists and update it, otherwise create a new chart
+    if (window.myExpenseChart) {
+        // Update existing chart data
+        window.myExpenseChart.data.labels = labels;
+        window.myExpenseChart.data.datasets[0].data = data;
+        window.myExpenseChart.update();
+    } else {
+        // Create a new chart
+        const ctx = document.getElementById('myChart').getContext('2d');
+        window.myExpenseChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: labels, // Grouped expense categories
+                datasets: [{
+                    label: 'Expenses',
+                    data: data, // Grouped totals for each category
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            }
+        });
+    }
+}
+
+export function calculateCategoryExpenses() {
+    const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
+
+    // Create a map of categories with their total expenses
+    const categoryTotals = {};
+    
+    // Initialize each category with 0 spent
+    categories.forEach(category => {
+        categoryTotals[category.title.trim()] = 0;
+    });
+
+    // Sum expenses for each category
+    monthData.expenses.forEach(expense => {
+        // Find the matching category by title
+        const expenseCategoryTitle = expense.category.split(' ').slice(1).join(' ').trim();  // Remove emoji, match only the title
+
+        if (categoryTotals[expenseCategoryTitle] !== undefined) {
+            categoryTotals[expenseCategoryTitle] += parseFloat(expense.amount);
+        } else {
+            console.warn(`Category "${expenseCategoryTitle}" not found in categories`);
+        }
+    });
+
+    console.log('Category totals after calculation:', categoryTotals);  // Debugging
+    return categoryTotals;
+}
+
+
+export function renderBudgetTracking() {
+    const categoryTotals = calculateCategoryExpenses();
+    const budgetContainer = document.querySelector('.budget-tracking-container');
+    budgetContainer.innerHTML = '';  // Clear previous content
+
+    categories.forEach(category => {
+        const totalSpent = categoryTotals[category.title] || 0;
+        const percentage = Math.min((totalSpent / category.budget) * 100, 100);  // Calculate percentage, cap at 100%
+
+        const budgetItem = `
+            <div class="budget-item">
+                <span>${category.title}</span>
+                <div class="budget-bar">
+                    <div class="budget-bar-inner" style="width: ${percentage}%"></div>
+                </div>
+                <span>${totalSpent}/${category.budget}</span>
+            </div>
+        `;
+
+        budgetContainer.innerHTML += budgetItem;
     });
 }
