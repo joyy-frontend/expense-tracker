@@ -292,10 +292,6 @@ td {
   margin: 0 auto;
 }
 
-/*.category-container {
-  margin-top: 2rem;
-}*/
-
 .category-item p {
   border: solid 2px var(--gray-line);
   border-radius: 6px;
@@ -314,11 +310,6 @@ td {
   color: white;
 }
 
-.category-container {
-  /*width: 50%;*/
-  margin: 0 auto;
-}
-
 .save-exence-wrap,
 .edit-category-wrap {
   text-align: right;
@@ -327,7 +318,40 @@ td {
   margin-bottom: 1.5rem;
 }
 
+.color-expense {
+  color: red;
+  font-weight: bold;
+}
+.category-expense {
+  display: flex;
+  width: 100%;
+  border: solid 2px var(--gray-line);
+  border-radius: 6px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.4rem;
+}
+
+.category-expense:hover {
+  background-color: var(--main-color);
+  color: white;
+}
+
+.category-expense:hover .color-expense {
+  color: white;
+}
+.category-expense p {
+  height: 100%;
+  vertical-align: center;
+}
 /********* category **********/
+.category-container {
+  margin-top: 1.5rem;
+  border: solid 2px var(--gray-line);
+  border-radius: 20px;
+  width: 50%;
+  padding-bottom: 0.5rem;
+}
 .categories {
   width: 100%;
   display: flex;
@@ -336,6 +360,74 @@ td {
 }
 .category-header h2 {
   width: 100%;
+}
+
+/* add income css (joy) */
+#errorMessage,
+#errorMessageEdit {
+  color: #e74c3c;
+  font-size: 18px;
+  margin-top: 10px;
+  display: none;
+}
+
+#saveIncomeBtn,
+#editIncomeBtn,
+#delIncomeBtn {
+  padding: 12px;
+  background-color: #fff;
+  color: #f35288;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  transition: background-color 0.3s;
+  border: 2px solid #e5e5e5;
+}
+
+#saveIncomeBtn,
+#editIncomeBtn {
+  width: 100%;
+}
+
+#delIncomeBtn {
+  width: auto;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+  outline: none;
+}
+
+.income-box {
+  display: flex;
+  margin: 5px;
+  gap: 10px;
+  justify-content: space-between;
+  border: solid 1px var(--gray-line);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px;
+  line-height: 30px;
+  cursor: pointer;
+}
+
+.income-box p {
+  text-align: center;
 }
 
 /******** footer ***********/
