@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Expense Tracker</title>  
+  <title>Expense Tracker</title>
   <link rel="stylesheet" href="./main.css" />
   <!-- Material Icon -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
-  rel="stylesheet">
+    rel="stylesheet">
   <!-- temp modal design -->
   <link rel="stylesheet" href="./modal.css" />
   <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
@@ -59,10 +59,10 @@
           </div>
         </div>
         <div class="salary">
-          <div class=""salary-item">
+          <!-- <div class="salary-item">
             <p>Salary</p>
             <p>1000</p>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -70,10 +70,12 @@
       <div class="modal-content">
         <span class="close">&times;</span>
         <h2>New Income</h2>
-        <label for="incomeTitleInput">Title:</label>
-        <input type="text" id="incomeTitleInput">
-        <label for="incomeAmountInput">Amount:</label>
-        <input type="number" id="incomeAmountInput">
+        <div class="modal-input-container">
+          <!-- <label for="incomeTitleInput">Title:</label> -->
+          <input type="text" id="incomeTitleInput" placeholder="Title">
+          <!-- <label for="incomeAmountInput">Amount:</label> -->
+          <input type="number" id="incomeAmountInput" placeholder="Amount">
+        </div>
         <button id="saveIncomeBtn">Save</button>
         <div id="errorMessage"></div>
       </div>
@@ -82,20 +84,27 @@
     <div id="editIncomeModal" class="modal hidden">
       <div class="modal-content">
         <span class="close">&times;</span>
-        <p id="categoryName"></p>
-        <label for="incomeTitleEdit"> Title:</label>
-        <input type="text" id="incomeTitleEdit">
-        <label for="incomeAmountEdit">Amount:</label>
-        <input type="text" id="incomeAmountEdit">
+        <h2>Edit Income</h2>
+        <div class="modal-input-container">
+          <input type="text" id="incomeTitleEdit" placeholder="Title">
+          <input type="number" id="incomeAmountEdit" placeholder="Amount" />
+        </div>
         <button id="editIncomeBtn">Edit</button>
+        <div id="errorMessageEdit"></div>
       </div>
     </div>
 
     <div class="expence-container">
-      <div class="expense-header">
-        <h2>Expenses</h2>
-        <div class="income-btn-new">
-          <button id="addExpenseBtn">+ New</button>
+      <div class="expense-each-total">
+        <div class="expense-area">
+          <div class="expense-header">
+            <div class="expense">
+              <h2>Expenses</h2>
+            </div>
+            <div class="income-btn-new">
+              <button id="addExpenseBtn">+New</button>
+            </div>
+          </div>
         </div>
       </div>
       <div class="expense-chart">
@@ -124,40 +133,47 @@
       <!-- Add expense modal -->
       <div id="addExpenseModal" class="modal hidden">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Add Expense</h2>
-            <!-- Category dropdown -->
+          <span class="close">&times;</span>
+          <h2>Add Expense</h2>
+          <!-- Category dropdown -->
+          <div>
             <label for="expenseCategory">Category:</label>
             <select id="expenseCategory">
             </select>
             <div class="expence-item">
               <label for="expenseDescriptionInput">Detail:</label>
-              <input type="text" id="expenseDescriptionInput">
+              <input type="text" id="expenseDescriptionInput" placeholder="ex: dress">
             </div>
-            <div class="expence-item">
-              <label for="expensePriceInput">Price:</label>
-              <input type="number" id="expensePriceInput">
+            <div class="expence-flex">
+              <div class="expence-item">
+                <label for="expensePriceInput">Price:</label>
+                <input type="number" id="expensePriceInput">
+              </div>
+              <div class="expence-item">
+                <label for="expenseDateInput">Date:</label>
+                <input type="date" id="expenseDateInput" value="">
+              </div>
             </div>
-            <div class="expence-item">
-              <label for="expenseDateInput">Date:</label>
-              <input type="date" id="expenseDateInput" value="">
+            <div class="save-exence-wrap">
+              <button id="saveExpenseBtn">Save</button>
             </div>
-            <button id="saveExpenseBtn">Save</button>
+          </div>
         </div>
       </div>
       <!-- Edit expense modal -->
       <div id="editExpenseModal" class="modal hidden">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Edit Expense</h2>
-            <!-- Category dropdown -->
-            <label for="expenseCategoryEdit">Category:</label>
-            <select id="expenseCategoryEdit">
-            </select>
-            <div class="expence-item">
-              <label for="expenseDescriptionEdit">Detail:</label>
-              <input type="text" id="expenseDescriptionEdit">
-            </div>
+          <span class="close">&times;</span>
+          <h2>Edit Expense</h2>
+          <!-- Category dropdown -->
+          <label for="expenseCategoryEdit">Category:</label>
+          <select id="expenseCategoryEdit">
+          </select>
+          <div class="expence-item">
+            <label for="expenseDescriptionEdit">Detail:</label>
+            <input type="text" id="expenseDescriptionEdit">
+          </div>
+          <div class="expence-flex">
             <div class="expence-item">
               <label for="expensePriceEdit">Price:</label>
               <input type="number" id="expensePriceEdit">
@@ -166,60 +182,75 @@
               <label for="expenseDateEdit">Date:</label>
               <input type="date" id="expenseDateEdit" value="">
             </div>
-            <button id="editExpenseBtn">Save</button>
+          </div>
+          <div class="edit-category-wrap"><button id="editExpenseBtn">Save</button></div>
         </div>
       </div>
     </div>
 
-      <div class="category-container">
-        <div class="category-header">
-          <h2>Category</h2>
-          <div class="income-btn-new">
-            <button id="newCategoryBtn">+New</button>
+    <div class="category-container">
+      <div class="category-each-total">
+        <div class="category-area">
+          <div class="category-header">
+            <h2>Category</h2>
+            <div class="income-btn-new">
+              <button id="newCategoryBtn">+New</button>
+            </div>
           </div>
         </div>
-        <div class="categories">
-          <p class="category-item">Shopping</p>
-          <p class="category-item">Rent</p>
-          <p class="category-item">Restaurant</p>
-          <p class="category-item">Grocery</p>
-          <p class="category-item">Gym</p>
-          <p class="category-item">Subscription</p>
-        </div>
-        <!-- Add category modal -->
-        <div id="addCategoryModal" class="modal hidden">
-          <div class="modal-content">
-              <span class="close">&times;</span>
-              <h2>New Category</h2>
-              <label for="categorySymbol">Symbol:</label>
-              <input type="text" id="categorySymbol">
-              <emoji-picker id="addEmojiPicker"></emoji-picker>
-              <label for="categoryTitleInput">Category Title:</label>
-              <input type="text" id="categoryTitleInput">
-              <label for="categoryDescriptionInput">Description:</label>
-              <input type="text" id="categoryDescriptionInput">
-              <button id="saveCategoryBtn">Save</button>
-          </div>
-        </div>
-        <!-- Edit and delete modal -->
-        <div id="editCategoryModal" class="modal hidden">
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <p id="categoryName"></p>
-            <label for="categorySymbolEdit">Category Symbol:</label>
-            <input type="text" id="categorySymbolEdit">
-            <emoji-picker id="editEmojiPicker"></emoji-picker>
-            <label for="categoryTitleEdit">Category Title:</label>
-            <input type="text" id="categoryTitleEdit">
-            <label for="categoryDescriptionEdit">Description:</label>
-            <input type="text" id="categoryDescriptionEdit">
-            <button id="editCategoryBtn">Edit</button>
-          </div>
-        </div>
-
       </div>
+      <div class="categories">
+        <p class="category-item">Shopping</p>
+        <p class="category-item">Rent</p>
+        <p class="category-item">Restaurant</p>
+        <p class="category-item">Grocery</p>
+        <p class="category-item">Gym</p>
+        <p class="category-item">Subscription</p>
+      </div>
+      <!-- Add category modal -->
+      <div id="addCategoryModal" class="modal hidden">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>New Category</h2>
+          <div class="ctgry-flex">
+            <label for="categoryTitleInput">Category Title:</label>
+            <input type="text" id="categoryTitleInput">
+          </div>
+          <label for="categorySymbol">Symbol:</label>
+          <input type="text" id="categorySymbol">
+          <emoji-picker id="addEmojiPicker"></emoji-picker>
+          <label for="categoryDescriptionInput">Description:</label>
+          <input type="text" id="categoryDescriptionInput">
+          <div class="save-exence-wrap">
+            <button id="saveCategoryBtn">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Edit and delete modal -->
+    <div id="editCategoryModal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="categoryName"></p>
+        <div class="ctgry-flex">
+          <label for="categoryTitleEdit">Category Title:</label>
+          <input type="text" id="categoryTitleEdit">
+        </div>
+        <label for="categorySymbolEdit">Category Symbol:</label>
+        <input type="text" id="categorySymbolEdit">
+        <emoji-picker id="editEmojiPicker"></emoji-picker>
+        <label for="categoryDescriptionEdit">Description:</label>
+        <input type="text" id="categoryDescriptionEdit">
+        <div class="edit-category-wrap"><button id="editCategoryBtn">Edit</button></div>
+      </div>
+    </div>
+
+    </div>
     </div>
   </main>
+  <footer>
+    <p>&#9400;2024 Mina, Joy, Haruka</p>
+  </footer>
   <script async type="module" src="script.js"></script>
   <script type="module" src="income.js"></script>
   <script type="module" src="expense.js"></script>

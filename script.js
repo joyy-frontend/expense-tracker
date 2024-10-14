@@ -55,7 +55,7 @@ closeModalButtons.forEach(button => {
             modal.style.display = 'none';  // Close the modal dynamically
             console.log(`${modal.id} closed`);
 
-            clearModalInputs(modal);
+            //clearModalInputs(modal);
         }
     });
 });
@@ -191,20 +191,8 @@ function handleEdit(index) {
     const monthData = monthsData[currentMonth];
     const expense = monthData.expenses[index];
 
-    console.log('Index received for edit:', index);
-    console.log('Expense at index:', expense);
-
-    if (!expense || !expense.category) {
-        console.error('Invalid expense or category:', expense);
-        return;
-    }
-
     // Select the edit button
     const editExpenseBtn = document.getElementById('editExpenseBtn');
-    if (!editExpenseBtn) {
-        console.error('Edit button not found in the DOM');
-        return;
-    }
 
     // Populate category options in the dropdown
     renderCategoryOptionsForEdit();

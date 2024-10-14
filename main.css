@@ -7,7 +7,7 @@
 
 :root {
   --main-color: #f35288;
-  --gray-line: rgb(177, 177, 177);
+  --gray-line: lightgray;
 }
 
 main {
@@ -85,13 +85,13 @@ main {
   padding: 20px;
 }
 
-.category-header {
+/*.category-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 5%;
-  margin-top: 3rem;
-}
+  /*margin: 3rem auto 0 auto;
+  width: 100%;
+}*/
 
 /* income */
 .income-container {
@@ -107,7 +107,9 @@ main {
   align-items: center;
 }
 
-.income-each-total {
+.income-each-total,
+.expense-each-total,
+.category-each-total {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -115,7 +117,8 @@ main {
   padding: 10px;
 }
 
-.income {
+.income,
+.expense {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -123,12 +126,18 @@ main {
   width: 100%;
 }
 
-.income-area {
+.income-area,
+.expense-area,
+.category-area {
   display: flex;
   /* flex-direction: row; */
   justify-content: space-between;
   width: 100%;
   align-items: center;
+}
+.category-area,
+.expense-area {
+  padding: 2rem;
 }
 
 .income h1 {
@@ -139,6 +148,7 @@ main {
 .income-btn-new {
   display: flex;
   flex-direction: row;
+  margin-left: auto;
 }
 
 .income-btn-new button {
@@ -198,22 +208,22 @@ main {
 
 .category-expence {
   display: flex;
-  margin: 5px;
+  margin: 5px 0;
   gap: 10px;
   justify-content: space-between;
-  border: solid 1px var(--gray-line);
-  border-radius: 5px;
-  margin: 10px;
-  padding: 5px;
+  border: solid 2px var(--gray-line);
+  border-radius: 20px;
+  padding: 10px;
   line-height: 30px;
+  width: 100%;
+  font-size: 1rem;
 }
 
 .category-expence p {
-  width: 25%;
-}
-
-.expence-container {
-  width: 100%;
+  width: 80%;
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
 }
 
 .expence-item {
@@ -222,7 +232,7 @@ main {
 }
 
 .expence-wrap {
-  width: 50%;
+  width: 95%;
   text-align: center;
   margin: 0 auto;
 }
@@ -236,12 +246,25 @@ main {
   color: white;
 }
 
-.expense-header {
+.expense-header,
+.category-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 5%;
-  margin-top: 3rem;
+  width: 100%;
+  padding: 1rem;
+}
+
+.expense h2,
+.category h2 {
+  width: 100%;
+}
+.expence-container {
+  border: solid 2px var(--gray-line);
+  border-radius: 20px;
+  width: 50%;
+  margin-top: 20px;
+  padding: 0 0 0.8rem 0;
 }
 
 h2 {
@@ -264,25 +287,21 @@ td {
   height: 30px;
 }
 
-
-
 .expense-chart {
   width: 50%;
   margin: 0 auto;
 }
 
-.category-container {
-  margin-top: 2rem;
-}
-
-.categories p {
-  border: solid 1px var(--gray-line);
-  border-radius: 2px;
+.category-item p {
+  border: solid 2px var(--gray-line);
+  border-radius: 6px;
   color: black;
+  background-color: white;
   display: block;
   margin: 10px;
   padding: 5px;
   line-height: 30px;
+  min-width: 6rem;
 }
 
 .categories p:hover,
@@ -291,7 +310,131 @@ td {
   color: white;
 }
 
+.save-exence-wrap,
+.edit-category-wrap {
+  text-align: right;
+}
+.expense-chart {
+  margin-bottom: 1.5rem;
+}
+
+.color-expense {
+  color: red;
+  font-weight: bold;
+}
+.category-expense {
+  display: flex;
+  width: 100%;
+  border: solid 2px var(--gray-line);
+  border-radius: 6px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.4rem;
+}
+
+.category-expense:hover {
+  background-color: var(--main-color);
+  color: white;
+}
+
+.category-expense:hover .color-expense {
+  color: white;
+}
+.category-expense p {
+  height: 100%;
+  vertical-align: center;
+}
+/********* category **********/
 .category-container {
+  margin-top: 1.5rem;
+  border: solid 2px var(--gray-line);
+  border-radius: 20px;
   width: 50%;
-  margin: 0 auto;
+  padding-bottom: 0.5rem;
+}
+.categories {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 1rem;
+}
+.category-header h2 {
+  width: 100%;
+}
+
+/* add income css (joy) */
+#errorMessage,
+#errorMessageEdit {
+  color: #e74c3c;
+  font-size: 18px;
+  margin-top: 10px;
+  display: none;
+}
+
+#saveIncomeBtn,
+#editIncomeBtn,
+#delIncomeBtn {
+  padding: 12px;
+  background-color: #fff;
+  color: #f35288;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  transition: background-color 0.3s;
+  border: 2px solid #e5e5e5;
+}
+
+#saveIncomeBtn,
+#editIncomeBtn {
+  width: 100%;
+}
+
+#delIncomeBtn {
+  width: auto;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+  outline: none;
+}
+
+.income-box {
+  display: flex;
+  margin: 5px;
+  gap: 10px;
+  justify-content: space-between;
+  border: solid 1px var(--gray-line);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px;
+  line-height: 30px;
+  cursor: pointer;
+}
+
+.income-box p {
+  text-align: center;
+}
+
+/******** footer ***********/
+footer {
+  margin-top: 2rem;
+  text-align: center;
+  background-color: #331524;
+  color: white;
+  padding: 1rem;
 }
