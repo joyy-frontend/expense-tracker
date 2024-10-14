@@ -1,19 +1,26 @@
-import { categories, currentMonth, updateTotals, monthsData, renderExpense, renderDataForMonth } from './script.js';
+import { categories, currentMonth, renderBudgetTracking, updateTotals, updateExpenseChart, monthsData, renderExpense, renderDataForMonth } from './script.js';
 
 const addExpenseModal = document.getElementById('addExpenseModal');
 const addExpenseBtn = document.getElementById('addExpenseBtn');
 const saveExpenseBtn = document.getElementById('saveExpenseBtn');
-const expenseContainer = document.querySelector('.category-expence');
 
-function addExpense(category, amount, description, date) {
+function addExpense(categoryTitle, amount, description, date) {
     if (!monthsData[currentMonth]) {
         monthsData[currentMonth] = { income: [], expenses: [] };
     }
-    
-    const newExpense = { category, amount, description, date };
+
+    const newExpense = {
+        category: categoryTitle,  // Ensure this matches the exact title in categories
+        amount: amount,
+        description: description,
+        date: date
+    };
+
     monthsData[currentMonth].expenses.push(newExpense);
-    renderExpense();  // Re-render after adding new expense
-    updateTotals();  // Update the totals
+    renderExpense();  // Re-render expenses list
+    updateTotals();    // Update totals
+    updateExpenseChart();  // Update the expense chart for the current month
+    renderBudgetTracking();  // Update the budget tracking progress bars
 }
 
 // Populate categories in the dropdown

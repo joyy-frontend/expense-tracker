@@ -103,6 +103,41 @@ main {
   margin-top: 20px;
 }
 
+.budget-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.budget-item span:first-child {
+  width: 60px;
+  text-align: left;
+}
+
+.budget-bar {
+  flex-grow: 1;
+  height: 20px;
+  background-color: #e0e0e0;
+  margin: 0 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.budget-bar-inner {
+  height: 100%;
+  background-color: #00bcd4;
+  border-radius: 10px;
+}
+
+.budget-item span:last-child {
+  width: 100px;
+  text-align: right;
+}
+
+
+
+
 /* income */
 .income-container {
   display: flex;
@@ -298,7 +333,8 @@ td {
 }
 
 .expense-chart {
-  width: 50%;
+  width: 400px; 
+  height: 400px;
   margin: 0 auto;
 }
 
