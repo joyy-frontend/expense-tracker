@@ -111,6 +111,7 @@ function handleDelete(e) {
     const index = e.target.dataset.index;
     categories.splice(index, 1);  // Remove the category from the array
     renderCategories();  // Re-render the categories list
+    renderBudgetTracking();
 }
 
 function handleEdit(index) {
