@@ -86,60 +86,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 ///////////////////////////////////////////////////////////////expense
-// Function to render income for the current month (new and existing)
 export function renderIncome() {
     const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
     salary.innerHTML = '';  // Clear previous income list
 
-    console.log('Rendering income for the current month:', monthData.income); // Debugging
-
     // Standardize rendering for old and new income data
     monthData.income.forEach((income, index) => {
-        console.log(`Rendering income at index ${index}:`, income);  // Debugging
-
         // Create income element container
         const incomeElement = document.createElement('div');
-        incomeElement.classList.add('income-list');
-
-        // Create a single p tag for description and amount
-        const incomeText = document.createElement('p');
-        incomeText.textContent = `${income.description} - $${income.amount}`;  // Standardized format
-        incomeText.dataset.index = index;
-
-        // Create delete button
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.classList.add('income-del');
-        deleteButton.dataset.index = index;
-
-        // Append the text and button to the income element
-        incomeElement.appendChild(incomeText);
-        incomeElement.appendChild(deleteButton);
-
-        // Append the income element to the salary container
+        incomeElement.classList.add('expence-container');  // Ensure class is consistent
+        incomeElement.innerHTML = `
+            <div class="income-box">
+                <p class="income-title" data-index="${index}">${income.description}</p>
+                <p class="income-amount" data-index="${index}">$${income.amount}</p>
+                <button class="income-del" id="delIncomeBtn" data-index="${index}">Delete</button>
+            </div>
+        `;
         salary.appendChild(incomeElement);
     });
 
-    // Reattach event listeners after rendering for each p tag
+    // Reattach event listeners for editing income
     document.querySelectorAll('.salary p').forEach(p => {
         p.addEventListener('click', (e) => {
             const index = Number(e.target.dataset.index);
-            console.log('Income edit clicked at index:', index);  // Debugging
+            console.log(`Income edit clicked for index: ${index}`);  // Debugging
             IncomeHandleEdit(index);
         });
     });
 
-    // Reattach event listeners after rendering for each delete button
+    // Reattach event listeners for deleting income
     document.querySelectorAll('.income-del').forEach(button => {
         button.addEventListener('click', incomeHandleDelete);
     });
 
-    updateTotals();    // Recalculate totals
-    renderBudgetTracking();
+    updateTotals();    // Recalculate totals after rendering income
+    renderBudgetTracking();  // Update budget tracking
 }
 
+
 // Function to handle income editing
-export function IncomeHandleEdit(index) {
+function IncomeHandleEdit(index) {
     const monthData = monthsData[currentMonth];
     console.log('Editing income:', monthData.income[index]);  // Debugging
     document.getElementById('incomeTitleEdit').value = monthData.income[index].description;

@@ -4,30 +4,12 @@ const btnIncomeNew = document.getElementById("btnIncomeNew");
 const addIncomeModal = document.getElementById('addIncomeModal');
 const saveIncomeBtn = document.getElementById('saveIncomeBtn');
 const errorMessage = document.getElementById('errorMessage');
-//const salary = document.querySelector('.salary');
+const salary = document.querySelector('.salary');
 const editIncomeModal = document.getElementById('editIncomeModal');
 const editIncomeBtn = document.getElementById('editIncomeBtn');
+const incomeArray = [];  // Temporary, as income data is fetched from monthsData[currentMonth]
 
-function addIncome(amount, description) {
-    if (!monthsData[currentMonth]) {
-        monthsData[currentMonth] = { income: [], expenses: [] };
-    }
-    monthsData[currentMonth].income.push({ amount, description });
-    renderIncome();  // Re-render after adding new income
-    updateTotals();  // Update totals
-    renderBudgetTracking();  // Recalculate and update budget tracking
-}
-
-
-
-// Show the add income modal
-btnIncomeNew.addEventListener('click', () => {
-    incomeClearModalInputs(addIncomeModal);
-    addIncomeModal.style.display = 'block';
-});
-
-
-// Handle saving the edited income
+// Save edited income
 editIncomeBtn.addEventListener('click', (e) => {
     e.preventDefault();
     const index = editIncomeBtn.getAttribute('data-index');
@@ -37,12 +19,9 @@ editIncomeBtn.addEventListener('click', (e) => {
     monthData.income[index].description = document.getElementById('incomeTitleEdit').value;
     monthData.income[index].amount = document.getElementById('incomeAmountEdit').value;
 
-    console.log('Updated income:', monthData.income[index]);  // Debugging
-
     renderIncome();  // Re-render income after editing
     editIncomeModal.style.display = 'none';
 });
-
 
 // Clear modal input fields
 function incomeClearModalInputs(modal) {
@@ -51,6 +30,12 @@ function incomeClearModalInputs(modal) {
         input.value = '';
     });
 }
+
+// Show the add income modal
+btnIncomeNew.addEventListener('click', () => {
+    incomeClearModalInputs(addIncomeModal);
+    addIncomeModal.style.display = 'block';
+});
 
 // Handle saving new income
 saveIncomeBtn.addEventListener('click', (e) => {
@@ -64,12 +49,19 @@ saveIncomeBtn.addEventListener('click', (e) => {
         addIncome(incomeAmountInput.value, incomeTitleInput.value);  // Add income to current month data
         renderIncome();  // Re-render income
         addIncomeModal.style.display = 'none';  // Close modal
-        console.log("Income modal closed");
     } else {
         errorMessage.textContent = 'Please check your input values.';
         errorMessage.style.display = 'block';
     }
 });
 
-
-
+// Add new income to the current month
+function addIncome(amount, description) {
+    if (!monthsData[currentMonth]) {
+        monthsData[currentMonth] = { income: [], expenses: [] };
+    }
+    monthsData[currentMonth].income.push({ amount, description });
+    renderIncome();  // Re-render after adding new income
+    updateTotals();  // Update totals
+    renderBudgetTracking();  // Recalculate and update budget tracking
+}
