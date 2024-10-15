@@ -1,10 +1,24 @@
 export let categories = [];
 export let expenses = [];
 export let monthsData = {};
-export let currentMonth = 'October 2024';
+//haruka added default month = current month
+const now = new Date(); // Create new date obj
+const currentYear = now.getFullYear(); // Get current year
+const currentMonthIndex = now.getMonth(); // Get current month (0-11)
+
+const months = [];
+for (let year = 2024; year <= 2200; year++) {
+    for (let month = 0; month < 12; month++) {
+        const date = new Date(year, month);
+        const monthName = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+        months.push(monthName);
+    }
+}
+
+export let currentMonth = months[currentMonthIndex + (currentYear - 2024) * 12]; // get index.
 export const salary = document.querySelector('.salary');
 
-const closeModalButtons = document.querySelectorAll('.close');  
+export const closeModalButtons = document.querySelectorAll('.close');  
 
 // Function to update the current month
 export function setCurrentMonth(currentMonth) {
@@ -22,14 +36,26 @@ export function renderDataForMonth(month) {
 }
 
 function changeMonth(direction) {
-    const months = ['January 2024', 'February 2024', 'March 2024', 'April 2024', 'May 2024', 'June 2024', 
-                    'July 2024', 'August 2024', 'September 2024', 'October 2024', 'November 2024', 'December 2024'];
+    /*const months = [];// move this const out of function
+    for (let year = 2024; year <= 2200; year++) {
+        for (let month = 0; month < 12; month++) {
+            const date = new Date(year, month);
+            const monthName = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+            months.push(monthName);
+        }
+    }*/
     let currentIndex = months.indexOf(currentMonth);
     
     if (direction === 'next') {
-        currentIndex = (currentIndex + 1) % months.length;
+        currentIndex++;
+        if (currentIndex >= months.length) {
+            currentIndex = 0; // if index exceeds months array item, reset undex
+        }
     } else if (direction === 'prev') {
-        currentIndex = (currentIndex - 1 + months.length) % months.length;
+        currentIndex--;
+        if (currentIndex < 0) {
+            currentIndex = 0; // stop backforwarding by 2024/1
+        }
     }
     
     currentMonth = months[currentIndex];
@@ -71,8 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setCurrentMonth(currentMonth);
 });
 
-
-///////////////////////////////////////////////////////////////expense
 // Function to render income for the current month (new and existing)
 export function renderIncome() {
     const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
@@ -242,6 +266,7 @@ function handleSaveExpense(index) {
         document.getElementById('editExpenseModal').style.display = 'none';
         updateTotals();  // Update totals after editing
         updateExpenseChart();  // Update chart after editing
+        renderBudgetTracking();//added
     } else {
         alert('Please fill in all fields.');
     }
@@ -274,6 +299,8 @@ export function updateTotals() {
     document.querySelector('.summary-header h2').textContent = `$${totalBalance.toLocaleString()}`;
     document.querySelector('.summary-income p:last-child').textContent = `$${totalIncome.toLocaleString()}`;
     document.querySelector('.summary-expense p:last-child').textContent = `$${totalExpenses.toLocaleString()}`;
+    // Call renderBudgetTracking to update budget items
+    renderBudgetTracking();
 }
 
 
