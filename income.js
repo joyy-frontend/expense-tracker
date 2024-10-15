@@ -15,9 +15,21 @@ editIncomeBtn.addEventListener('click', (e) => {
     const index = editIncomeBtn.getAttribute('data-index');
     const monthData = monthsData[currentMonth];
 
+    const incomeTitleEdit = document.getElementById('incomeTitleEdit').value.trim();
+    const incomeAmountEdit = document.getElementById('incomeAmountEdit').value.trim();
+    const errorMessageEdit = document.getElementById('errorMessageEdit');  
+
     // Update the income with edited values
     monthData.income[index].description = document.getElementById('incomeTitleEdit').value;
     monthData.income[index].amount = document.getElementById('incomeAmountEdit').value;
+
+    // Check if the fields are not empty
+    if (incomeTitleEdit === '' || incomeAmountEdit === '') {
+        errorMessageEdit.textContent = 'Please fill in both fields before saving.';  
+        errorMessageEdit.style.color = 'red'; 
+        errorMessageEdit.style.display = 'block';  
+        return;  
+    }
 
     renderIncome();  // Re-render income after editing
     editIncomeModal.style.display = 'none';
