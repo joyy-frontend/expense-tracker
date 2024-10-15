@@ -1,4 +1,4 @@
-import { currentMonth, monthsData, updateTotals, renderIncome, salary } from './script.js';
+import { currentMonth, monthsData, updateTotals, renderIncome, renderBudgetTracking } from './script.js';
 
 const btnIncomeNew = document.getElementById("btnIncomeNew");
 const addIncomeModal = document.getElementById('addIncomeModal');
@@ -8,7 +8,6 @@ const errorMessage = document.getElementById('errorMessage');
 const editIncomeModal = document.getElementById('editIncomeModal');
 const editIncomeBtn = document.getElementById('editIncomeBtn');
 
-// Function to add income to the selected month
 function addIncome(amount, description) {
     if (!monthsData[currentMonth]) {
         monthsData[currentMonth] = { income: [], expenses: [] };
@@ -16,7 +15,9 @@ function addIncome(amount, description) {
     monthsData[currentMonth].income.push({ amount, description });
     renderIncome();  // Re-render after adding new income
     updateTotals();  // Update totals
+    renderBudgetTracking();  // Recalculate and update budget tracking
 }
+
 
 
 // Show the add income modal
@@ -69,3 +70,6 @@ saveIncomeBtn.addEventListener('click', (e) => {
         errorMessage.style.display = 'block';
     }
 });
+
+
+

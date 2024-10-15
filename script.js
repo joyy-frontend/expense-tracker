@@ -1,4 +1,9 @@
-export let categories = [];
+export let categories = [
+    { symbol: '🏠', title: 'Rent', description: 'Monthly rent', budget: 3000 },
+    { symbol: '🛍️', title: 'Shopping', description: 'Clothing and other shopping', budget: 1000 },
+    { symbol: '🛒', title: 'Grocery', description: 'Grocery shopping', budget: 500 }
+];
+
 export let expenses = [];
 export let monthsData = {};
 export let currentMonth = 'October 2024';
@@ -22,8 +27,11 @@ export function renderDataForMonth(month) {
 }
 
 function changeMonth(direction) {
-    const months = ['January 2024', 'February 2024', 'March 2024', 'April 2024', 'May 2024', 'June 2024', 
-                    'July 2024', 'August 2024', 'September 2024', 'October 2024', 'November 2024', 'December 2024'];
+    const months = [
+        'January 2024', 'February 2024', 'March 2024', 'April 2024', 
+        'May 2024', 'June 2024', 'July 2024', 'August 2024', 
+        'September 2024', 'October 2024', 'November 2024', 'December 2024'
+    ];
     let currentIndex = months.indexOf(currentMonth);
     
     if (direction === 'next') {
@@ -34,10 +42,15 @@ function changeMonth(direction) {
     
     currentMonth = months[currentIndex];
     setCurrentMonth(currentMonth);
-    renderDataForMonth(currentMonth); // Re-render data for the new month
-    updateTotals();  // Update totals for the new month
-    updateExpenseChart();
+    
+    // Re-render data for the new month
+    renderDataForMonth(currentMonth); 
+    updateTotals();        // Recalculate and update totals
+    updateExpenseChart();   // Update the expense chart for the new month
+    renderBudgetTracking(); // Re-render the budget tracking for the new month
 }
+
+
 
 document.querySelector('.material-icons.left').addEventListener('click', () => changeMonth('prev'));
 document.querySelector('.material-icons.right').addEventListener('click', () => changeMonth('next'));
@@ -120,6 +133,9 @@ export function renderIncome() {
     document.querySelectorAll('.income-del').forEach(button => {
         button.addEventListener('click', incomeHandleDelete);
     });
+
+    updateTotals();    // Recalculate totals
+    renderBudgetTracking();
 }
 
 // Function to handle income editing
@@ -132,12 +148,12 @@ export function IncomeHandleEdit(index) {
     editIncomeBtn.setAttribute('data-index', index);
 }
 
-// Handle income deletion
 function incomeHandleDelete(e) {
     const index = e.target.dataset.index;
-    console.log('Deleting income at index:', index);  // Debugging
     monthsData[currentMonth].income.splice(index, 1);  // Remove from monthly data
     renderIncome();  // Re-render after deletion
+    updateTotals();    // Recalculate totals
+    renderBudgetTracking();  // Recalculate budget tracking
 }
 
 
@@ -177,13 +193,15 @@ export function renderExpense() {
     });
 }
 
-// Delete expense function
 function handleDelete(e) {
     const index = e.target.dataset.index;
     monthsData[currentMonth].expenses.splice(index, 1);  // Remove the expense from the array
-    renderExpense();
-    updateTotals();  // Update totals after deleting
+    renderExpense();  // Re-render the updated expense list
+    updateTotals();    // Recalculate totals
+    updateExpenseChart(); // Update chart after deleting
+    renderBudgetTracking();  // Re-render the budget tracking after deleting
 }
+
 
 function handleEdit(index) {
     const monthData = monthsData[currentMonth];
@@ -218,7 +236,6 @@ function handleEdit(index) {
     };
 }
 
-// Define the save function outside of handleEdit
 function handleSaveExpense(index) {
     const monthData = monthsData[currentMonth];
     const expense = monthData.expenses[index];
@@ -242,6 +259,7 @@ function handleSaveExpense(index) {
         document.getElementById('editExpenseModal').style.display = 'none';
         updateTotals();  // Update totals after editing
         updateExpenseChart();  // Update chart after editing
+        renderBudgetTracking();  // Recalculate and update budget tracking
     } else {
         alert('Please fill in all fields.');
     }
@@ -263,18 +281,21 @@ function renderCategoryOptionsForEdit() {
 export function updateTotals() {
     const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
     
-    // Calculate total income and expenses
-    const totalIncome = monthData.income.reduce((acc, income) => acc + parseFloat(income.amount), 0);
-    const totalExpenses = monthData.expenses.reduce((acc, expense) => acc + parseFloat(expense.amount), 0);
-    
-    // Calculate total balance
+    // Calculate total income
+    const totalIncome = monthData.income.reduce((sum, inc) => sum + parseFloat(inc.amount), 0);
+
+    // Calculate total expenses
+    const totalExpenses = monthData.expenses.reduce((sum, exp) => sum + parseFloat(exp.amount), 0);
+
+    // Update total balance: income - expenses
     const totalBalance = totalIncome - totalExpenses;
 
-    // Update the DOM elements with the calculated totals
-    document.querySelector('.summary-header h2').textContent = `$${totalBalance.toLocaleString()}`;
-    document.querySelector('.summary-income p:last-child').textContent = `$${totalIncome.toLocaleString()}`;
-    document.querySelector('.summary-expense p:last-child').textContent = `$${totalExpenses.toLocaleString()}`;
+    // Update the UI
+    document.querySelector('.summary-container h2').textContent = `$${totalBalance.toFixed(2)}`; // Update balance
+    document.querySelector('.summary-income p:last-child').textContent = `$${totalIncome.toFixed(2)}`; // Update income
+    document.querySelector('.summary-expense p:last-child').textContent = `$${totalExpenses.toFixed(2)}`; // Update expenses
 }
+
 
 
 // Function to generate the expenses chart with grouped categories
@@ -359,7 +380,8 @@ export function calculateCategoryExpenses() {
 
 
 export function renderBudgetTracking() {
-    const categoryTotals = calculateCategoryExpenses();
+    const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
+    const categoryTotals = calculateCategoryExpenses();  // This calculates based on the current month's data
     const budgetContainer = document.querySelector('.budget-tracking-container');
     budgetContainer.innerHTML = '';  // Clear previous content
 

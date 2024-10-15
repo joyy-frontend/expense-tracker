@@ -10,7 +10,7 @@ function addExpense(categoryTitle, amount, description, date) {
     }
 
     const newExpense = {
-        category: categoryTitle,  // Ensure this matches the exact title in categories
+        category: categoryTitle,
         amount: amount,
         description: description,
         date: date
@@ -22,6 +22,7 @@ function addExpense(categoryTitle, amount, description, date) {
     updateExpenseChart();  // Update the expense chart for the current month
     renderBudgetTracking();  // Update the budget tracking progress bars
 }
+
 
 // Populate categories in the dropdown
 function renderCategoryOptions() {
