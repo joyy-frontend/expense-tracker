@@ -1,7 +1,7 @@
 export let categories = [
-    { symbol: '🏠', title: 'Rent', description: 'Monthly rent', budget: 3000 },
-    { symbol: '🛍️', title: 'Shopping', description: 'Clothing and other shopping', budget: 1000 },
-    { symbol: '🛒', title: 'Grocery', description: 'Grocery shopping', budget: 500 }
+    { symbol: '🏠', title: 'Rent', description: 'Monthly rent', budget: 3000, alertShown: false },
+    { symbol: '🛍️', title: 'Shopping', description: 'Clothing and other shopping', budget: 1000, alertShown: false },
+    { symbol: '🛒', title: 'Grocery', description: 'Grocery shopping', budget: 500, alertShown: false }
 ];
 
 export let expenses = [];
@@ -403,12 +403,28 @@ export function renderBudgetTracking() {
     categories.forEach(category => {
         const totalSpent = categoryTotals[category.title] || 0;
         const percentage = Math.min((totalSpent / category.budget) * 100, 100);  // Calculate percentage, cap at 100%
+        let barColor = 'green';  // Default bar color
 
+        // Check if the total spent exceeds or is equal to the budget
+        if (totalSpent >= category.budget) {
+            barColor = 'red';  // Change bar color to red if over the budget
+
+            // Show the alert only if it hasn't been shown before for this category
+            if (!category.alertShown) {
+                alert(`⛔️ You have exceeded or reached your budget for ${category.title}!`);
+                category.alertShown = true;  // Mark the alert as shown
+            }
+        } else {
+            // Reset the alert flag if the total spent goes below the budget again
+            category.alertShown = false;
+        }
+
+        // Create the budget tracking item with the updated color for the bar
         const budgetItem = `
             <div class="budget-item">
                 <span>${category.title}</span>
                 <div class="budget-bar">
-                    <div class="budget-bar-inner" style="width: ${percentage}%"></div>
+                    <div class="budget-bar-inner" style="width: ${percentage}%; background-color: ${barColor};"></div>
                 </div>
                 <span>${totalSpent}/${category.budget}</span>
             </div>
