@@ -105,6 +105,10 @@
 #editExpenseModal .expence-item {
   margin-top: 0.4rem;
 }
+
+#editExpenseModal label {
+  margin-right: 0.2rem;
+}
 .ctgry-flex {
   display: flex;
   margin-top: 1rem;
@@ -166,12 +170,13 @@
   border-radius: 20px;
   width: 5rem;
   height: 3rem;
-  border: solid 1px #36a2eb;
-  color: #031929;
+  border: solid 2px #e5e5e5;
+  color: var(--main-color);
   padding: 12px;
-  margin: 10px;
+  /*margin: 10px;*/
   font-size: 1rem;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .delete-btn:hover {
