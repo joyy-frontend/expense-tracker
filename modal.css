@@ -179,11 +179,6 @@
   font-weight: bold;
 }
 
-.delete-btn:hover {
-  background-color: #36a2eb;
-  color: white;
-}
-
 #categoryTitleEdit {
   width: 75%;
 }

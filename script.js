@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-///////////////////////////////////////////////////////////////expense
+///////////////////////////////////////////////////////////////income
 export function renderIncome() {
     const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
     salary.innerHTML = '';  // Clear previous income list
@@ -171,8 +171,8 @@ export function renderExpense() {
     monthData.expenses.forEach((expense, index) => {
         const expenseItem = `
             <div class="category-expense" data-index="${index}">
-                <p data-index="${index}">${expense.category} ${expense.description}</p>
-                <p class="color-expense">${expense.amount}</p>
+                <p data-index="${index}">${expense.category} <p>${expense.description}</p></p>
+                <p class="color-expense">$${expense.amount}</p>
                 <p>${expense.date}</p>
                 <button class="delete-btn" data-index="${index}">Delete</button>
             </div>`;
