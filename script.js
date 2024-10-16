@@ -142,6 +142,7 @@ function IncomeHandleEdit(index) {
     document.getElementById('incomeTitleEdit').value = monthData.income[index].description;
     document.getElementById('incomeAmountEdit').value = monthData.income[index].amount;
     editIncomeModal.style.display = 'block';
+    document.querySelector('#errorMessageEdit').style.display = 'none';
     editIncomeBtn.setAttribute('data-index', index);
 }
 
