@@ -85,15 +85,10 @@ main {
   padding: 20px;
 }
 
-/*.category-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  /*margin: 3rem auto 0 auto;
-  width: 100%;
-}*/
-
 /* budget container temp */
+.budget-header {
+  margin-bottom: 2rem;
+}
 .budget-container {
   background-color: rgb(88, 36, 210);
   width: 50%;
@@ -135,9 +130,6 @@ main {
   text-align: right;
 }
 
-
-
-
 /* income */
 .income-first-container {
   width: 100%;
@@ -156,9 +148,7 @@ main {
   align-items: center;
 }
 
-.income-each-total,
-.expense-each-total,
-.category-each-total {
+.income-each-total {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -166,6 +156,10 @@ main {
   padding: 10px;
 }
 
+.category-each-total,
+.expense-each-total {
+  padding: 10px;
+}
 .income,
 .expense {
   display: flex;
@@ -176,17 +170,11 @@ main {
 }
 
 .income-area,
-.expense-area,
 .category-area {
   display: flex;
   justify-content: space-between;
   width: 100%;
   align-items: center;
-}
-
-.category-area,
-.expense-area {
-  padding: 2rem;
 }
 
 .income h1 {
@@ -209,6 +197,11 @@ main {
   padding: 0.8rem 1.5rem;
   font-size: 1rem;
   cursor: pointer;
+}
+
+.income-btn-new button:hover {
+  background-color: #ff4069; /*same color of the hovered chart */
+  font-weight: bold;
 }
 
 .income button {
@@ -282,9 +275,12 @@ main {
 }
 
 .expence-wrap {
-  width: 95%;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
   text-align: center;
-  margin: 0 auto;
+  padding: 0 20px;
+  font-size: 1.4rem;
 }
 
 .color-expence {
@@ -302,7 +298,6 @@ main {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 1rem;
 }
 
 .expense h2,
@@ -315,7 +310,7 @@ main {
   border-radius: 20px;
   width: 50%;
   margin-top: 20px;
-  padding: 0 0 0.8rem 0;
+  padding: 2rem;
 }
 
 h2 {
@@ -344,25 +339,33 @@ td {
   margin: 0 auto;
 }
 
-.category-item p {
-  border: solid 2px var(--gray-line);
+.category-item {
+  border: solid 1px var(--gray-line);
   border-radius: 6px;
   color: black;
   background-color: white;
-  display: block;
-  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0 0 0;
   padding: 5px;
-  line-height: 30px;
-  min-width: 6rem;
+  width: 100%;
+  cursor: pointer;
+  height: 3.5rem;
 }
 
-.categories p:hover,
+.category-item:hover,
 .category-expence:hover,
 .income-box:hover {
   background-color: var(--main-color);
   color: white;
 }
 
+.category-item p {
+  padding-left: 5px;
+  width: 100%;
+  text-align: left;
+}
 .save-exence-wrap,
 .edit-category-wrap {
   text-align: right;
@@ -380,11 +383,13 @@ td {
 .category-expense {
   display: flex;
   width: 100%;
-  border: solid 2px var(--gray-line);
+  border: solid 1px var(--gray-line);
   border-radius: 6px;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0.4rem;
+  padding: 5px;
+  height: auto;
+  margin: 10px 0;
 }
 
 .category-expense:hover {
@@ -399,6 +404,8 @@ td {
 .category-expense p {
   height: 100%;
   vertical-align: center;
+  padding-left: 5px;
+  /*line-height: 3.5rem;*/
 }
 
 /********* category **********/
@@ -407,20 +414,20 @@ td {
   border: solid 2px var(--gray-line);
   border-radius: 20px;
   width: 50%;
-  padding-bottom: 0.5rem;
+  padding: 2rem;
 }
 
 .categories {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  padding: 0 1rem;
+  padding: 2% 20px 0 20px;
+  font-size: 1.4rem;
 }
 
 .category-header h2 {
   width: 100%;
 }
-
 
 #exerrorMessage,
 #exerrorMessageEdit {
@@ -438,7 +445,6 @@ td {
   margin-top: 10px;
   display: none;
 }
-
 
 #saveIncomeBtn,
 #editIncomeBtn,
