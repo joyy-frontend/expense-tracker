@@ -1,8 +1,19 @@
-import { categories, currentMonth, renderBudgetTracking, updateTotals, updateExpenseChart, monthsData, renderExpense, renderDataForMonth } from './script.js';
+import { categories, currentMonth, renderBudgetTracking, updateTotals, updateExpenseChart, monthsData, renderExpense, renderDataForMonth, saveToLocalStorage, loadFromLocalStorage } from './script.js';
 
 const addExpenseModal = document.getElementById('addExpenseModal');
 const addExpenseBtn = document.getElementById('addExpenseBtn');
 const saveExpenseBtn = document.getElementById('saveExpenseBtn');
+
+//function saveToLocalStorage() {
+//    localStorage.setItem('monthsData', JSON.stringify(monthsData));
+//}
+
+//function loadFromLocalStorage() {
+//    const storedMonthsData = localStorage.getItem('monthsData');
+//    if (storedMonthsData) {
+//        Object.assign(monthsData, JSON.parse(storedMonthsData)); // Merge loaded data into `monthsData`
+//    }
+//}
 
 function addExpense(categoryTitle, amount, description, date) {
     if (!monthsData[currentMonth]) {
@@ -17,6 +28,8 @@ function addExpense(categoryTitle, amount, description, date) {
     };
 
     monthsData[currentMonth].expenses.push(newExpense);
+    saveToLocalStorage();
+
     renderExpense();  // Re-render expenses list
     updateTotals();    // Update totals
     updateExpenseChart();  // Update the expense chart for the current month
@@ -39,6 +52,8 @@ function renderCategoryOptions() {
 
 // Show the add expense modal
 addExpenseBtn.addEventListener('click', () => {
+    const exerrorMessage = document.getElementById('exerrorMessage');
+
     renderCategoryOptions();
     document.getElementById('expenseDescriptionInput').value = ''; // Clear previous inputs
     document.getElementById('expensePriceInput').value = '';
@@ -78,3 +93,4 @@ function getTodayDate() {
     const day = String(today.getDate()).padStart(2, '0'); // Add leading 0 if needed
     return `${year}-${month}-${day}`; // Return in 'YYYY-MM-DD' format
 }
+

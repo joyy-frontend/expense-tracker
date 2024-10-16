@@ -6,9 +6,9 @@ export let categories = [
 
 export let expenses = [];
 export let monthsData = {};
-const now = new Date(); // Create new date obj
-const currentYear = now.getFullYear(); // Get current year
-const currentMonthIndex = now.getMonth(); // Get current month (0-11)
+const now = new Date(); 
+const currentYear = now.getFullYear(); 
+const currentMonthIndex = now.getMonth(); 
 const months = [];
 const editIncomeModal = document.getElementById('editIncomeModal');
 
@@ -24,6 +24,25 @@ export let currentMonth = months[currentMonthIndex + (currentYear - 2024) * 12];
 export const salary = document.querySelector('.salary');
 export const closeModalButtons = document.querySelectorAll('.close');  
 
+
+export function saveToLocalStorage() {
+    localStorage.setItem('monthsData', JSON.stringify(monthsData));
+    localStorage.setItem('categories', JSON.stringify(categories));
+}
+
+export function loadFromLocalStorage() {
+    const storedMonthsData = localStorage.getItem('monthsData');
+    const storedCategories = localStorage.getItem('categories');
+    
+    if (storedMonthsData) {
+        Object.assign(monthsData, JSON.parse(storedMonthsData)); // Merge loaded data into `monthsData`
+    }
+
+    if (storedCategories) {
+        Object.assign(categories, JSON.parse(storedCategories)); // Merge loaded categories
+    }
+}
+
 // Function to update the current month
 export function setCurrentMonth(currentMonth) {
     const showCurrentMonth = document.querySelector('#currentMonth');
@@ -36,7 +55,6 @@ export function renderDataForMonth(month) {
     const monthData = monthsData[month] || { income: [], expenses: [] };
 
     renderIncome();
-
     renderExpense(monthData);
 }
 
@@ -63,6 +81,7 @@ document.querySelector('.material-icons.left').addEventListener('click', () => c
 document.querySelector('.material-icons.right').addEventListener('click', () => changeMonth('next'));
 
 document.addEventListener('DOMContentLoaded', () => {
+    loadFromLocalStorage();
     setCurrentMonth(currentMonth);
     renderDataForMonth(currentMonth); // Initial render for the default month
 });
@@ -195,6 +214,8 @@ export function renderExpense() {
             handleDelete(e); // Handle deleting an expense
         });
     });
+
+    saveToLocalStorage();
 }
 
 function handleDelete(e) {
@@ -204,6 +225,8 @@ function handleDelete(e) {
     updateTotals();    // Recalculate totals
     updateExpenseChart(); // Update chart after deleting
     renderBudgetTracking();  // Re-render the budget tracking after deleting
+
+    saveToLocalStorage();
 }
 
 
@@ -432,4 +455,6 @@ export function renderBudgetTracking() {
 
         budgetContainer.innerHTML += budgetItem;
     });
+
+    saveToLocalStorage();
 }
