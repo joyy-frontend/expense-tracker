@@ -408,14 +408,13 @@ td {
   width: 100%;
 }
 
-#errorMessage {
-  color: #e74c3c;
-  font-size: 18px;
-  margin-top: 10px;
+#errorMessageEdit {
   display: none;
+  color: red;
+  font-size: 14px;
 }
 
-#errorMessageEdit {
+#exerrorMessage {
   color: #e74c3c;
   font-size: 18px;
   margin-top: 10px;

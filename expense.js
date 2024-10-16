@@ -43,8 +43,9 @@ addExpenseBtn.addEventListener('click', () => {
     document.getElementById('expenseDescriptionInput').value = ''; // Clear previous inputs
     document.getElementById('expensePriceInput').value = '';
     document.getElementById('expenseDateInput').value = getTodayDate();
-    const exerrorMessage = document.querySelector('#exerrorMessage');
-    exerrorMessage.innerHTML = '';
+    
+    exerrorMessage.style.display = 'none';
+    exerrorMessage.textContent = '';
     addExpenseModal.style.display = 'block';
 });
 
@@ -63,7 +64,6 @@ saveExpenseBtn.addEventListener('click', (e) => {
         addExpense(`${selectedCategory.symbol} ${selectedCategory.title}`, expensePrice, expenseDescription, expenseDate);
         addExpenseModal.style.display = 'none'; // Close modal
     } else {
-        console.log("test");
         exerrorMessage.textContent = 'Please fill all fields before saving.';  
         exerrorMessage.style.color = 'red'; 
         exerrorMessage.style.display = 'block';  

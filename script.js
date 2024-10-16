@@ -208,7 +208,8 @@ function handleDelete(e) {
 function handleEdit(index) {
     const monthData = monthsData[currentMonth];
     const expense = monthData.expenses[index];
-
+    const exerrorMessageEdit = document.querySelector('#exerrorMessageEdit');
+    
     // Select the edit button
     const editExpenseBtn = document.getElementById('editExpenseBtn');
 
@@ -227,7 +228,8 @@ function handleEdit(index) {
     document.getElementById('expenseDescriptionEdit').value = expense.description;
     document.getElementById('expensePriceEdit').value = expense.amount;
     document.getElementById('expenseDateEdit').value = expense.date;
-
+    exerrorMessageEdit.style.display = 'none';
+    exerrorMessageEdit.textContent = '';
     // Show the modal
     document.getElementById('editExpenseModal').style.display = 'block';
 
@@ -240,14 +242,15 @@ function handleEdit(index) {
 
 function handleSaveExpense(index) {
     const monthData = monthsData[currentMonth];
-    const expense = monthData.expenses[index];
 
     const newCategoryIndex = document.getElementById('expenseCategoryEdit').value;
     const newCategory = categories[newCategoryIndex];
     const expenseDescription = document.getElementById('expenseDescriptionEdit').value;
     const expensePrice = document.getElementById('expensePriceEdit').value;
     const expenseDate = document.getElementById('expenseDateEdit').value;
+    const exerrorMessageEdit = document.querySelector('#exerrorMessageEdit');
 
+    // Check if all fields are filled before saving
     if (newCategory && expenseDescription && expensePrice && expenseDate) {
         // Update the expense with new values
         monthData.expenses[index] = {
@@ -262,10 +265,18 @@ function handleSaveExpense(index) {
         updateTotals();  // Update totals after editing
         updateExpenseChart();  // Update chart after editing
         renderBudgetTracking();  // Recalculate and update budget tracking
+
+        
     } else {
-        alert('Please fill in all fields.');
+        console.log("Validation failed - showing error message");
+
+        // Show error message and make sure it's visible
+        exerrorMessageEdit.style.display = 'block'; 
+        exerrorMessageEdit.textContent = 'Please fill all fields before saving.';  
+        exerrorMessageEdit.style.color = 'red'; 
     }
 }
+
 
 function renderCategoryOptionsForEdit() {
     const categorySelect = document.getElementById('expenseCategoryEdit');
@@ -293,9 +304,9 @@ export function updateTotals() {
     const totalBalance = totalIncome - totalExpenses;
 
     // Update the UI
-    document.querySelector('.summary-container h2').textContent = `$${totalBalance.toFixed(2)}`; // Update balance
-    document.querySelector('.summary-income p:last-child').textContent = `$${totalIncome.toFixed(2)}`; // Update income
-    document.querySelector('.summary-expense p:last-child').textContent = `$${totalExpenses.toFixed(2)}`; // Update expenses
+    document.querySelector('.summary-container h2').textContent = `$${totalBalance.toFixed(2)}`; 
+    document.querySelector('.summary-income p:last-child').textContent = `$${totalIncome.toFixed(2)}`; 
+    document.querySelector('.summary-expense p:last-child').textContent = `$${totalExpenses.toFixed(2)}`; 
 }
 
 
