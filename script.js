@@ -153,6 +153,15 @@ function IncomeHandleEdit(index) {
 function incomeHandleDelete(e) {
     const index = e.target.dataset.index;
     monthsData[currentMonth].income.splice(index, 1);  // Remove from monthly data
+    
+    let incomeArray = JSON.parse(localStorage.getItem('income')) || [];
+
+    if (index >= 0 && index < incomeArray.length) {
+        incomeArray.splice(index, 1);
+    }
+
+    localStorage.setItem('income', JSON.stringify(incomeArray));
+
     renderIncome();  // Re-render after deletion
     updateTotals();    // Recalculate totals
     renderBudgetTracking();  // Recalculate budget tracking
