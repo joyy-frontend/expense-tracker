@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 import { currentMonth, monthsData, updateTotals, renderIncome, renderBudgetTracking } from './script.js';
 
 const btnIncomeNew = document.getElementById("btnIncomeNew");
@@ -6,43 +13,82 @@ const saveIncomeBtn = document.getElementById('saveIncomeBtn');
 const errorMessage = document.getElementById('errorMessage');
 const editIncomeModal = document.getElementById('editIncomeModal');
 const editIncomeBtn = document.getElementById('editIncomeBtn');
-const incomeArray = [];  // Temporary, as income data is fetched from monthsData[currentMonth]
+
+const incomeArray = [];
+
+renderIncome();
+
+btnIncomeNew.addEventListener('click', () => {
+  incomeClearModalInputs(addIncomeModal);
+  addIncomeModal.style.display = 'block';
+});
 
 // Save edited income
 editIncomeBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const index = editIncomeBtn.getAttribute('data-index');
-    const monthData = monthsData[currentMonth];
+  e.preventDefault();
+  const index = editIncomeBtn.getAttribute('data-index'); 
+  const incomeTitleEdit = document.getElementById('incomeTitleEdit');
+  const incomeAmountEdit = document.getElementById('incomeAmountEdit');
+  const monthData = monthsData[currentMonth];
+  const incomeTitleEditValue = document.getElementById('incomeTitleEdit').value.trim();
+  const incomeAmountEditValue = document.getElementById('incomeAmountEdit').value.trim();
+  const errorMessageEdit = document.getElementById('errorMessageEdit');  
 
-    const incomeTitleEdit = document.getElementById('incomeTitleEdit').value.trim();
-    const incomeAmountEdit = document.getElementById('incomeAmountEdit').value.trim();
-    const errorMessageEdit = document.getElementById('errorMessageEdit');  
+  monthData.income[index].description = document.getElementById('incomeTitleEdit').value;
+  monthData.income[index].amount = document.getElementById('incomeAmountEdit').value;
 
-    // Update the income with edited values
-    monthData.income[index].description = document.getElementById('incomeTitleEdit').value;
-    monthData.income[index].amount = document.getElementById('incomeAmountEdit').value;
-
-    // Check if the fields are not empty
-    if (incomeTitleEdit === '' || incomeAmountEdit === '') {
-        errorMessageEdit.textContent = 'Please fill in both fields before saving.';  
-        errorMessageEdit.style.color = 'red'; 
-        errorMessageEdit.style.display = 'block';  
-        return;  
-    }
-
-    renderIncome();  // Re-render income after editing
-    editIncomeModal.style.display = 'none';
+  if (incomeTitleEditValue === '' || incomeAmountEditValue === '') {
+    errorMessageEdit.textContent = 'Please fill in both fields before saving.';  
+    errorMessageEdit.style.color = 'red'; 
+    errorMessageEdit.style.display = 'block';  
+    return;  
+  }
+  
+  renderIncome();  // Re-render income after editing
+  editIncomeModal.style.display = 'none';
+  handleIncomeAction(incomeTitleEdit, incomeAmountEdit, editIncomeModal, 'edit', index);
 });
 
-// Clear modal input fields
 function incomeClearModalInputs(modal) {
     const inputs = modal.querySelectorAll('input');
-    const errorMessage = modal.querySelector('#errorMessage');
-    errorMessage.innerHTML = '';
     inputs.forEach(input => {
         input.value = '';
     });
 }
+
+function handleIncomeAction(titleInput, amountInput, modal, status, index) {
+  const errorMessageEdit = document.getElementById('errorMessageEdit'); 
+
+  if (titleInput.value.trim() !== '' && amountInput.value.trim() !== '') {
+    errorMessageEdit.style.display = 'none'; 
+
+    if (status === 'edit') {
+      incomeArray[index].title = titleInput.value;
+      incomeArray[index].amount = amountInput.value;
+    } else {
+      incomeArray.push({ title: titleInput.value, amount: amountInput.value });
+    }
+    localStorage.setItem('income', JSON.stringify(incomeArray));
+    renderIncome(); 
+    modal.style.display = 'none'; 
+  } else {
+    if (status === 'edit') {
+      errorMessageEdit.textContent = 'Please check your input values.';
+      errorMessageEdit.style.display = 'block';
+    } else {
+      errorMessage.textContent = 'Please check your input values.';
+      errorMessage.style.display = 'block';
+    }
+  }
+}
+
+saveIncomeBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  const incomeTitleInput = document.getElementById('incomeTitleInput');
+  const incomeAmountInput = document.getElementById('incomeAmountInput');
+  handleIncomeAction(incomeTitleInput, incomeAmountInput, addIncomeModal, 'save');
+});
+
 
 // Show the add income modal
 btnIncomeNew.addEventListener('click', () => {
@@ -78,3 +124,4 @@ function addIncome(amount, description) {
     updateTotals();  // Update totals
     renderBudgetTracking();  // Recalculate and update budget tracking
 }
+
