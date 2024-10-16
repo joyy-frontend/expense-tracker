@@ -89,12 +89,13 @@ main {
 .budget-header {
   margin-bottom: 2rem;
 }
+
 .budget-container {
-  background-color: rgb(88, 36, 210);
+  background-color: #FBCBDC;
   width: 50%;
   border-radius: 20px;
   padding: 2rem;
-  color: #fff;
+  color: #F35288;
   margin-top: 20px;
 }
 
@@ -112,8 +113,8 @@ main {
 .budget-bar {
   flex-grow: 1;
   height: 20px;
-  background-color: #e0e0e0;
-  margin: 0 10px;
+  background-color: #fff;
+  margin: 0px 10px 0px 50px;
   border-radius: 10px;
   overflow: hidden;
   position: relative;
@@ -160,6 +161,7 @@ main {
 .expense-each-total {
   padding: 10px;
 }
+
 .income,
 .expense {
   display: flex;
@@ -200,7 +202,8 @@ main {
 }
 
 .income-btn-new button:hover {
-  background-color: #ff4069; /*same color of the hovered chart */
+  background-color: #ff4069;
+  /*same color of the hovered chart */
   font-weight: bold;
 }
 
@@ -366,6 +369,7 @@ td {
   width: 100%;
   text-align: left;
 }
+
 .save-exence-wrap,
 .edit-category-wrap {
   text-align: right;
