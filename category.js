@@ -1,5 +1,5 @@
 
-import { categories, renderBudgetTracking } from './script.js';
+import { categories, renderBudgetTracking, monthsData, saveToLocalStorage } from './script.js';
 
 let editingIndex = -1;
 const categoriesContainer = document.querySelector('.categories');
@@ -109,10 +109,52 @@ function renderCategories() {
 // Delete Button Functionality
 function handleDelete(e) {
     const index = e.target.dataset.index;
-    categories.splice(index, 1);  // Remove the category from the array
-    renderCategories();  // Re-render the categories list
-    renderBudgetTracking();
+    const categoryToDelete = categories[index].title;  // Get the title of the category to delete
+
+    // Check if the category has associated expenses in any month
+    let hasExpenses = false;
+
+    // Loop through each month to check for expenses
+    Object.keys(monthsData).forEach(month => {
+        const monthData = monthsData[month];
+        if (monthData.expenses) {
+            // Check if any expense belongs to the category we're trying to delete
+            if (monthData.expenses.some(expense => expense.category.includes(categoryToDelete))) {
+                hasExpenses = true;
+            }
+        }
+    });
+
+    // If expenses are found, ask for confirmation to delete the category and associated expenses
+    if (hasExpenses) {
+        const confirmDelete = confirm(`The "${categoryToDelete}" category has associated expenses. Do you want to delete the category and all related expenses?`);
+        if (confirmDelete) {
+            // If user confirms, delete both the category and the expenses
+            Object.keys(monthsData).forEach(month => {
+                const monthData = monthsData[month];
+                if (monthData.expenses) {
+                    // Filter out expenses that belong to the category to delete
+                    monthData.expenses = monthData.expenses.filter(expense => !expense.category.includes(categoryToDelete));
+                }
+            });
+            // Proceed to delete the category
+            categories.splice(index, 1);  // Remove the category from the array
+            renderCategories();  // Re-render the categories list
+            renderExpense();  // Re-render the updated expense list
+            renderBudgetTracking();  // Update the budget tracking
+            updateTotals();  // Recalculate totals after deletion
+            saveToLocalStorage();  // Save changes to local storage
+        }
+    } else {
+        categories.splice(index, 1);
+        renderCategories();  // Re-render the categories list
+        renderBudgetTracking();  // Update the budget tracking
+        saveToLocalStorage();  // Save changes to local storage
+    }
 }
+
+
+
 
 function handleEdit(index) {
     editingIndex = index;

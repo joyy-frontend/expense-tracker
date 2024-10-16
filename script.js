@@ -220,13 +220,28 @@ export function renderExpense() {
 
 function handleDelete(e) {
     const index = e.target.dataset.index;
-    monthsData[currentMonth].expenses.splice(index, 1);  // Remove the expense from the array
-    renderExpense();  // Re-render the updated expense list
-    updateTotals();    // Recalculate totals
-    updateExpenseChart(); // Update chart after deleting
-    renderBudgetTracking();  // Re-render the budget tracking after deleting
 
-    saveToLocalStorage();
+    // Check if monthsData[currentMonth] and expenses are defined
+    if (!monthsData[currentMonth]) {
+        console.error(`No data found for the current month: ${currentMonth}`);
+        return;  // Exit the function if there's no data for the current month
+    }
+
+    if (!monthsData[currentMonth].expenses || !monthsData[currentMonth].expenses[index]) {
+        console.error(`No expense found at index ${index} for the current month.`);
+        return;  // Exit the function if there's no expense at the provided index
+    }
+
+    // Remove the expense from the array
+    monthsData[currentMonth].expenses.splice(index, 1);  
+    
+    // Re-render after deletion
+    renderExpense();  
+    updateTotals();    
+    updateExpenseChart(); 
+    renderBudgetTracking();  
+
+    saveToLocalStorage();  // Save updated data to local storage
 }
 
 
