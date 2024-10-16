@@ -135,9 +135,6 @@ main {
   text-align: right;
 }
 
-
-
-
 /* income */
 .income-container {
   display: flex;
@@ -205,6 +202,11 @@ main {
   padding: 0.8rem 1.5rem;
   font-size: 1rem;
   cursor: pointer;
+}
+
+.income-btn-new button:hover {
+  background-color: #ff4069; /*same color of the hovered chart */
+  font-weight: bold;
 }
 
 .income button {
@@ -333,29 +335,37 @@ td {
 }
 
 .expense-chart {
-  width: 400px; 
+  width: 400px;
   height: 400px;
   margin: 0 auto;
 }
 
-.category-item p {
+.category-item {
   border: solid 2px var(--gray-line);
   border-radius: 6px;
   color: black;
   background-color: white;
-  display: block;
-  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.4rem 0 0 0;
   padding: 5px;
-  line-height: 30px;
-  min-width: 6rem;
+  width: 100%;
+  cursor: pointer;
+  height: 3.5rem;
 }
 
-.categories p:hover,
+.category-item:hover,
 .category-expence:hover {
   background-color: var(--main-color);
   color: white;
 }
 
+.category-item p {
+  padding-left: 5px;
+  width: 100%;
+  text-align: left;
+}
 .save-exence-wrap,
 .edit-category-wrap {
   text-align: right;
@@ -376,6 +386,8 @@ td {
   justify-content: space-between;
   align-items: center;
   margin-top: 0.4rem;
+  padding: 0 5px;
+  height: 3.5rem;
 }
 
 .category-expense:hover {
@@ -389,6 +401,8 @@ td {
 .category-expense p {
   height: 100%;
   vertical-align: center;
+  padding-left: 5px;
+  line-height: 3.5rem;
 }
 /********* category **********/
 .category-container {
@@ -408,8 +422,8 @@ td {
   width: 100%;
 }
 
-
-#exerrorMessage, #exerrorMessageEdit {
+#exerrorMessage,
+#exerrorMessageEdit {
   color: #e74c3c;
   font-size: 18px;
   margin-top: 10px;
