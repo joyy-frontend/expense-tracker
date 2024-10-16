@@ -153,9 +153,9 @@ main {
   align-items: center;
 }
 
-.income-each-total,
-.expense-each-total,
-.category-each-total {
+.income-each-total/*,
+/*.expense-each-total,************************/
+/*.category-each-total*/ {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -163,6 +163,10 @@ main {
   padding: 10px;
 }
 
+.category-each-total,
+.expense-each-total {
+  padding: 2rem;
+}
 .income,
 .expense {
   display: flex;
@@ -173,7 +177,7 @@ main {
 }
 
 .income-area,
-.expense-area,
+/*.expense-area,*******************/
 .category-area {
   display: flex;
   justify-content: space-between;
@@ -181,10 +185,10 @@ main {
   align-items: center;
 }
 
-.category-area,
-.expense-area {
+/*.category-area/*,**********
+/*.expense-area {
   padding: 2rem;
-}
+}*/
 
 .income h1 {
   font-size: 2rem;
@@ -284,9 +288,8 @@ main {
 }
 
 .expence-wrap {
-  width: 95%;
   text-align: center;
-  margin: 0 auto;
+  margin: 0 2rem;
 }
 
 .color-expence {
@@ -394,7 +397,7 @@ td {
   border-radius: 6px;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0.4rem;
+  margin: 0.4rem;
   padding: 0 5px;
   height: 3.5rem;
 }
@@ -527,4 +530,8 @@ footer {
   background-color: #331524;
   color: white;
   padding: 1rem;
+}
+
+* {
+  border: solid blue 1px;
 }
