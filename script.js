@@ -102,12 +102,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 ///////////////////////////////////////////////////////////////expense
-export function renderIncome() {
+export function renderIncome(savedIncome=[]) {
     const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
     salary.innerHTML = '';  // Clear previous income list
+
+    const allIncome = [...savedIncome, ...monthData.income];
     
     // Standardize rendering for old and new income data
-    monthData.income.forEach((income, index) => {
+    allIncome.forEach((income, index) => {
         // Create income element container
         const incomeElement = document.createElement('div');
         incomeElement.classList.add('income-first-container');  // Ensure class is consistent
@@ -140,6 +142,8 @@ export function renderIncome() {
 }
 
 
+
+
 // Function to handle income editing
 function IncomeHandleEdit(index) {
     const monthData = monthsData[currentMonth];
@@ -152,7 +156,9 @@ function IncomeHandleEdit(index) {
 
 function incomeHandleDelete(e) {
     const index = e.target.dataset.index;
-    monthsData[currentMonth].income.splice(index, 1);  // Remove from monthly data
+    if (monthsData[currentMonth] && monthsData[currentMonth].income) {
+        monthsData[currentMonth].income.splice(index, 1);  // Remove from monthly data
+    }
     
     let incomeArray = JSON.parse(localStorage.getItem('income')) || [];
 
@@ -166,7 +172,6 @@ function incomeHandleDelete(e) {
     updateTotals();    // Recalculate totals
     renderBudgetTracking();  // Recalculate budget tracking
 }
-
 
 ///////////////////////////////////////////////////////expense
 export function renderExpense() {

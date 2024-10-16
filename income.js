@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 import { currentMonth, monthsData, updateTotals, renderIncome, renderBudgetTracking } from './script.js';
 
 const btnIncomeNew = document.getElementById("btnIncomeNew");
@@ -14,9 +7,32 @@ const errorMessage = document.getElementById('errorMessage');
 const editIncomeModal = document.getElementById('editIncomeModal');
 const editIncomeBtn = document.getElementById('editIncomeBtn');
 
-const incomeArray = [];
+let incomeArray = [];
 
 renderIncome();
+
+window.onload = function () {
+  const savedIncome = localStorage.getItem('income');
+  if (savedIncome) {
+    const parsedIncome = JSON.parse(savedIncome);
+    incomeArray.push(...parsedIncome); 
+    renderIncome(parsedIncome);  
+  } else {
+    renderIncome();  
+  }
+};
+
+
+
+
+// window.onload = function () {
+//   const savedIncome = localStorage.getItem('income');
+//   if (savedIncome) {
+//     incomeArray = JSON.parse(savedIncome); 
+//   }
+//   renderIncome(); 
+// };
+
 
 btnIncomeNew.addEventListener('click', () => {
   incomeClearModalInputs(addIncomeModal);
@@ -63,10 +79,10 @@ function handleIncomeAction(titleInput, amountInput, modal, status, index) {
     errorMessageEdit.style.display = 'none'; 
 
     if (status === 'edit') {
-      incomeArray[index].title = titleInput.value;
+      incomeArray[index].description = titleInput.value;
       incomeArray[index].amount = amountInput.value;
     } else {
-      incomeArray.push({ title: titleInput.value, amount: amountInput.value });
+      incomeArray.push({ description: titleInput.value, amount: amountInput.value });
     }
     localStorage.setItem('income', JSON.stringify(incomeArray));
     renderIncome(); 
@@ -124,4 +140,5 @@ function addIncome(amount, description) {
     updateTotals();  // Update totals
     renderBudgetTracking();  // Recalculate and update budget tracking
 }
+
 
