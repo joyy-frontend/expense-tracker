@@ -132,16 +132,14 @@ export function renderIncome() {
 
 
 // Function to handle income editing
-function IncomeHandleEdit(index) {
-    
+function IncomeHandleEdit(index) { 
     const monthData = monthsData[currentMonth];
     console.log('Editing income:', monthData.income[index]);  // Debugging
-
-    clearIncomeModalInputs();
-
+    //clearIncomeModalInputs();
+    
+    editIncomeModal.style.display = 'block';
     document.getElementById('incomeTitleEdit').value = monthData.income[index].description;
     document.getElementById('incomeAmountEdit').value = monthData.income[index].amount;
-    editIncomeModal.style.display = 'block';
     document.querySelector('#errorMessageEdit').style.display = 'none';
     editIncomeBtn.setAttribute('data-index', index);
 }
@@ -161,14 +159,6 @@ function incomeHandleDelete(e) {
     renderIncome();  // Re-render after deletion
     updateTotals();    // Recalculate totals
     renderBudgetTracking();  // Recalculate budget tracking
-}
-
-// Function to clear modal inputs for income
-function clearIncomeModalInputs() {
-    document.querySelectorAll('#errorMessageEdit').style = 'none';
-
-    document.getElementById('incomeTitleEdit').value = '';
-    document.getElementById('incomeAmountEdit').value = '';
 }
 
 ///////////////////////////////////////////////////////expense
