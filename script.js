@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 export let categories = [
     { symbol: '🏠', title: 'Rent', description: 'Monthly rent', budget: 3000 },
     { symbol: '🛍️', title: 'Shopping', description: 'Clothing and other shopping', budget: 1000 },
@@ -17,6 +10,7 @@ const now = new Date(); // Create new date obj
 const currentYear = now.getFullYear(); // Get current year
 const currentMonthIndex = now.getMonth(); // Get current month (0-11)
 const months = [];
+const editIncomeModal = document.getElementById('editIncomeModal');
 
 for (let year = 2024; year <= 2200; year++) {
     for (let month = 0; month < 12; month++) {
@@ -64,9 +58,6 @@ function changeMonth(direction) {
     updateExpenseChart();   // Update the expense chart for the new month
     renderBudgetTracking(); // Re-render the budget tracking for the new month
 }
-
-
-
 
 document.querySelector('.material-icons.left').addEventListener('click', () => changeMonth('prev'));
 document.querySelector('.material-icons.right').addEventListener('click', () => changeMonth('next'));
@@ -142,8 +133,12 @@ export function renderIncome() {
 
 // Function to handle income editing
 function IncomeHandleEdit(index) {
+    
     const monthData = monthsData[currentMonth];
     console.log('Editing income:', monthData.income[index]);  // Debugging
+
+    clearIncomeModalInputs();
+
     document.getElementById('incomeTitleEdit').value = monthData.income[index].description;
     document.getElementById('incomeAmountEdit').value = monthData.income[index].amount;
     editIncomeModal.style.display = 'block';
@@ -158,6 +153,13 @@ function incomeHandleDelete(e) {
     renderBudgetTracking();  // Recalculate budget tracking
 }
 
+// Function to clear modal inputs for income
+function clearIncomeModalInputs() {
+    document.querySelectorAll('#errorMessageEdit').style = 'none';
+
+    document.getElementById('incomeTitleEdit').value = '';
+    document.getElementById('incomeAmountEdit').value = '';
+}
 
 ///////////////////////////////////////////////////////expense
 export function renderExpense() {

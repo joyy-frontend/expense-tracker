@@ -408,13 +408,7 @@ td {
   width: 100%;
 }
 
-#errorMessageEdit {
-  display: none;
-  color: red;
-  font-size: 14px;
-}
-
-#exerrorMessage {
+#exerrorMessage, #exerrorMessageEdit {
   color: #e74c3c;
   font-size: 18px;
   margin-top: 10px;
@@ -429,6 +423,7 @@ td {
   margin-top: 10px;
   display: none;
 }
+
 
 #saveIncomeBtn,
 #editIncomeBtn,
