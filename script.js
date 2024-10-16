@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 export let categories = [
     { symbol: '🏠', title: 'Rent', description: 'Monthly rent', budget: 3000 },
     { symbol: '🛍️', title: 'Shopping', description: 'Clothing and other shopping', budget: 1000 },
@@ -6,16 +13,29 @@ export let categories = [
 
 export let expenses = [];
 export let monthsData = {};
-export let currentMonth = 'October 2024';
-export const salary = document.querySelector('.salary');
+const now = new Date(); // Create new date obj
+const currentYear = now.getFullYear(); // Get current year
+const currentMonthIndex = now.getMonth(); // Get current month (0-11)
+const months = [];
 
-const closeModalButtons = document.querySelectorAll('.close');  
+for (let year = 2024; year <= 2200; year++) {
+    for (let month = 0; month < 12; month++) {
+        const date = new Date(year, month);
+        const monthName = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+        months.push(monthName);
+    }
+}
+
+export let currentMonth = months[currentMonthIndex + (currentYear - 2024) * 12]; // get index.
+export const salary = document.querySelector('.salary');
+export const closeModalButtons = document.querySelectorAll('.close');  
 
 // Function to update the current month
 export function setCurrentMonth(currentMonth) {
     const showCurrentMonth = document.querySelector('#currentMonth');
-    showCurrentMonth.innerHTML = currentMonth;
+    showCurrentMonth.innerHTML = currentMonth;
 }
+
 
 // Function to render both income and expense data for a selected month
 export function renderDataForMonth(month) {
@@ -27,11 +47,6 @@ export function renderDataForMonth(month) {
 }
 
 function changeMonth(direction) {
-    const months = [
-        'January 2024', 'February 2024', 'March 2024', 'April 2024', 
-        'May 2024', 'June 2024', 'July 2024', 'August 2024', 
-        'September 2024', 'October 2024', 'November 2024', 'December 2024'
-    ];
     let currentIndex = months.indexOf(currentMonth);
     
     if (direction === 'next') {
@@ -49,6 +64,7 @@ function changeMonth(direction) {
     updateExpenseChart();   // Update the expense chart for the new month
     renderBudgetTracking(); // Re-render the budget tracking for the new month
 }
+
 
 
 
@@ -89,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
 export function renderIncome() {
     const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
     salary.innerHTML = '';  // Clear previous income list
-
+    
     // Standardize rendering for old and new income data
     monthData.income.forEach((income, index) => {
         // Create income element container

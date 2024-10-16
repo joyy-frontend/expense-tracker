@@ -43,6 +43,8 @@ addExpenseBtn.addEventListener('click', () => {
     document.getElementById('expenseDescriptionInput').value = ''; // Clear previous inputs
     document.getElementById('expensePriceInput').value = '';
     document.getElementById('expenseDateInput').value = getTodayDate();
+    const exerrorMessage = document.querySelector('#exerrorMessage');
+    exerrorMessage.innerHTML = '';
     addExpenseModal.style.display = 'block';
 });
 
@@ -55,12 +57,17 @@ saveExpenseBtn.addEventListener('click', (e) => {
     const expenseDescription = document.getElementById('expenseDescriptionInput').value;
     const expensePrice = document.getElementById('expensePriceInput').value;
     const expenseDate = document.getElementById('expenseDateInput').value;
+    const exerrorMessage = document.getElementById('exerrorMessage'); 
 
     if (selectedCategory && expenseDescription && expensePrice && expenseDate) {
         addExpense(`${selectedCategory.symbol} ${selectedCategory.title}`, expensePrice, expenseDescription, expenseDate);
         addExpenseModal.style.display = 'none'; // Close modal
     } else {
-        alert('Please fill in all fields.');
+        console.log("test");
+        exerrorMessage.textContent = 'Please fill all fields before saving.';  
+        exerrorMessage.style.color = 'red'; 
+        exerrorMessage.style.display = 'block';  
+        return;  
     }
 });
 

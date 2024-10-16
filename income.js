@@ -4,7 +4,6 @@ const btnIncomeNew = document.getElementById("btnIncomeNew");
 const addIncomeModal = document.getElementById('addIncomeModal');
 const saveIncomeBtn = document.getElementById('saveIncomeBtn');
 const errorMessage = document.getElementById('errorMessage');
-const salary = document.querySelector('.salary');
 const editIncomeModal = document.getElementById('editIncomeModal');
 const editIncomeBtn = document.getElementById('editIncomeBtn');
 const incomeArray = [];  // Temporary, as income data is fetched from monthsData[currentMonth]
@@ -38,6 +37,8 @@ editIncomeBtn.addEventListener('click', (e) => {
 // Clear modal input fields
 function incomeClearModalInputs(modal) {
     const inputs = modal.querySelectorAll('input');
+    const errorMessage = modal.querySelector('#errorMessage');
+    errorMessage.innerHTML = '';
     inputs.forEach(input => {
         input.value = '';
     });

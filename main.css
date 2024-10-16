@@ -408,6 +408,20 @@ td {
   width: 100%;
 }
 
+#errorMessage {
+  color: #e74c3c;
+  font-size: 18px;
+  margin-top: 10px;
+  display: none;
+}
+
+#errorMessageEdit {
+  color: #e74c3c;
+  font-size: 18px;
+  margin-top: 10px;
+  display: none;
+}
+
 /* add income css (joy) */
 #errorMessage,
 #errorMessageEdit {
