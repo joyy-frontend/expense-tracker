@@ -13,16 +13,16 @@ let emojiPickerInitialized = false;
 renderCategories();
 
 document.addEventListener('DOMContentLoaded', () => {
-    //let emojiPickerInitialized = false;
-    // Show the modal when the +New button is clicked
     newCategoryBtn.addEventListener('click', () => {
         clearModalInputs();
+        addCategoryModal.style.display = 'block';
+        editingIndex = -1;
+
+        // Initialize emoji picker if it hasn't been initialized
         if (!emojiPickerInitialized) {
             emojiPicker('addEmojiPicker', 'categorySymbol');
             emojiPickerInitialized = true;  // Ensure we only initialize the picker once
         }
-        addCategoryModal.style.display = 'block';
-        editingIndex = -1;
     });
 
     // Add event listener for Save Button (Handle both new and editing case)
@@ -115,6 +115,7 @@ function handleDelete(e) {
 }
 
 function handleEdit(index) {
+    editingIndex = index;
     // Pre-fill the edit modal with the category's existing data
     document.getElementById('categorySymbolEdit').value = categories[index].symbol;
     document.getElementById('categoryTitleEdit').value = categories[index].title;
@@ -124,25 +125,31 @@ function handleEdit(index) {
     // Open the modal for editing
     editCategoryModal.style.display = 'block';
 
-    // Handle saving the edited category
+    // Initialize the emoji picker for editing if not already initialized
+    if (!emojiPickerInitialized) {
+        emojiPicker('editEmojiPicker', 'categorySymbolEdit');  // Initialize emoji picker for the edit modal
+        emojiPickerInitialized = true;  // Ensure we only initialize once
+    }
+    
+    // Add event listener for save button inside the edit modal
     editCategoryBtn.addEventListener('click', (e) => {
         e.preventDefault();
+        if (editingIndex !== -1) {
+            // Update the category in the array using the index
+            categories[editingIndex].symbol = document.getElementById('categorySymbolEdit').value;
+            categories[editingIndex].title = document.getElementById('categoryTitleEdit').value;
+            categories[editingIndex].description = document.getElementById('categoryDescriptionEdit').value;
+            categories[editingIndex].budget = parseFloat(document.getElementById('categoryBudgetEdit').value); // Update budget
 
-        // Update the category in the array using the index
-        categories[index].symbol = document.getElementById('categorySymbolEdit').value;
-        categories[index].title = document.getElementById('categoryTitleEdit').value;
-        categories[index].description = document.getElementById('categoryDescriptionEdit').value;
-        categories[index].budget = parseFloat(document.getElementById('categoryBudgetEdit').value); // Update budget
+            // Re-render the updated list of categories
+            renderCategories();
+            renderBudgetTracking(); // Update budget tracking
 
-        // Re-render the updated list of categories
-        renderCategories();
-
-        // Render the budget tracking with updated values
-        renderBudgetTracking();
-
-        // Close the modal after saving
-        editCategoryModal.style.display = 'none';
-    }, { once: true });
+            // Close the modal after saving
+            editCategoryModal.style.display = 'none';
+            editingIndex = -1; // Reset the editing index
+        }
+    });
 }
 
 
