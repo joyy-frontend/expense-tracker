@@ -69,6 +69,7 @@ function changeMonth(direction) {
     
     currentMonth = months[currentIndex];
     setCurrentMonth(currentMonth);
+    prevBtnDisplay();//haruka added
     
     // Re-render data for the new month
     renderDataForMonth(currentMonth); 
@@ -77,6 +78,15 @@ function changeMonth(direction) {
     renderBudgetTracking(); // Re-render the budget tracking for the new month
 }
 
+function prevBtnDisplay(){//haruka added
+    const prevButton = document.querySelector('.material-icons.left');
+    if (currentMonth == months[0]) {//when displayed month is first
+        prevButton.style.color = 'gray';
+        prevButton.style.pointerEvents = 'none';//disable prev event
+     } else {
+    prevButton.style.color = 'black';
+    prevButton.style.pointerEvents = 'auto';//able prev event
+    }};    
 document.querySelector('.material-icons.left').addEventListener('click', () => changeMonth('prev'));
 document.querySelector('.material-icons.right').addEventListener('click', () => changeMonth('next'));
 
