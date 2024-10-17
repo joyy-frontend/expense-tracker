@@ -28,6 +28,7 @@ main {
   border: 2px solid lightgrey;
   border-radius: 20px;
   margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .month-header {
@@ -108,6 +109,7 @@ main {
 .budget-item span:first-child {
   width: 60px;
   text-align: left;
+  font-weight: bold;
 }
 
 .budget-bar {
@@ -122,7 +124,6 @@ main {
 
 .budget-bar-inner {
   height: 100%;
-  background-color: #00bcd4;
   border-radius: 10px;
 }
 
@@ -255,7 +256,7 @@ main {
   stroke-dashoffset: 0;
 }
 
-.category-expence {
+.category-expense {
   display: flex;
   margin: 5px 0;
   gap: 10px;
@@ -268,19 +269,19 @@ main {
   font-size: 1rem;
 }
 
-.category-expence p {
+.category-expense p {
   width: 80%;
   margin: 0;
   padding: 0;
   font-size: 1rem;
 }
 
-.expence-item {
+.expense-item {
   display: flex;
   align-items: center;
 }
 
-.expence-wrap {
+.expense-wrap {
   align-items: center;
   flex-direction: column;
   display: flex;
@@ -289,12 +290,12 @@ main {
   font-size: 1.4rem;
 }
 
-.color-expence {
+.color-expense {
   color: red;
   font-weight: bold;
 }
 
-.category-expence:hover .color-expence {
+.category-expense:hover .color-expense {
   color: white;
 }
 
@@ -327,30 +328,33 @@ main {
   margin-left: auto;
 }
 
-.expence-container {
+.expense-container {
   border: solid 2px var(--gray-line);
   border-radius: 20px;
   width: 50%;
   margin-top: 20px;
   padding: 2rem;
+  height: 143.54px; /* Default height */
+  overflow: hidden; /* Prevent content overflow */
+  transition: height 0.3s ease; /* Smooth transition when height changes */
 }
 
 h2 {
   font-size: 2rem;
 }
 
-.expence-list {
+.expense-list {
   margin: 0 auto;
   border-collapse: collapse;
 }
 
-.expence-list th,
+.expense-list th,
 td {
   border: solid 1px;
   padding: 5%;
 }
 
-.expence-list th {
+.expense-list th {
   width: 100px;
   height: 30px;
 }
@@ -376,7 +380,7 @@ td {
 }
 
 .category-item:hover,
-.category-expence:hover,
+.category-expense:hover,
 .income-box:hover {
   background-color: var(--main-color);
   color: white;
