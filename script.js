@@ -183,7 +183,7 @@ function incomeHandleDelete(e) {
 ///////////////////////////////////////////////////////expense
 export function renderExpense() {
     const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
-    const expensesContainer = document.querySelector('.expence-wrap');
+    const expensesContainer = document.querySelector('.expense-wrap');
     expensesContainer.innerHTML = ''; // Clear previous expenses
 
     // Render each expense
@@ -426,12 +426,13 @@ export function renderBudgetTracking() {
     categories.forEach(category => {
         const totalSpent = categoryTotals[category.title] || 0;
         const percentage = Math.min((totalSpent / category.budget) * 100, 100);  // Calculate percentage, cap at 100%
-        let barColor = 'green';  // Default bar color
+        //let barColor = '#f35288';  // main color
+        let barColor = '#a7b6f7';  // blue
 
         // Check if the total spent exceeds or is equal to the budget
         if (totalSpent >= category.budget) {
-            barColor = 'red';  // Change bar color to red if over the budget
-
+            //barColor = 'red';  // Change bar color to red if over the budget
+            barColor = '#f35288'
             // Show the alert only if it hasn't been shown before for this category
             if (!category.alertShown) {
                 alert(`⛔️ You have exceeded or reached your budget for ${category.title}!`);
