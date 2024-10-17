@@ -177,11 +177,14 @@ main {
   justify-content: space-between;
   width: 100%;
   align-items: center;
+  position: relative;
 }
 
-.income h1 {
+.income h2 {
   font-size: 2rem;
-  margin-right: -40px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .income-btn-new {
@@ -303,9 +306,25 @@ main {
   width: 100%;
 }
 
-.expense h2,
-.category h2 {
+.expense-area {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
+  align-items: center;
+  position: relative;
+}
+
+.expense h2 {
+  font-size: 2rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.expense-btn-new {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
 }
 
 .expence-container {
@@ -428,8 +447,25 @@ td {
   font-size: 1.4rem;
 }
 
-.category-header h2 {
+.category-area {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
+  align-items: center;
+  position: relative;
+}
+
+.category-header h2 {
+  font-size: 2rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.category-btn-new {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
 }
 
 #exerrorMessage,
