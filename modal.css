@@ -146,11 +146,6 @@
 .ctgry-flex:nth-of-type(4) input {
   width: 25%;
 }
-#addCategoryModal #categorySymbol,
-#categorySymbolEdit {
-  /*width: 8rem;*/
-  /*margin: 0.5rem 0;*/
-}
 
 #addExpenseModal label,
 #editExpenseModal label {

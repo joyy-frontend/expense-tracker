@@ -399,9 +399,11 @@ td {
 .save-exence-wrap,
 .edit-category-wrap,
 .save-category-wrap {
-  text-align: right;
+  text-align: center;
 }
-
+.edit-category-wrap {
+  margin-top: 1rem;
+}
 .save-category-wrap {
   margin-top: 1rem;
 }
