@@ -200,7 +200,7 @@ export function renderExpense() {
     monthData.expenses.forEach((expense, index) => {
         const expenseItem = `
             <div class="category-expense" data-index="${index}">
-                <p data-index="${index}">${expense.category} <p>${expense.description}</p></p>
+                <p data-index="${index}">${expense.category} </p><p>${expense.description}</p>
                 <p class="color-expense">$${expense.amount}</p>
                 <p>${expense.date}</p>
                 <button class="delete-btn" data-index="${index}">Delete</button>
@@ -469,3 +469,19 @@ export function renderBudgetTracking() {
 
     saveToLocalStorage();
 }
+
+//haruka added for mobile add botton
+const responsiveAddBtnText = document.querySelectorAll('#btnIncomeNew,#addExpenseBtn, #newCategoryBtn');
+function updateText() {
+const newText = window.innerWidth <= 875 ? "+" : "+New";
+responsiveAddBtnText.forEach(btn => {
+    btn.textContent = newText;
+});
+}
+
+//render it
+updateText();
+
+// when window resized, render
+window.addEventListener('resize', updateText);
+

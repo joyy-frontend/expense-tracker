@@ -25,6 +25,7 @@ main {
   font-weight: 700;
   font-size: 3rem;
   width: 50%;
+  min-width: 320px;
   border: 2px solid lightgrey;
   border-radius: 20px;
   margin-bottom: 20px;
@@ -51,6 +52,7 @@ main {
 .summary-container {
   background-color: var(--main-color);
   width: 50%;
+  min-width: 320px;
   border-radius: 20px;
   padding: 2%;
   color: #fff;
@@ -92,11 +94,12 @@ main {
 }
 
 .budget-container {
-  background-color: #FBCBDC;
+  background-color: #fbcbdc;
   width: 50%;
+  min-width: 320px;
   border-radius: 20px;
   padding: 2rem;
-  color: #F35288;
+  color: #f35288;
   margin-top: 20px;
 }
 
@@ -142,6 +145,7 @@ main {
   justify-content: space-between;
   text-align: center;
   width: 50%;
+  min-width: 320px;
   padding: 2rem;
   border: 2px solid lightgrey;
   line-height: 2rem;
@@ -264,7 +268,6 @@ main {
   border: solid 2px var(--gray-line);
   border-radius: 20px;
   padding: 10px;
-  line-height: 30px;
   width: 100%;
   font-size: 1rem;
 }
@@ -279,15 +282,8 @@ main {
 .expense-item {
   display: flex;
   align-items: center;
-}
-
-.expense-wrap {
-  align-items: center;
-  flex-direction: column;
-  display: flex;
-  text-align: center;
-  padding: 0 20px;
-  font-size: 1.4rem;
+  padding: 0.5rem;
+  font-size: 1.5rem;
 }
 
 .color-expense {
@@ -332,6 +328,7 @@ main {
   border: solid 2px var(--gray-line);
   border-radius: 20px;
   width: 50%;
+  min-width: 320px;
   margin-top: 20px;
   padding: 2rem;
   height: 143.54px; /* Default height */
@@ -392,11 +389,27 @@ td {
   text-align: left;
 }
 
+.category-item p:first-of-type {
+  max-width: calc((100% - 5.2rem) / 2);
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding-right: 5px;
+}
 .save-exence-wrap,
-.edit-category-wrap {
+.edit-category-wrap,
+.save-category-wrap {
   text-align: right;
 }
 
+.save-category-wrap {
+  margin-top: 1rem;
+}
+
+.edit-category-wrap,
+.save-exence-wrap {
+  padding: 0.5rem;
+}
 .expense-chart {
   margin-bottom: 1.5rem;
 }
@@ -418,6 +431,26 @@ td {
   margin: 10px 0;
 }
 
+.category-expense p:first-of-type {
+  /*to hide some part of text and show "..."*/
+  min-width: 30px;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: left;
+}
+
+.category-expense p:nth-of-type(2) {
+  /*to hide some part of text and show "..."*/
+  max-width: 200px;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: left;
+}
+.category-expense p:nth-of-type(3) {
+  text-align: right;
+}
 .category-expense:hover {
   background-color: var(--main-color);
   color: white;
@@ -440,6 +473,7 @@ td {
   border: solid 2px var(--gray-line);
   border-radius: 20px;
   width: 50%;
+  min-width: 320px;
   padding: 2rem;
 }
 
@@ -557,6 +591,9 @@ input:focus {
   text-align: center;
 }
 
+p {
+  text-overflow: ellipsis;
+}
 /******** footer ***********/
 footer {
   margin-top: 2rem;
@@ -564,4 +601,92 @@ footer {
   background-color: #331524;
   color: white;
   padding: 1rem;
+}
+
+.expense-chart {
+  width: 90%;
+}
+
+/********************/
+/*for smartphone*/
+@media (max-width: 767px) {
+  .save-exence-wrap,
+  .edit-category-wrap {
+    text-align: center;
+  }
+
+  .budget-item span:last-child {
+    width: 75px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .budget-item span:first-child {
+    width: 75px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .budget-bar {
+    margin: 0;
+  }
+  .income-area {
+    position: relative;
+  }
+  .income-btn-new {
+    position: absolute;
+    top: -24px;
+    right: 0;
+  }
+
+  .salary {
+    margin-top: 1.5rem;
+  }
+  .income-container,
+  .expense-container,
+  .category-container {
+    padding: 2rem 0 0 0;
+  }
+
+  .category-expense {
+    gap: 5px;
+  }
+  .expense-chart {
+    margin-top: 1rem;
+  }
+
+  .category-expense p:first-of-type {
+    min-width: 30px;
+    max-width: 30px;
+    text-overflow: unset;
+  }
+  .category-expense p:nth-of-type(2) {
+    min-width: 60px;
+  }
+  .category-expense p:nth-of-type(3) {
+    min-width: 70px;
+    max-width: 70px;
+    font-size: 0.8rem;
+  }
+  .category-expense p:nth-of-type(4) {
+    min-width: 40px;
+    text-wrap: wrap;
+    font-size: 0.8rem;
+  }
+  .expense-container .delete-btn {
+    width: 3rem;
+    font-size: 10px;
+    padding: 5px;
+    height: auto;
+  }
+  #delIncomeBtn {
+    font-size: 14px;
+    width: 4rem;
+    padding: 0;
+  }
+  .categories {
+    padding: 2% 20px 1rem 20px;
+  }
+  .expense-wrap {
+    padding: 0 1rem;
+  }
 }

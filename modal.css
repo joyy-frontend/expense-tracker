@@ -24,6 +24,8 @@
   padding: 20px;
   border: 1px solid #888;
   width: 80%; /*check leter, originally 35%*/
+  min-width: 360px;
+  max-width: 1000px;
   max-height: 90%;
   overflow-y: auto;
 }
@@ -57,10 +59,15 @@
   border-radius: 5px;
   padding: 0.5rem;
   width: 100%;
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  /* margin-bottom: 0.5rem; */
 }
-
+#expensePriceInput {
+  margin: 0;
+}
+#addExpenseModal #addExpenseModal input {
+  margin: 0;
+}
 .modal-content select {
   border: 2px solid var(--gray-line);
   border-radius: 5px;
@@ -75,31 +82,38 @@
   gap: 1rem;
 }
 
-.expence-item {
+/* .expence-item {
   flex: 1; /* make Price and Date's input width same*/
-}
-.expence-flex > .expence-item > input {
+/* } */
+/* .expence-flex > .expence-item > input {
   width: 100%;
   height: 3rem;
-}
+} */
 #addCategoryModal,
 #editCategoryModal,
 #editExpenseModal {
   text-align: left;
 }
 
+#addExpenseModal h2,
 #addCategoryModal h2,
 #editCategoryModal h2,
 #editExpenseModal h2 {
   text-align: center;
+  margin-bottom: 10px;
 }
 
 #addCategoryModal label,
 #editCategoryModal label {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   text-align: left;
   display: inline-block;
-  margin-top: 0.5rem;
+  /*margin-top: 0.5rem;*/
+}
+
+#addCategoryModal label,
+#editCategoryModal label {
+  text-align: center;
 }
 
 #editExpenseModal .expence-item {
@@ -111,27 +125,59 @@
 }
 .ctgry-flex {
   display: flex;
-  margin-top: 1rem;
+  margin-top: 1.2rem;
+  align-items: center;
 }
 
 .ctgry-flex label {
   text-wrap: none;
   white-space: nowrap;
-  margin-right: 0.2rem;
+  margin-right: 5px;
 }
 
+.ctgry-flex:nth-of-type(2) {
+  margin-bottom: 1rem;
+}
+
+.ctgry-flex:nth-of-type(2) input {
+  width: 25%;
+}
+
+.ctgry-flex:nth-of-type(4) input {
+  width: 25%;
+}
 #addCategoryModal #categorySymbol,
 #categorySymbolEdit {
-  width: 8rem;
-  margin: 0.5rem 0;
+  /*width: 8rem;*/
+  /*margin: 0.5rem 0;*/
 }
 
-#addExpenseModal label {
-  display: inline-block;
-  margin: 1rem 0.2rem 0.2rem 0;
-  height: 3rem; /*same hight as input*/
+#addExpenseModal label,
+#editExpenseModal label {
+  /* display: inline-block; */
+  /*margin: 1rem 0.2rem 0.2rem 0;
+  /*height: 3rem; /*same hight as input*/
+  width: 12%;
+  min-width: 112px;
+  margin-right: 5px;
+  text-align: right;
+}
+#addCategoryModal label,
+#editCategoryModal label {
+  width: 15%;
+  min-width: 160px;
+  /* margin-right: 5px; */
 }
 
+#editExpenseModal .modal-content,
+#addExpenseModal .modal-content,
+#addCategoryModal .modal-content,
+#editCategoryModal .modal-content {
+  padding: min(5%, 3rem);
+}
+.expense-item input {
+  width: 100%;
+}
 #addEmojiPicker,
 #editEmojiPicker {
   width: 100%;
@@ -179,6 +225,12 @@
   font-weight: bold;
 }
 
-#categoryTitleEdit {
-  width: 75%;
+#editExpenseModal input[type="number"],
+#editExpenseModal input[type="text"],
+#addExpenseModal input[type="text"],
+#addCategoryModal input[type="text"],
+#addCategoryModal input[type="number"],
+#editCategoryModal input[type="text"],
+#editCategoryModal input[type="number"] {
+  margin: 0;
 }
