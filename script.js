@@ -41,6 +41,7 @@ function changeMonth(direction) {
     
     currentMonth = months[currentIndex];
     setCurrentMonth(currentMonth);
+    prevBtnDisplay();//haruka added
     
     // Re-render data for the new month
     renderDataForMonth(currentMonth); 
@@ -49,6 +50,15 @@ function changeMonth(direction) {
     renderBudgetTracking(); // Re-render the budget tracking for the new month
 }
 
+function prevBtnDisplay(){//haruka added
+    const prevButton = document.querySelector('.material-icons.left');
+    if (currentMonth == months[0]) {//when displayed month is first
+        prevButton.style.color = 'gray';
+        prevButton.style.pointerEvents = 'none';//disable prev event
+     } else {
+    prevButton.style.color = 'black';
+    prevButton.style.pointerEvents = 'auto';//able prev event
+    }};    
 document.querySelector('.material-icons.left').addEventListener('click', () => changeMonth('prev'));
 document.querySelector('.material-icons.right').addEventListener('click', () => changeMonth('next'));
 
@@ -118,7 +128,7 @@ window.addEventListener('click', (e) => {
 
 
 
-///////////////////////////////////////////////////////////////expense
+///////////////////////////////////////////////////////////////income
 export function renderIncome() {
     const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
     salary.innerHTML = '';  // Clear previous income list
@@ -224,8 +234,8 @@ export function renderExpense() {
     monthData.expenses.forEach((expense, index) => {
         const expenseItem = `
             <div class="category-expense" data-index="${index}">
-                <p data-index="${index}">${expense.category} ${expense.description}</p>
-                <p class="color-expense">${expense.amount}</p>
+                <p data-index="${index}">${expense.category} <p>${expense.description}</p></p>
+                <p class="color-expense">$${expense.amount}</p>
                 <p>${expense.date}</p>
                 <button class="delete-btn" data-index="${index}">Delete</button>
             </div>`;
@@ -485,12 +495,13 @@ export function renderBudgetTracking() {
     categories.forEach(category => {
         const totalSpent = categoryTotals[category.title] || 0;
         const percentage = Math.min((totalSpent / category.budget) * 100, 100);  // Calculate percentage, cap at 100%
-        let barColor = 'green';  // Default bar color
+        //let barColor = '#f35288';  // main color
+        let barColor = '#a7b6f7';  // blue
 
         // Check if the total spent exceeds or is equal to the budget
         if (totalSpent >= category.budget) {
-            barColor = 'red';  // Change bar color to red if over the budget
-
+            //barColor = 'red';  // Change bar color to red if over the budget
+            barColor = '#f35288'
             // Show the alert only if it hasn't been shown before for this category
             if (!category.alertShown) {
                 alert(`⛔️ You have exceeded or reached your budget for ${category.title}!`);
