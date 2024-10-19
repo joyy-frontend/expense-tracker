@@ -334,7 +334,7 @@ main {
   width: 50%;
   margin-top: 20px;
   padding: 2rem;
-  height: 143.54px; /* Default height */
+  /*height: 143.54px; /* Default height */
   overflow: hidden; /* Prevent content overflow */
   transition: height 0.3s ease; /* Smooth transition when height changes */
 }

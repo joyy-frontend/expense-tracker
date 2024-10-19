@@ -4,41 +4,10 @@ const addExpenseModal = document.getElementById('addExpenseModal');
 const addExpenseBtn = document.getElementById('addExpenseBtn');
 const saveExpenseBtn = document.getElementById('saveExpenseBtn');
 
-//function saveToLocalStorage() {
-//    localStorage.setItem('monthsData', JSON.stringify(monthsData));
-//}
-
-//function loadFromLocalStorage() {
-//    const storedMonthsData = localStorage.getItem('monthsData');
-//    if (storedMonthsData) {
-//        Object.assign(monthsData, JSON.parse(storedMonthsData)); // Merge loaded data into `monthsData`
-//    }
-//}
-
-let hasAddedFirstExpense = false; 
-
-function updateExpenseContainerHeight() {
-    const expenseContainer = document.querySelector('.expense-container');
-
-    const currentHeight = parseFloat(getComputedStyle(expenseContainer).height);
-    
-    const addedExpenseCount = monthsData[currentMonth].expenses.length; // Get the number of expenses added so far
-    let newHeight;
-
-    if (!hasAddedFirstExpense) {
-        newHeight = currentHeight + 400 + 84; // Increase by 600px + 74px for the first expense
-        hasAddedFirstExpense = true;          // Set the flag to true after the first expense is added
-    } else {
-        const additionalHeight = 84 + (4 * (addedExpenseCount)); // Subtract 1 because first expense has a special height
-        console.log(addedExpenseCount);
-        newHeight = currentHeight + additionalHeight;
-    }
-
-    // Apply the new height to the container
-    expenseContainer.style.height = `${newHeight}px`;
-}
-
-
+document.addEventListener('DOMContentLoaded', () => {
+    loadFromLocalStorage();  // Load data from localStorage on page load
+    renderDataForMonth(currentMonth);  // Render data for the current month
+});
 
 
 function addExpense(categoryTitle, amount, description, date) {
@@ -53,9 +22,7 @@ function addExpense(categoryTitle, amount, description, date) {
         date: date
     };
 
-    
     monthsData[currentMonth].expenses.push(newExpense);
-    updateExpenseContainerHeight();
     saveToLocalStorage();
 
     renderExpense();  // Re-render expenses list
