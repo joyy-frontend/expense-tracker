@@ -1,9 +1,6 @@
-export let categories = [
-    { symbol: '🏠', title: 'Rent', description: 'Monthly rent', budget: 3000, alertShown: false },
+export let categories = JSON.parse(localStorage.getItem('categories')) || [{ symbol: '🏠', title: 'Rent', description: 'Monthly rent', budget: 3000, alertShown: false },
     { symbol: '🛍️', title: 'Shopping', description: 'Clothing and other shopping', budget: 1000, alertShown: false },
-    { symbol: '🛒', title: 'Grocery', description: 'Grocery shopping', budget: 500, alertShown: false }
-];
-
+    { symbol: '🛒', title: 'Grocery', description: 'Grocery shopping', budget: 500, alertShown: false }];
 export let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
 export let monthsData = JSON.parse(localStorage.getItem('monthsData')) || {};
 const now = new Date(); 
@@ -77,17 +74,29 @@ export function loadFromLocalStorage() {
     
     // Load monthsData from localStorage if available
     if (storedMonthsData) {
-        Object.assign(monthsData, JSON.parse(storedMonthsData));  // Merge loaded data into monthsData
-        console.log("monthsData loaded from localStorage:", monthsData);
+        try {
+            monthsData = JSON.parse(storedMonthsData);  // Overwrite safely with parsed data
+            console.log("monthsData loaded from localStorage:", monthsData);
+        } catch (e) {
+            console.error("Error parsing monthsData from localStorage", e);
+        }
     } else {
-        monthsData = {};  // Initialize it if localStorage is empty
+        monthsData = {};  // Initialize if localStorage is empty
     }
 
+    // Load categories from localStorage if available
     if (storedCategories) {
-        Object.assign(categories, JSON.parse(storedCategories));  
-        console.log("Categories loaded from localStorage:", categories);
+        try {
+            categories = JSON.parse(storedCategories);  // Overwrite safely with parsed data
+            console.log("Categories loaded from localStorage:", categories);
+        } catch (e) {
+            console.error("Error parsing categories from localStorage", e);
+        }
+    } else {
+        categories = [];  // Initialize as empty array if no data
     }
 }
+
 
 export function renderDataForMonth(month) {
     const monthData = monthsData[month] || { income: [], expenses: [] };
@@ -96,6 +105,18 @@ export function renderDataForMonth(month) {
     renderExpense(monthData);
 }
 
+export function saveCategoriesToLocalStorage() {
+    localStorage.setItem('categories', JSON.stringify(categories));
+}
+
+export function loadCategoriesFromLocalStorage() {
+    const storedCategories = localStorage.getItem('categories');
+    if (storedCategories) {
+        categories = JSON.parse(storedCategories); // Load and overwrite current categories
+    } else {
+        categories = []; // Initialize with an empty array if no data in local storage
+    }
+}
 
 
 //////////////////////////////// bring month data when page loads
@@ -103,6 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
     loadFromLocalStorage();
     setCurrentMonth(currentMonth);
     renderDataForMonth(currentMonth); // Initial render for the default month
+    loadCategoriesFromLocalStorage();
+    renderCategories();
 });
 
 
@@ -461,9 +484,15 @@ export function updateExpenseChart() {
 export function calculateCategoryExpenses() {
     const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
 
+    // Ensure categories is an array
+    if (!Array.isArray(categories)) {
+        console.error("Categories is not an array. Value of categories:", categories);
+        return {};  // Return an empty object if categories is invalid
+    }
+
     // Create a map of categories with their total expenses
     const categoryTotals = {};
-    
+
     // Initialize each category with 0 spent
     categories.forEach(category => {
         categoryTotals[category.title.trim()] = 0;
@@ -471,7 +500,6 @@ export function calculateCategoryExpenses() {
 
     // Sum expenses for each category
     monthData.expenses.forEach(expense => {
-        // Find the matching category by title
         const expenseCategoryTitle = expense.category.split(' ').slice(1).join(' ').trim();  // Remove emoji, match only the title
 
         if (categoryTotals[expenseCategoryTitle] !== undefined) {
@@ -484,6 +512,7 @@ export function calculateCategoryExpenses() {
     console.log('Category totals after calculation:', categoryTotals);  // Debugging
     return categoryTotals;
 }
+
 
 
 export function renderBudgetTracking() {
@@ -527,6 +556,34 @@ export function renderBudgetTracking() {
     });
 
     saveToLocalStorage();
+}
+
+// Function to render categories
+export function renderCategories() {
+    const categoriesContainer = document.querySelector('.categories');
+    categoriesContainer.innerHTML = '';  // Clear previous list
+
+    categories.forEach((category, index) => {
+        const categoryElement = document.createElement('div');
+        categoryElement.classList.add('category-item');
+        categoryElement.innerHTML = `
+            <p data-index="${index}">${category.symbol} ${category.title}</p><p>$${category.budget}</p>
+            <button class="delete-btn" data-index="${index}">Delete</button>
+        `;
+
+        categoriesContainer.appendChild(categoryElement);
+    });
+
+    document.querySelectorAll('.category-item p').forEach(p => {
+        p.addEventListener('click', (e) => {
+            const index = Number(e.target.dataset.index);
+            handleEdit(index);
+        });
+    });
+
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', handleDelete);
+    });
 }
 
 //haruka added for mobile add botton
