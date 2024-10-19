@@ -284,8 +284,8 @@ export function renderExpense() {
 
     saveToLocalStorage();
     updateExpenseChart();
+    showHideExpense();//added
 }
-
 
 function handleDelete(e) {
     const index = e.target.dataset.index;
@@ -362,7 +362,6 @@ function handleSaveExpense(index) {
 
         saveToLocalStorage();
         renderExpense();
-
         // Close the edit modal
         document.getElementById('editExpenseModal').style.display = 'none';
 
@@ -601,3 +600,53 @@ updateText();
 // when window resized, render
 window.addEventListener('resize', updateText);
 
+
+//// show more and show less button
+const displayBtn = document.getElementById('displayBtn');
+function showHideExpense(){
+    const expenseItemsRow = document.querySelectorAll('.category-expense');
+    let hiddenYes = false;//item to check if elements are hidden
+    expenseItemsRow.forEach(expense=>{
+        const index = Number(expense.getAttribute('data-index'));//get index-number attribute
+
+        if (index>2){//hide if idx is greater than 2
+            expense.style.height = '0';
+            expense.style.margin = '0';
+            expense.style.padding = 0;
+            expense.style.visibility = 'hidden';
+            hiddenYes = true;
+        }
+    });
+        
+        if (hiddenYes) {//if there are hidden items
+            displayBtn.style.display = 'block'; // Show button
+            displayBtn.textContent = 'Show More';
+        }else{
+            displayBtn.style.display = 'none'; // Show button
+            displayBtn.textContent = 'Show Less';
+        }
+};
+// Add event listener for displayBtn to toggle hidden expenses
+displayBtn.addEventListener('click', () => {
+    const expenseItemsRow = document.querySelectorAll('.category-expense');
+    
+    if(displayBtn.textContent === 'Show More'){
+    expenseItemsRow.forEach(expense => {// Show all expenses
+        expense.style.height = 'auto'; 
+        expense.style.margin = ''; // Reset margin to default
+        expense.style.padding = '';
+        expense.style.visibility = 'visible';
+    });
+    displayBtn.textContent = 'Show Less';//change button text
+}else{
+    expenseItemsRow.forEach(expense => {//hide items
+        const index = Number(expense.getAttribute('data-index'));
+        if (index > 2) {
+            expense.style.height = '0';
+            expense.style.margin = '0';
+            expense.style.padding = '0';
+            expense.style.visibility = 'hidden'; // Non-visible
+        }});
+        displayBtn.textContent = 'Show More';//change button number
+}
+});

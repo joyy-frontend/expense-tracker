@@ -609,6 +609,24 @@ footer {
   width: 90%;
 }
 
+.dispbtn {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+#displayBtn {
+  background: white;
+  border-radius: 20px;
+  width: auto;
+  height: 3rem;
+  border: solid 2px #e5e5e5;
+  color: var(--main-color);
+  font-size: 1rem;
+  padding: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+}
 /********************/
 /*for smartphone*/
 @media (max-width: 767px) {
@@ -690,5 +708,15 @@ footer {
   }
   .expense-wrap {
     padding: 0 1rem;
+  }
+
+  .dispbtn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  #displayBtn {
+    font-size: 14px;
+    height: auto;
+    padding: 5px;
   }
 }
