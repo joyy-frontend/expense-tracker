@@ -121,29 +121,28 @@
           <span class="close">&times;</span>
           <h2>Add Expense</h2>
           <!-- Category dropdown -->
-          <div>
-            <label for="expenseCategory">Category:</label>
+          <div class="expense-item"><label for="expenseCategory">Category:</label>
             <select id="expenseCategory">
             </select>
-            <div class="expense-item">
-              <label for="expenseDescriptionInput">Detail:</label>
-              <input type="text" id="expenseDescriptionInput" placeholder="ex: dress">
-            </div>
-            <div class="expense-flex">
-              <div class="expense-item">
-                <label for="expensePriceInput">Price:</label>
-                <input type="number" id="expensePriceInput">
-              </div>
-              <div class="expense-item">
-                <label for="expenseDateInput">Date:</label>
-                <input type="date" id="expenseDateInput" value="">
-              </div>
-            </div>
-            <div class="save-exence-wrap">
-              <button id="saveExpenseBtn">Save</button>
-            </div>
-            <div id="exerrorMessage"></div>
           </div>
+          <div class="expense-item">
+            <label for="expenseDescriptionInput">Detail:</label>
+            <input type="text" id="expenseDescriptionInput" placeholder="ex: house">
+          </div>
+          <!-- <div class="expense-flex"> -->
+          <div class="expense-item">
+            <label for="expensePriceInput">Price:</label>
+            <input type="number" id="expensePriceInput" placeholder="ex: 100.00">
+          </div>
+          <div class="expense-item">
+            <label for="expenseDateInput">Date:</label>
+            <input type="date" id="expenseDateInput" value="">
+          </div>
+          <!-- </div> -->
+          <div class="save-exence-wrap">
+            <button id="saveExpenseBtn">Save</button>
+          </div>
+          <div id="exerrorMessage"></div>
         </div>
       </div>
       <!-- Edit expense modal -->
@@ -152,9 +151,11 @@
           <span class="close">&times;</span>
           <h2>Edit Expense</h2>
           <!-- Category dropdown -->
-          <label for="expenseCategoryEdit">Category:</label>
-          <select id="expenseCategoryEdit">
-          </select>
+          <div class="expense-item">
+            <label for="expenseCategoryEdit">Category:</label>
+            <select id="expenseCategoryEdit">
+            </select>
+          </div>
           <div class="expense-item">
             <label for="expenseDescriptionEdit">Detail:</label>
             <input type="text" id="expenseDescriptionEdit">
@@ -203,14 +204,18 @@
             <label for="categoryTitleInput">Category Title:</label>
             <input type="text" id="categoryTitleInput">
           </div>
-          <label for="categorySymbol">Symbol:</label>
-          <input type="text" id="categorySymbol">
+          <div class="ctgry-flex">
+            <label for="categorySymbol">Symbol:</label>
+            <input type="text" id="categorySymbol">
+          </div>
           <emoji-picker id="addEmojiPicker"></emoji-picker>
-          <label for="categoryDescriptionInput">Description:</label>
-          <input type="text" id="categoryDescriptionInput">
-          <label for="categoryBudgetInput">Budget:</label>
-          <input type="number" id="categoryBudgetInput" placeholder="Set budget">
-          <div class="save-exence-wrap">
+          <div class="ctgry-flex"><label for="categoryDescriptionInput">Description:</label>
+            <input type="text" id="categoryDescriptionInput">
+          </div>
+          <div class="ctgry-flex"><label for="categoryBudgetInput">Budget:</label>
+            <input type="number" id="categoryBudgetInput" placeholder="Set budget">
+          </div>
+          <div class="save-category-wrap">
             <button id="saveCategoryBtn">Save</button>
           </div>
         </div>
@@ -221,17 +226,24 @@
       <div class="modal-content">
         <span class="close">&times;</span>
         <p id="categoryName"></p>
+        <h2>Edit Category</h2>
         <div class="ctgry-flex">
           <label for="categoryTitleEdit">Category Title:</label>
           <input type="text" id="categoryTitleEdit">
         </div>
-        <label for="categorySymbolEdit">Category Symbol:</label>
-        <input type="text" id="categorySymbolEdit">
+        <div class="ctgry-flex">
+          <label for="categorySymbolEdit">Symbol:</label>
+          <input type="text" id="categorySymbolEdit">
+        </div>
         <emoji-picker id="editEmojiPicker"></emoji-picker>
-        <label for="categoryDescriptionEdit">Description:</label>
-        <input type="text" id="categoryDescriptionEdit">
-        <label for="categoryBudgetEdit">Budget:</label>
-        <input type="number" id="categoryBudgetEdit">
+        <div class="ctgry-flex">
+          <label for="categoryDescriptionEdit">Description:</label>
+          <input type="text" id="categoryDescriptionEdit">
+        </div>
+        <div class="ctgry-flex">
+          <label for="categoryBudgetEdit">Budget:</label>
+          <input type="number" id="categoryBudgetEdit">
+        </div>
         <div class="edit-category-wrap"><button id="editCategoryBtn">Edit</button></div>
       </div>
     </div>
