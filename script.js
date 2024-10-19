@@ -4,14 +4,16 @@ export let categories = [
     { symbol: '🛒', title: 'Grocery', description: 'Grocery shopping', budget: 500, alertShown: false }
 ];
 
-export let expenses = [];
-export let monthsData = {};
+export let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+export let monthsData = JSON.parse(localStorage.getItem('monthsData')) || {};
 const now = new Date(); 
 const currentYear = now.getFullYear(); 
 const currentMonthIndex = now.getMonth(); 
 const months = [];
 const editIncomeModal = document.getElementById('editIncomeModal');
 
+
+////////////////////////////////////////////////// Month part
 for (let year = 2024; year <= 2200; year++) {
     for (let month = 0; month < 12; month++) {
         const date = new Date(year, month);
@@ -19,43 +21,13 @@ for (let year = 2024; year <= 2200; year++) {
         months.push(monthName);
     }
 }
-
 export let currentMonth = months[currentMonthIndex + (currentYear - 2024) * 12]; // get index.
 export const salary = document.querySelector('.salary');
 export const closeModalButtons = document.querySelectorAll('.close');  
 
-
-export function saveToLocalStorage() {
-    localStorage.setItem('monthsData', JSON.stringify(monthsData));
-    localStorage.setItem('categories', JSON.stringify(categories));
-}
-
-export function loadFromLocalStorage() {
-    const storedMonthsData = localStorage.getItem('monthsData');
-    const storedCategories = localStorage.getItem('categories');
-    
-    if (storedMonthsData) {
-        Object.assign(monthsData, JSON.parse(storedMonthsData)); // Merge loaded data into `monthsData`
-    }
-
-    if (storedCategories) {
-        Object.assign(categories, JSON.parse(storedCategories)); // Merge loaded categories
-    }
-}
-
-// Function to update the current month
 export function setCurrentMonth(currentMonth) {
     const showCurrentMonth = document.querySelector('#currentMonth');
     showCurrentMonth.innerHTML = currentMonth;
-}
-
-
-// Function to render both income and expense data for a selected month
-export function renderDataForMonth(month) {
-    const monthData = monthsData[month] || { income: [], expenses: [] };
-
-    renderIncome();
-    renderExpense(monthData);
 }
 
 function changeMonth(direction) {
@@ -80,13 +52,52 @@ function changeMonth(direction) {
 document.querySelector('.material-icons.left').addEventListener('click', () => changeMonth('prev'));
 document.querySelector('.material-icons.right').addEventListener('click', () => changeMonth('next'));
 
+
+
+/////////////////////////////////////////////////// local storage part
+export function saveToLocalStorage() {
+    localStorage.setItem('monthsData', JSON.stringify(monthsData));
+    localStorage.setItem('categories', JSON.stringify(categories));
+    //console.log("Saved monthsData:", localStorage.getItem('monthsData'));  
+}
+
+export function loadFromLocalStorage() {
+    const storedMonthsData = localStorage.getItem('monthsData');
+    const storedCategories = localStorage.getItem('categories');
+    
+    // Load monthsData from localStorage if available
+    if (storedMonthsData) {
+        Object.assign(monthsData, JSON.parse(storedMonthsData));  // Merge loaded data into monthsData
+        console.log("monthsData loaded from localStorage:", monthsData);
+    } else {
+        monthsData = {};  // Initialize it if localStorage is empty
+    }
+
+    if (storedCategories) {
+        Object.assign(categories, JSON.parse(storedCategories));  
+        console.log("Categories loaded from localStorage:", categories);
+    }
+}
+
+export function renderDataForMonth(month) {
+    const monthData = monthsData[month] || { income: [], expenses: [] };
+
+    renderIncome();
+    renderExpense(monthData);
+}
+
+
+
+//////////////////////////////// bring month data when page loads
 document.addEventListener('DOMContentLoaded', () => {
     loadFromLocalStorage();
     setCurrentMonth(currentMonth);
     renderDataForMonth(currentMonth); // Initial render for the default month
 });
 
-// Close X button
+
+
+//////////////////////////////// Close X button, Close the modal when clicking outside the modal
 closeModalButtons.forEach(button => {
     button.addEventListener('click', () => {
         const modal = button.closest('.modal');
@@ -98,7 +109,6 @@ closeModalButtons.forEach(button => {
     });
 });
 
-// Close the modal when clicking outside the modal
 window.addEventListener('click', (e) => {
     if (e.target.classList.contains('modal')) {
         e.target.style.display = 'none';
@@ -106,9 +116,6 @@ window.addEventListener('click', (e) => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    setCurrentMonth(currentMonth);
-});
 
 
 ///////////////////////////////////////////////////////////////expense
@@ -180,11 +187,38 @@ function incomeHandleDelete(e) {
     renderBudgetTracking();  // Recalculate budget tracking
 }
 
+
+
+
 ///////////////////////////////////////////////////////expense
-export function renderExpense() {
-    const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
-    const expensesContainer = document.querySelector('.expence-wrap');
+export function renderExpense() { 
+    const storedMonthsData = localStorage.getItem('monthsData'); 
+
+    if (!storedMonthsData) {
+        console.error("No data found in localStorage for 'monthsData'");
+        return;
+    }
+
+    // Parse monthsData and fetch data for the current month
+    const monthData = JSON.parse(storedMonthsData)[currentMonth] || { income: [], expenses: [] }; // Parse and access current month's data
+    const expensesContainer = document.querySelector('.expense-wrap');
     expensesContainer.innerHTML = ''; // Clear previous expenses
+    const chartContainer = document.querySelector('.expense-chart');
+    console.log("Rendering expenses for current month:", monthData.expenses);  // This will now show the correct expenses
+    
+    // If there are any expenses, remove the height restriction
+    if (monthData.expenses.length > 0) {
+        expensesContainer.style.height = 'auto'; // Allow the container to expand naturally
+        expensesContainer.style.overflow = 'visible'; // Show all expenses
+        chartContainer.style.display = 'block';
+        console.log("if condition");
+    } else {
+        // If no expenses, keep the default height
+        console.log("else condition");
+        //expensesContainer.style.height = '143.54px';
+        expensesContainer.style.overflow = 'hidden';
+        chartContainer.style.display = 'none';
+    }
 
     // Render each expense
     monthData.expenses.forEach((expense, index) => {
@@ -216,32 +250,25 @@ export function renderExpense() {
     });
 
     saveToLocalStorage();
+    updateExpenseChart();
 }
+
 
 function handleDelete(e) {
     const index = e.target.dataset.index;
+    monthsData[currentMonth].expenses.splice(index, 1);  // Remove the expense from the array
 
-    // Check if monthsData[currentMonth] and expenses are defined
-    if (!monthsData[currentMonth]) {
-        console.error(`No data found for the current month: ${currentMonth}`);
-        return;  // Exit the function if there's no data for the current month
+    const storedMonthsData = JSON.parse(localStorage.getItem('monthsData')) || {};
+    if (storedMonthsData[currentMonth] && storedMonthsData[currentMonth].expenses) {
+        storedMonthsData[currentMonth].expenses.splice(index, 1);
+        localStorage.setItem('monthsData', JSON.stringify(storedMonthsData));  // Save the updated data
     }
 
-    if (!monthsData[currentMonth].expenses || !monthsData[currentMonth].expenses[index]) {
-        console.error(`No expense found at index ${index} for the current month.`);
-        return;  // Exit the function if there's no expense at the provided index
-    }
-
-    // Remove the expense from the array
-    monthsData[currentMonth].expenses.splice(index, 1);  
-    
-    // Re-render after deletion
     renderExpense();  
     updateTotals();    
     updateExpenseChart(); 
     renderBudgetTracking();  
-
-    saveToLocalStorage();  // Save updated data to local storage
+    saveToLocalStorage();
 }
 
 
@@ -300,13 +327,16 @@ function handleSaveExpense(index) {
             date: expenseDate
         };
 
+        saveToLocalStorage();
         renderExpense();
+
+        // Close the edit modal
         document.getElementById('editExpenseModal').style.display = 'none';
+
+        // Update totals and charts after editing
         updateTotals();  // Update totals after editing
         updateExpenseChart();  // Update chart after editing
         renderBudgetTracking();  // Recalculate and update budget tracking
-
-        
     } else {
         console.log("Validation failed - showing error message");
 
@@ -316,6 +346,7 @@ function handleSaveExpense(index) {
         exerrorMessageEdit.style.color = 'red'; 
     }
 }
+
 
 
 function renderCategoryOptionsForEdit() {
@@ -332,7 +363,14 @@ function renderCategoryOptionsForEdit() {
 
 // This function will be used to update the total balance, total income, and total expenses dynamically
 export function updateTotals() {
-    const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
+    const storedMonthsData = localStorage.getItem('monthsData'); // Retrieve from localStorage
+
+    if (!storedMonthsData) {
+        console.error("No data found in localStorage for 'monthsData'");
+        return;
+    }
+
+    const monthData = JSON.parse(storedMonthsData)[currentMonth] || { income: [], expenses: [] }; // Parse and access current month's data
     
     // Calculate total income
     const totalIncome = monthData.income.reduce((sum, inc) => sum + parseFloat(inc.amount), 0);
@@ -350,10 +388,16 @@ export function updateTotals() {
 }
 
 
-
 // Function to generate the expenses chart with grouped categories
 export function updateExpenseChart() {
-    const monthData = monthsData[currentMonth] || { income: [], expenses: [] };
+    const storedMonthsData = localStorage.getItem('monthsData'); // Retrieve from localStorage
+
+    if (!storedMonthsData) {
+        console.error("No data found in localStorage for 'monthsData'");
+        return;
+    }
+
+    const monthData = JSON.parse(storedMonthsData)[currentMonth] || { income: [], expenses: [] }; // Parse and access current month's data
 
     // Group expenses by category
     const categoryTotals = {};

@@ -4,16 +4,11 @@ const addExpenseModal = document.getElementById('addExpenseModal');
 const addExpenseBtn = document.getElementById('addExpenseBtn');
 const saveExpenseBtn = document.getElementById('saveExpenseBtn');
 
-//function saveToLocalStorage() {
-//    localStorage.setItem('monthsData', JSON.stringify(monthsData));
-//}
+document.addEventListener('DOMContentLoaded', () => {
+    loadFromLocalStorage();  // Load data from localStorage on page load
+    renderDataForMonth(currentMonth);  // Render data for the current month
+});
 
-//function loadFromLocalStorage() {
-//    const storedMonthsData = localStorage.getItem('monthsData');
-//    if (storedMonthsData) {
-//        Object.assign(monthsData, JSON.parse(storedMonthsData)); // Merge loaded data into `monthsData`
-//    }
-//}
 
 function addExpense(categoryTitle, amount, description, date) {
     if (!monthsData[currentMonth]) {
