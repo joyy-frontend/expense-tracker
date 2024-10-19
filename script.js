@@ -622,7 +622,7 @@ function showHideExpense(){
             displayBtn.style.display = 'block'; // Show button
             displayBtn.textContent = 'Show More';
         }else{
-            displayBtn.style.display = 'none'; // Show button
+            displayBtn.style.display = 'none'; // hide button
             displayBtn.textContent = 'Show Less';
         }
 };
@@ -645,8 +645,8 @@ displayBtn.addEventListener('click', () => {
             expense.style.height = '0';
             expense.style.margin = '0';
             expense.style.padding = '0';
-            expense.style.visibility = 'hidden'; // Non-visible
+            expense.style.visibility = 'hidden';
         }});
-        displayBtn.textContent = 'Show More';//change button number
+        displayBtn.textContent = 'Show More';//change button text
 }
 });
