@@ -171,10 +171,11 @@ export function renderIncome() {
         salary.appendChild(incomeElement);
     });
 
-    // Reattach event listeners for editing income
-    document.querySelectorAll('.salary p').forEach(p => {
-        p.addEventListener('click', (e) => {
-            const index = Number(e.target.dataset.index);
+    document.querySelectorAll('.income-box').forEach(incomeDiv => {
+        incomeDiv.addEventListener('click', (e) => {
+            // Get the necessary information from the clicked div
+            const index = incomeDiv.querySelector('.income-title').dataset.index;
+            
             console.log(`Income edit clicked for index: ${index}`);  // Debugging
             IncomeHandleEdit(index);
         });
@@ -182,7 +183,10 @@ export function renderIncome() {
 
     // Reattach event listeners for deleting income
     document.querySelectorAll('.income-del').forEach(button => {
-        button.addEventListener('click', incomeHandleDelete);
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();  // Prevent the delete button from triggering the edit modal
+            incomeHandleDelete(e);  // Call the delete function
+        });
     });
 
     updateTotals();    // Recalculate totals after rendering income
