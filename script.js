@@ -288,7 +288,7 @@ export function renderExpense() {
 
     saveToLocalStorage();
     updateExpenseChart();
-    showHideExpense();//added
+    showHideExpense();
 }
 
 function handleDelete(e) {
@@ -607,50 +607,79 @@ window.addEventListener('resize', updateText);
 
 //// show more and show less button
 const displayBtn = document.getElementById('displayBtn');
-function showHideExpense(){
-    const expenseItemsRow = document.querySelectorAll('.category-expense');
-    let hiddenYes = false;//item to check if elements are hidden
-    expenseItemsRow.forEach(expense=>{
-        const index = Number(expense.getAttribute('data-index'));//get index-number attribute
+const expenseWrap = document.querySelector('.expense-wrap');
 
-        if (index>2){//hide if idx is greater than 2
-            expense.style.height = '0';
-            expense.style.margin = '0';
-            expense.style.padding = 0;
-            expense.style.visibility = 'hidden';
-            hiddenYes = true;
-        }
-    });
-        
-        if (hiddenYes) {//if there are hidden items
-            displayBtn.style.display = 'block'; // Show button
-            displayBtn.textContent = 'Show More';
-        }else{
-            displayBtn.style.display = 'none'; // hide button
-            displayBtn.textContent = 'Show Less';
-        }
-};
-// Add event listener for displayBtn to toggle hidden expenses
-displayBtn.addEventListener('click', () => {
+function btnChecker() {
+    const expenseItemsRow = document.querySelectorAll('.category-expense');
+
+  if (expenseItemsRow.length < 4) {
+    displayBtn.style.display = 'none';
+    return; // exit
+} 
+
+// data-index has more than 4, show button
+displayBtn.style.display = 'block';
+}
+
+// display/hide items
+function showHideExpense() {
     const expenseItemsRow = document.querySelectorAll('.category-expense');
     
-    if(displayBtn.textContent === 'Show More'){
-    expenseItemsRow.forEach(expense => {// Show all expenses
-        expense.style.height = 'auto'; 
-        expense.style.margin = ''; // Reset margin to default
-        expense.style.padding = '';
-        expense.style.visibility = 'visible';
-    });
-    displayBtn.textContent = 'Show Less';//change button text
-}else{
-    expenseItemsRow.forEach(expense => {//hide items
+    expenseItemsRow.forEach(expense => {
         const index = Number(expense.getAttribute('data-index'));
-        if (index > 2) {
+        let hiddenYes = false; // checklist whether it has hidden items or not
+
+        if (index > 2 && displayBtn.textContent === 'Show More') {
             expense.style.height = '0';
             expense.style.margin = '0';
             expense.style.padding = '0';
             expense.style.visibility = 'hidden';
-        }});
-        displayBtn.textContent = 'Show More';//change button text
+            hiddenYes = true; // checkmark to hidden item
+        } else {
+            expense.style.height = 'auto';
+            expense.style.margin = '';
+            expense.style.padding = '';
+            expense.style.visibility = 'visible';
+        }
+    });
+    
 }
+
+// to observe changes of numbers of element
+const observer = new MutationObserver(() => {//actions to do
+    btnChecker();
+    showHideExpense();
 });
+
+// what to observe
+observer.observe(expenseWrap, { childList: true, subtree: true });
+
+// element show/hide by click
+displayBtn.addEventListener('click', () => {
+    const expenseItemsRow = document.querySelectorAll('.category-expense');
+
+    if (displayBtn.textContent === 'Show More') {
+        expenseItemsRow.forEach(expense => {
+            expense.style.height = 'auto';
+            expense.style.margin = '';
+            expense.style.padding = '';
+            expense.style.visibility = 'visible';
+        });
+        displayBtn.textContent = 'Show Less';
+    } else {
+        expenseItemsRow.forEach(expense => {
+            const index = Number(expense.getAttribute('data-index'));
+            if (index > 2) {
+                expense.style.height = '0';
+                expense.style.margin = '0';
+                expense.style.padding = '0';
+                expense.style.visibility = 'hidden';
+            }
+        });
+        displayBtn.textContent = 'Show More';
+    }
+});
+
+// page loaded, take place
+btnChecker();
+showHideExpense();
