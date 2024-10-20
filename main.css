@@ -136,6 +136,19 @@ main {
 }
 
 /* income */
+.income-title {
+  display: flex;
+  text-align: left;
+  padding-left: 0%;
+  width: 15%;
+}
+
+.income-amount {
+  display: flex;
+  text-align: left;
+  width: 15%;
+}
+
 .income-first-container {
   width: 100%;
 }
@@ -270,6 +283,7 @@ main {
   padding: 10px;
   width: 100%;
   font-size: 1rem;
+  cursor: pointer;
 }
 
 .category-expense p {
@@ -332,8 +346,10 @@ main {
   margin-top: 20px;
   padding: 2rem;
   /*height: 143.54px; /* Default height */
-  overflow: hidden; /* Prevent content overflow */
-  transition: height 0.3s ease; /* Smooth transition when height changes */
+  overflow: hidden;
+  /* Prevent content overflow */
+  transition: height 0.3s ease;
+  /* Smooth transition when height changes */
 }
 
 h2 {
@@ -396,14 +412,17 @@ td {
   overflow: hidden;
   padding-right: 5px;
 }
+
 .save-exence-wrap,
 .edit-category-wrap,
 .save-category-wrap {
   text-align: center;
 }
+
 .edit-category-wrap {
   margin-top: 1rem;
 }
+
 .save-category-wrap {
   margin-top: 1rem;
 }
@@ -412,6 +431,7 @@ td {
 .save-exence-wrap {
   padding: 0.5rem;
 }
+
 .expense-chart {
   margin-bottom: 1.5rem;
 }
@@ -450,9 +470,11 @@ td {
   overflow: hidden;
   text-align: left;
 }
+
 .category-expense p:nth-of-type(3) {
   text-align: right;
 }
+
 .category-expense:hover {
   background-color: var(--main-color);
   color: white;
@@ -596,6 +618,7 @@ input:focus {
 p {
   text-overflow: ellipsis;
 }
+
 /******** footer ***********/
 footer {
   margin-top: 2rem;
@@ -614,6 +637,7 @@ footer {
   justify-content: center;
   margin-top: 1rem;
 }
+
 #displayBtn {
   background: white;
   border-radius: 20px;
@@ -627,9 +651,11 @@ footer {
   font-weight: bold;
   text-align: center;
 }
+
 /********************/
 /*for smartphone*/
 @media (max-width: 767px) {
+
   .save-exence-wrap,
   .edit-category-wrap {
     text-align: center;
@@ -641,17 +667,21 @@ footer {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
   .budget-item span:first-child {
     width: 75px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
   .budget-bar {
     margin: 0;
   }
+
   .income-area {
     position: relative;
   }
+
   .income-btn-new {
     position: absolute;
     top: -24px;
@@ -661,6 +691,7 @@ footer {
   .salary {
     margin-top: 1.5rem;
   }
+
   .income-container,
   .expense-container,
   .category-container {
@@ -670,6 +701,7 @@ footer {
   .category-expense {
     gap: 5px;
   }
+
   .expense-chart {
     margin-top: 1rem;
   }
@@ -679,33 +711,40 @@ footer {
     max-width: 30px;
     text-overflow: unset;
   }
+
   .category-expense p:nth-of-type(2) {
     min-width: 60px;
   }
+
   .category-expense p:nth-of-type(3) {
     min-width: 70px;
     max-width: 70px;
     font-size: 0.8rem;
   }
+
   .category-expense p:nth-of-type(4) {
     min-width: 40px;
     text-wrap: wrap;
     font-size: 0.8rem;
   }
+
   .expense-container .delete-btn {
     width: 3rem;
     font-size: 10px;
     padding: 5px;
     height: auto;
   }
+
   #delIncomeBtn {
     font-size: 14px;
     width: 4rem;
     padding: 0;
   }
+
   .categories {
     padding: 2% 20px 1rem 20px;
   }
+
   .expense-wrap {
     padding: 0 1rem;
   }
@@ -714,6 +753,7 @@ footer {
     margin-top: 10px;
     margin-bottom: 10px;
   }
+
   #displayBtn {
     font-size: 14px;
     height: auto;
