@@ -22,7 +22,7 @@ function addExpense(categoryTitle, amount, description, date) {
         date: date
     };
 
-    monthsData[currentMonth].expenses.push(newExpense);
+    monthsData[currentMonth].expenses.unshift(newExpense);
     saveToLocalStorage();
 
     renderExpense();  // Re-render expenses list

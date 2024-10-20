@@ -63,9 +63,9 @@ function handleIncomeAction(titleInput, amountInput, modal, status, index) {
       incomeArray[index].title = titleInput.value;
       incomeArray[index].amount = amountInput.value;
     } else {
-      incomeArray.push({ title: titleInput.value, amount: amountInput.value });
+      incomeArray.unshift({ title: titleInput.value, amount: amountInput.value });
     }
-    localStorage.setItem('income', JSON.stringify(incomeArray));
+    // localStorage.setItem('income', JSON.stringify(incomeArray));
     renderIncome(); 
     modal.style.display = 'none'; 
   } else {
@@ -117,7 +117,7 @@ function addIncome(amount, description) {
     if (!monthsData[currentMonth]) {
         monthsData[currentMonth] = { income: [], expenses: [] };
     }
-    monthsData[currentMonth].income.push({ amount, description });
+    monthsData[currentMonth].income.unshift({ amount, description });
     renderIncome();  // Re-render after adding new income
     updateTotals();  // Update totals
     renderBudgetTracking();  // Recalculate and update budget tracking

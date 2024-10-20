@@ -41,7 +41,7 @@ function handleSaveOrEdit(e) {
     if (categorySymbol && categoryTitle && categoryDescription && categoryBudget) {
         if (editingIndex === -1) {
             // Add new category with budget to the array
-            categories.push({ 
+            categories.unshift({ 
                 symbol: categorySymbol, 
                 title: categoryTitle, 
                 description: categoryDescription,
