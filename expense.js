@@ -5,8 +5,8 @@ const addExpenseBtn = document.getElementById('addExpenseBtn');
 const saveExpenseBtn = document.getElementById('saveExpenseBtn');
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadFromLocalStorage();  // Load data from localStorage on page load
-    renderDataForMonth(currentMonth);  // Render data for the current month
+    loadFromLocalStorage();  
+    renderDataForMonth(currentMonth);  
 });
 
 
@@ -25,22 +25,22 @@ function addExpense(categoryTitle, amount, description, date) {
     monthsData[currentMonth].expenses.unshift(newExpense);
     saveToLocalStorage();
 
-    renderExpense();  // Re-render expenses list
-    updateTotals();    // Update totals
-    updateExpenseChart();  // Update the expense chart for the current month
-    renderBudgetTracking();  // Update the budget tracking progress bars
+    renderExpense();  
+    updateTotals();    
+    updateExpenseChart();  
+    renderBudgetTracking();  
 }
 
 
 // Populate categories in the dropdown
 function renderCategoryOptions() {
     const categorySelect = document.getElementById('expenseCategory');
-    categorySelect.innerHTML = ''; // Clear previous options
+    categorySelect.innerHTML = ''; 
 
     categories.forEach((category, index) => {
         const option = document.createElement('option');
         option.value = index;
-        option.textContent = `${category.symbol} ${category.title}`; // Show symbol and title in the dropdown
+        option.textContent = `${category.symbol} ${category.title}`; 
         categorySelect.appendChild(option);
     });
 }

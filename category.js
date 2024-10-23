@@ -11,8 +11,8 @@ let emojiPickerInitialized = false;
 
 // Load categories from local storage when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    loadCategoriesFromLocalStorage(); // Load categories from local storage
-    renderCategories(); // Render the categories after loading from local storage
+    loadCategoriesFromLocalStorage();
+    renderCategories(); 
 });
 
 newCategoryBtn.addEventListener('click', () => {
@@ -20,10 +20,9 @@ newCategoryBtn.addEventListener('click', () => {
     addCategoryModal.style.display = 'block';
     editingIndex = -1;
 
-    // Initialize emoji picker if it hasn't been initialized
     if (!emojiPickerInitialized) {
         emojiPicker('addEmojiPicker', 'categorySymbol');
-        emojiPickerInitialized = true;  // Ensure we only initialize the picker once
+        emojiPickerInitialized = true;  
     }
 });
 
@@ -40,7 +39,6 @@ function handleSaveOrEdit(e) {
 
     if (categorySymbol && categoryTitle && categoryDescription && categoryBudget) {
         if (editingIndex === -1) {
-            // Add new category with budget to the array
             categories.unshift({ 
                 symbol: categorySymbol, 
                 title: categoryTitle, 
@@ -48,7 +46,6 @@ function handleSaveOrEdit(e) {
                 budget: parseFloat(categoryBudget)  // Include budget
             });
         } else {
-            // Edit existing category in the array
             categories[editingIndex] = { 
                 symbol: categorySymbol, 
                 title: categoryTitle, 
@@ -58,16 +55,10 @@ function handleSaveOrEdit(e) {
             editingIndex = -1;  // Reset after editing
         }
 
-        // Save categories to local storage
         saveCategoriesToLocalStorage();
-
-        // Render the updated list of categories
         renderCategories();
-
-        // Render budget tracking since categories have been updated
         renderBudgetTracking();
 
-        // Close the modal after saving
         addCategoryModal.style.display = 'none';
     } else {
         alert('Please fill in all fields including the budget.');
@@ -79,13 +70,13 @@ function clearModalInputs() {
     document.getElementById('categorySymbol').value = '';
     document.getElementById('categoryTitleInput').value = '';
     document.getElementById('categoryDescriptionInput').value = '';
+    document.getElementById('categoryBudgetInput').value = '';
 }
 
 function renderCategories() {
     categoriesContainer.innerHTML = '';  // Clear previous list
 
     categories.forEach((category, index) => {
-        // Create category element with the budget
         const categoryElement = document.createElement('div');
         categoryElement.classList.add('category-item');
         categoryElement.innerHTML = `
@@ -93,7 +84,6 @@ function renderCategories() {
             <button class="delete-btn" data-index="${index}">Delete</button>
         `;//haruka added <p></p> between title and amount to make spaces
 
-        // Append the element to the container
         categoriesContainer.appendChild(categoryElement);
     });
 
@@ -141,41 +131,37 @@ function handleDelete(e) {
                 }
             });
             // Proceed to delete the category
-            categories.splice(index, 1);  // Remove the category from the array
-            renderCategories();  // Re-render the categories list
-            renderExpense();  // Re-render the updated expense list
-            renderBudgetTracking();  // Update the budget tracking
-            updateTotals();  // Recalculate totals after deletion
-            saveToLocalStorage();  // Save changes to local storage
-            saveCategoriesToLocalStorage();  // Save updated categories to local storage
+            categories.splice(index, 1); 
+            renderCategories();  
+            renderExpense(); 
+            renderBudgetTracking();  
+            updateTotals(); 
+            saveToLocalStorage(); 
+            saveCategoriesToLocalStorage(); 
         }
     } else {
         categories.splice(index, 1);
-        renderCategories();  // Re-render the categories list
-        renderBudgetTracking();  // Update the budget tracking
-        saveToLocalStorage();  // Save changes to local storage
-        saveCategoriesToLocalStorage();  // Save updated categories to local storage
+        renderCategories(); 
+        renderBudgetTracking(); 
+        saveToLocalStorage(); 
+        saveCategoriesToLocalStorage(); 
     }
 }
 
 function handleEdit(index) {
     editingIndex = index;
-    // Pre-fill the edit modal with the category's existing data
     document.getElementById('categorySymbolEdit').value = categories[index].symbol;
     document.getElementById('categoryTitleEdit').value = categories[index].title;
     document.getElementById('categoryDescriptionEdit').value = categories[index].description;
     document.getElementById('categoryBudgetEdit').value = categories[index].budget; // Pre-fill budget
 
-    // Open the modal for editing
     editCategoryModal.style.display = 'block';
 
-    // Initialize the emoji picker for editing if not already initialized
     if (!emojiPickerInitialized) {
         emojiPicker('editEmojiPicker', 'categorySymbolEdit');  // Initialize emoji picker for the edit modal
         emojiPickerInitialized = true;  // Ensure we only initialize once
     }
     
-    // Add event listener for save button inside the edit modal
     editCategoryBtn.addEventListener('click', (e) => {
         e.preventDefault();
         if (editingIndex !== -1) {
@@ -185,14 +171,10 @@ function handleEdit(index) {
             categories[editingIndex].description = document.getElementById('categoryDescriptionEdit').value;
             categories[editingIndex].budget = parseFloat(document.getElementById('categoryBudgetEdit').value); // Update budget
 
-            // Save categories to local storage
             saveCategoriesToLocalStorage();
-
-            // Re-render the updated list of categories
             renderCategories();
-            renderBudgetTracking(); // Update budget tracking
+            renderBudgetTracking(); 
 
-            // Close the modal after saving
             editCategoryModal.style.display = 'none';
             editingIndex = -1; // Reset the editing index
         }

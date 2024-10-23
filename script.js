@@ -1,6 +1,4 @@
-export let categories = JSON.parse(localStorage.getItem('categories')) || [{ symbol: '🏠', title: 'Rent', description: 'Monthly rent', budget: 3000, alertShown: false },
-    { symbol: '🛍️', title: 'Shopping', description: 'Clothing and other shopping', budget: 1000, alertShown: false },
-    { symbol: '🛒', title: 'Grocery', description: 'Grocery shopping', budget: 500, alertShown: false }];
+export let categories = JSON.parse(localStorage.getItem('categories')) || [];
 export let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
 export let monthsData = JSON.parse(localStorage.getItem('monthsData')) || {};
 const now = new Date(); 

@@ -35,15 +35,13 @@ editIncomeBtn.addEventListener('click', (e) => {
 
     const monthData = monthsData[currentMonth];
     
-    // Update the income data only when saved
     monthData.income[index].description = incomeTitleEditValue;
     monthData.income[index].amount = incomeAmountEditValue;
 
-    // Re-render income and close the modal
     renderIncome();
     editIncomeModal.style.display = 'none';
-    updateTotals();  // Update totals after saving
-    renderBudgetTracking();  // Recalculate and update budget tracking
+    updateTotals();  
+    renderBudgetTracking();  
 });
 
 function incomeClearModalInputs(modal) {
@@ -65,17 +63,17 @@ function handleIncomeAction(titleInput, amountInput, modal, status, index) {
     } else {
       incomeArray.unshift({ title: titleInput.value, amount: amountInput.value });
     }
-    // localStorage.setItem('income', JSON.stringify(incomeArray));
+
     renderIncome(); 
     modal.style.display = 'none'; 
   } else {
-    if (status === 'edit') {
-      errorMessageEdit.textContent = 'Please check your input values.';
-      errorMessageEdit.style.display = 'block';
-    } else {
-      errorMessage.textContent = 'Please check your input values.';
-      errorMessage.style.display = 'block';
-    }
+      if (status === 'edit') {
+        errorMessageEdit.textContent = 'Please check your input values.';
+        errorMessageEdit.style.display = 'block';
+      } else {
+        errorMessage.textContent = 'Please check your input values.';
+        errorMessage.style.display = 'block';
+      }
   }
 }
 
@@ -103,9 +101,9 @@ saveIncomeBtn.addEventListener('click', (e) => {
 
     if (incomeTitleInput.value.trim() !== '' && incomeAmountInput.value.trim() !== '') {
         errorMessage.style.display = 'none';
-        addIncome(incomeAmountInput.value, incomeTitleInput.value);  // Add income to current month data
-        renderIncome();  // Re-render income
-        addIncomeModal.style.display = 'none';  // Close modal
+        addIncome(incomeAmountInput.value, incomeTitleInput.value); 
+        renderIncome();  
+        addIncomeModal.style.display = 'none';  
     } else {
         errorMessage.textContent = 'Please check your input values.';
         errorMessage.style.display = 'block';
@@ -118,7 +116,7 @@ function addIncome(amount, description) {
         monthsData[currentMonth] = { income: [], expenses: [] };
     }
     monthsData[currentMonth].income.unshift({ amount, description });
-    renderIncome();  // Re-render after adding new income
-    updateTotals();  // Update totals
-    renderBudgetTracking();  // Recalculate and update budget tracking
+    renderIncome();  
+    updateTotals(); 
+    renderBudgetTracking();  
 }
