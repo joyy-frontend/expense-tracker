@@ -14,7 +14,7 @@ const editIncomeModal = document.getElementById('editIncomeModal');
 for (let year = 2024; year <= 2200; year++) {
     for (let month = 0; month < 12; month++) {
         const date = new Date(year, month);
-        const monthName = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+        const monthName = date.toLocaleString('en-US', { month: 'long', year: 'numeric' });
         months.push(monthName);
     }
 }

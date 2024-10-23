@@ -130,7 +130,7 @@
 }
 
 .ctgry-flex label {
-  text-wrap: none;
+  /*text-wrap: none;*/
   white-space: nowrap;
   margin-right: 5px;
 }

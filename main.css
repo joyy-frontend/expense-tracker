@@ -486,7 +486,7 @@ td {
 
 .category-expense p {
   height: 100%;
-  vertical-align: center;
+  /*vertical-align: center;*/
   padding-left: 5px;
   /*line-height: 3.5rem;*/
 }
@@ -653,14 +653,44 @@ footer {
 }
 
 /********************/
+/*for tablet*/
+@media (max-width: 1020px) and (min-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+
+  .salary,
+  .category-container .categories {
+    font-size: 15px;
+  }
+  .category-container .category-item .delete-btn,
+  .category-expense .delete-btn,
+  #delIncomeBtn {
+    font-size: 15px;
+    padding: 8px;
+  }
+}
+
 /*for smartphone*/
 @media (max-width: 767px) {
-
+  body {
+    font-size: 14px;
+  }
+  #currentMonth {
+    font-size: 32px;
+  }
   .save-exence-wrap,
   .edit-category-wrap {
     text-align: center;
   }
 
+  .category-item .delete-btn {
+    font-size: 14px;
+    margin: 0;
+    height: auto;
+    width: auto;
+    padding: 10px;
+  }
   .budget-item span:last-child {
     width: 75px;
     display: inline-block;
