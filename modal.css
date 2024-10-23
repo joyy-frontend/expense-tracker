@@ -139,13 +139,6 @@
   margin-bottom: 1rem;
 }
 
-.ctgry-flex:nth-of-type(2) input {
-  width: 25%;
-}
-
-.ctgry-flex:nth-of-type(4) input {
-  width: 25%;
-}
 
 #addExpenseModal label,
 #editExpenseModal label {
@@ -171,6 +164,9 @@
   padding: min(5%, 3rem);
 }
 .expense-item input {
+  width: 100%;
+}
+.expense-item select {
   width: 100%;
 }
 #addEmojiPicker,
@@ -228,4 +224,40 @@
 #editCategoryModal input[type="text"],
 #editCategoryModal input[type="number"] {
   margin: 0;
+}
+
+
+/********************/
+/*for tablet*/
+@media (max-width: 1020px) and (min-width: 768px) {
+
+}
+
+/*for smartphone*/
+@media (max-width: 767px) {
+  input::placeholder {
+    font-size: 14px;  /* Set the font size of the placeholder text */
+  }
+  .expense-item {
+    font-size: 20px;
+    flex-direction: column;  /* Make each label and input stack in a column */
+    align-items: flex-start; /* Align labels and inputs to the left */
+    margin-bottom: 10px;
+  }
+  #addExpenseModal label,
+  #editExpenseModal label {
+  /* display: inline-block; */
+  /*margin: 1rem 0.2rem 0.2rem 0;
+  /*height: 3rem; /*same hight as input*/
+  width: 12%;
+  margin-right: 5px;
+  text-align: left;
+  }
+
+  #editCategoryModal label {
+    width: 15%;
+    text-align: left;
+    font-size: 20px;
+  }
+
 }

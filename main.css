@@ -172,7 +172,6 @@ main {
   flex-direction: column;
   text-align: center;
   width: 100%;
-  padding: 10px;
 }
 
 .category-each-total,
@@ -196,6 +195,7 @@ main {
   width: 100%;
   align-items: center;
   position: relative;
+  padding: 10px;
 }
 
 .income h2 {
@@ -505,7 +505,7 @@ td {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  padding: 2% 20px 0 20px;
+  /* padding: 2% 20px 0 20px; */
   font-size: 1.4rem;
 }
 
@@ -600,12 +600,12 @@ input:focus {
 
 .income-box {
   display: flex;
-  margin: 5px;
+  margin-top: 10px;
   gap: 10px;
   justify-content: space-between;
   border: solid 1px var(--gray-line);
   border-radius: 5px;
-  margin: 10px;
+  /* margin: 10px; */
   padding: 5px;
   line-height: 30px;
   cursor: pointer;
@@ -658,7 +658,9 @@ footer {
   body {
     font-size: 15px;
   }
-
+  .income-amount {
+    font-weight: bold;
+  }
   .salary,
   .category-container .categories {
     font-size: 15px;
@@ -673,6 +675,13 @@ footer {
 
 /*for smartphone*/
 @media (max-width: 767px) {
+  input::placeholder {
+    font-size: 14px;  /* Set the font size of the placeholder text */
+  }
+
+  .income h2, .expense h2, .category-header h2 {
+    font-size: 2em;
+  }
   body {
     font-size: 14px;
   }
@@ -690,6 +699,10 @@ footer {
     height: auto;
     width: auto;
     padding: 10px;
+  }
+
+  .category-item p {
+    font-size: 14px;
   }
   .budget-item span:last-child {
     width: 75px;
@@ -712,6 +725,9 @@ footer {
     position: relative;
   }
 
+  .income-amount {
+    font-weight: bold;
+  }
   .income-btn-new {
     position: absolute;
     top: -24px;
@@ -720,6 +736,23 @@ footer {
 
   .salary {
     margin-top: 1.5rem;
+    padding: 20px;
+  }
+
+  .salary p {
+    padding: 0;
+  }
+  .income-box {
+    display: flex;
+    flex-direction: column;
+  }
+  
+
+  .income-title, .income-amount {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0;
   }
 
   .income-container,
@@ -736,39 +769,18 @@ footer {
     margin-top: 1rem;
   }
 
-  .category-expense p:first-of-type {
-    min-width: 30px;
-    max-width: 30px;
-    text-overflow: unset;
+  .category-expense {
+    display: flex;
+    flex-direction: column;
   }
 
-  .category-expense p:nth-of-type(2) {
-    min-width: 60px;
+  .category-expense p {
+    display: flex;
+    justify-content: center;
+    margin: 3px;
   }
-
-  .category-expense p:nth-of-type(3) {
-    min-width: 70px;
-    max-width: 70px;
-    font-size: 0.8rem;
-  }
-
-  .category-expense p:nth-of-type(4) {
-    min-width: 40px;
-    text-wrap: wrap;
-    font-size: 0.8rem;
-  }
-
-  .expense-container .delete-btn {
-    width: 3rem;
-    font-size: 10px;
-    padding: 5px;
-    height: auto;
-  }
-
-  #delIncomeBtn {
-    font-size: 14px;
-    width: 4rem;
-    padding: 0;
+   .category-expense p:first-of-type {
+    font-size: 20px;
   }
 
   .categories {
@@ -776,7 +788,7 @@ footer {
   }
 
   .expense-wrap {
-    padding: 0 1rem;
+    padding: 20px;
   }
 
   .dispbtn {
@@ -788,5 +800,9 @@ footer {
     font-size: 14px;
     height: auto;
     padding: 5px;
+  }
+
+  .income-box p {
+    font-size: 14px;
   }
 }
