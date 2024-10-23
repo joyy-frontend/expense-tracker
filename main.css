@@ -675,6 +675,10 @@ footer {
 
 /*for smartphone*/
 @media (max-width: 767px) {
+  #delIncomeBtn {
+  width: 5rem;
+  margin: 0 auto;
+  }
   input::placeholder {
     font-size: 14px;  /* Set the font size of the placeholder text */
   }
