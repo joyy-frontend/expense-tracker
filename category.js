@@ -89,7 +89,7 @@ function renderCategories() {
         const categoryElement = document.createElement('div');
         categoryElement.classList.add('category-item');
         categoryElement.innerHTML = `
-            <p data-index="${index}">${category.symbol} ${category.title}</p><p>$${category.budget}</p>
+            <p data-index="${index}">${category.symbol} ${category.title}</p><p data-index="${index}">$${category.budget}</p>
             <button class="delete-btn" data-index="${index}">Delete</button>
         `;//haruka added <p></p> between title and amount to make spaces
 
